@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import type { ScreenType } from "@/pages/home";
-import type { HarborCrossingTime, HarborTideTime, HarborWeatherData } from "@shared/schema";
+import type { CrossingTime, TideData, WeatherData } from "@shared/schema";
 
 export function useWeekData(screenType: ScreenType, weekOffset: number) {
   return useQuery({

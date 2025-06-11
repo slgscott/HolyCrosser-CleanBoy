@@ -73,59 +73,59 @@ export class DatabaseStorage implements IStorage {
     return user;
   }
 
-  async getCrossingTimesForWeek(weekOffset: number): Promise<HarborCrossingTime[]> {
+  async getCrossingTimesForWeek(weekOffset: number): Promise<CrossingTime[]> {
     const { startDate, endDate } = getWeekRange(weekOffset);
     const startDateStr = startDate.toISOString().split('T')[0];
     const endDateStr = endDate.toISOString().split('T')[0];
     
     const results = await harborDb
       .select()
-      .from(harborCrossingTimes)
+      .from(crossingTimes)
       .where(
         and(
-          gte(harborCrossingTimes.date, startDateStr),
-          lte(harborCrossingTimes.date, endDateStr)
+          gte(crossingTimes.date, startDateStr),
+          lte(crossingTimes.date, endDateStr)
         )
       )
-      .orderBy(harborCrossingTimes.date);
+      .orderBy(crossingTimes.date);
     
     return results;
   }
 
-  async getTideTimesForWeek(weekOffset: number): Promise<HarborTideTime[]> {
+  async getTideTimesForWeek(weekOffset: number): Promise<TideData[]> {
     const { startDate, endDate } = getWeekRange(weekOffset);
     const startDateStr = startDate.toISOString().split('T')[0];
     const endDateStr = endDate.toISOString().split('T')[0];
     
     const results = await harborDb
       .select()
-      .from(harborTideTimes)
+      .from(tideData)
       .where(
         and(
-          gte(harborTideTimes.date, startDateStr),
-          lte(harborTideTimes.date, endDateStr)
+          gte(tideData.date, startDateStr),
+          lte(tideData.date, endDateStr)
         )
       )
-      .orderBy(harborTideTimes.date);
+      .orderBy(tideData.date);
     
     return results;
   }
 
-  async getWeatherDataForWeek(weekOffset: number): Promise<HarborWeatherData[]> {
+  async getWeatherDataForWeek(weekOffset: number): Promise<WeatherData[]> {
     const { startDate, endDate } = getWeekRange(weekOffset);
     const startDateStr = startDate.toISOString().split('T')[0];
     const endDateStr = endDate.toISOString().split('T')[0];
     
     const results = await harborDb
       .select()
-      .from(harborWeatherData)
+      .from(weatherData)
       .where(
         and(
-          gte(harborWeatherData.date, startDateStr),
-          lte(harborWeatherData.date, endDateStr)
+          gte(weatherData.date, startDateStr),
+          lte(weatherData.date, endDateStr)
         )
       )
-      .orderBy(harborWeatherData.date);
+      .orderBy(weatherData.date);
     
     return results;
   }

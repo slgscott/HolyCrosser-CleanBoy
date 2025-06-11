@@ -120,24 +120,24 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
     switch (screenType) {
       case "crossings":
         return [
-          dayData.morning || "—",
-          dayData.midday || "—", 
-          dayData.evening || "—",
-          dayData.night || "—"
+          dayData.safeFrom1 || "—",
+          dayData.safeTo1 || "—", 
+          dayData.safeFrom2 || "—",
+          dayData.safeTo2 || "—"
         ];
       case "tides":
         return [
-          dayData.highTide1 || "—",
-          dayData.lowTide1 || "—",
-          dayData.highTide2 || "—", 
-          dayData.lowTide2 || "—"
+          dayData.highTide1Time || "—",
+          dayData.lowTide1Time || "—",
+          dayData.highTide2Time || "—", 
+          dayData.lowTide2Time || "—"
         ];
       case "weather":
         return [
-          dayData.temperature || "—",
-          dayData.windSpeed || "—",
-          dayData.precipitation || "—",
-          dayData.visibility || "—"
+          dayData.temperature ? `${dayData.temperature}°` : "—",
+          dayData.windSpeed ? `${dayData.windSpeed} mph` : "—",
+          dayData.precipitationSum || "—",
+          dayData.humidity ? `${dayData.humidity}%` : "—"
         ];
       default:
         return ["—", "—", "—", "—"];
