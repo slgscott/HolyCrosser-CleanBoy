@@ -33,7 +33,14 @@ export const harborWeatherData = pgTable("harbor_weather_data", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
-// Local preferences tables
+// Local preferences tables (for this app's user settings)
+export const users = pgTable("users", {
+  id: serial("id").primaryKey(),
+  username: text("username").notNull().unique(),
+  password: text("password").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 export const userPreferences = pgTable("user_preferences", {
   id: serial("id").primaryKey(),
   screenType: text("screen_type").notNull(), // 'crossings', 'tides', 'weather'
@@ -55,6 +62,11 @@ export const appSettings = pgTable("app_settings", {
 });
 
 // Zod schemas
+export const insertUserSchema = createInsertSchema(users).omit({
+  id: true,
+  createdAt: true,
+});
+
 export const insertUserPreferencesSchema = createInsertSchema(userPreferences).omit({
   id: true,
   createdAt: true,
@@ -71,7 +83,9 @@ export const insertAppSettingsSchema = createInsertSchema(appSettings).omit({
 export type HarborCrossingTime = typeof harborCrossingTimes.$inferSelect;
 export type HarborTideTime = typeof harborTideTimes.$inferSelect;
 export type HarborWeatherData = typeof harborWeatherData.$inferSelect;
+export type User = typeof users.$inferSelect;
 export type UserPreferences = typeof userPreferences.$inferSelect;
 export type AppSettings = typeof appSettings.$inferSelect;
+export type InsertUser = z.infer<typeof insertUserSchema>;
 export type InsertUserPreferences = z.infer<typeof insertUserPreferencesSchema>;
 export type InsertAppSettings = z.infer<typeof insertAppSettingsSchema>;
