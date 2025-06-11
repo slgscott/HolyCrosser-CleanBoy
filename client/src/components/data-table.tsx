@@ -30,7 +30,7 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
         return {
           title: "Safe Crossing Times",
           icon: <Navigation className="h-5 w-5 text-primary mr-2" />,
-          defaultColumns: ["Morning", "Midday", "Evening", "Night"]
+          defaultColumns: ["Safe to cross", "Unsafe to cross", "Safe to cross", "Unsafe to cross"]
         };
       case "tides":
         return {
@@ -109,6 +109,37 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   };
 
+  const formatTimeWithDay = (time: string, baseDate: Date) => {
+    if (!time || time === "—") return "—";
+    
+    const [hours, minutes] = time.split(':').map(Number);
+    const timeDate = new Date(baseDate);
+    timeDate.setHours(hours, minutes, 0, 0);
+    
+    // If time is less than 6am, assume it's next day
+    if (hours < 6) {
+      timeDate.setDate(timeDate.getDate() + 1);
+      const dayName = timeDate.toLocaleDateString('en-US', { weekday: 'short' });
+      return `${time} (${dayName})`;
+    }
+    
+    return time;
+  };
+
+  const formatTimeRange = (fromTime: string, toTime: string, baseDate: Date) => {
+    if (!fromTime || !toTime || fromTime === "—" || toTime === "—") return "—";
+    
+    const formattedFrom = formatTimeWithDay(fromTime, baseDate);
+    const formattedTo = formatTimeWithDay(toTime, baseDate);
+    
+    return (
+      <div className="text-sm leading-tight">
+        <div>{formattedFrom} until</div>
+        <div>{formattedTo}</div>
+      </div>
+    );
+  };
+
   const getRowData = (date: Date) => {
     if (!data || !Array.isArray(data)) return ["—", "—", "—", "—"];
     
@@ -120,17 +151,29 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
     switch (screenType) {
       case "crossings":
         return [
-          dayData.safeFrom1 || "—",
-          dayData.safeTo1 || "—", 
-          dayData.safeFrom2 || "—",
-          dayData.safeTo2 || "—"
+          formatTimeRange(dayData.safeFrom1, dayData.safeTo1, date),
+          formatTimeRange(dayData.unsafeFrom1, dayData.unsafeTo1, date),
+          formatTimeRange(dayData.safeFrom2, dayData.safeTo2, date),
+          formatTimeRange(dayData.unsafeFrom2, dayData.unsafeTo2, date)
         ];
       case "tides":
         return [
-          dayData.highTide1Time || "—",
-          dayData.lowTide1Time || "—",
-          dayData.highTide2Time || "—", 
-          dayData.lowTide2Time || "—"
+          <div className="text-sm">
+            <div>{dayData.highTide1Time || "—"}</div>
+            {dayData.highTide1Height && <div className="text-xs text-gray-600">{dayData.highTide1Height.toFixed(1)}m</div>}
+          </div>,
+          <div className="text-sm">
+            <div>{dayData.lowTide1Time || "—"}</div>
+            {dayData.lowTide1Height && <div className="text-xs text-gray-600">{dayData.lowTide1Height.toFixed(1)}m</div>}
+          </div>,
+          <div className="text-sm">
+            <div>{dayData.highTide2Time || "—"}</div>
+            {dayData.highTide2Height && <div className="text-xs text-gray-600">{dayData.highTide2Height.toFixed(1)}m</div>}
+          </div>,
+          <div className="text-sm">
+            <div>{dayData.lowTide2Time || "—"}</div>
+            {dayData.lowTide2Height && <div className="text-xs text-gray-600">{dayData.lowTide2Height.toFixed(1)}m</div>}
+          </div>
         ];
       case "weather":
         return [

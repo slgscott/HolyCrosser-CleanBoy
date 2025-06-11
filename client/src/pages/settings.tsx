@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import { ChevronLeft, Save } from "lucide-react";
@@ -25,63 +24,104 @@ export default function Settings() {
     queryKey: ["/api/settings"],
   });
 
-  // Local state for form data
-  const [crossingColumns, setCrossingColumns] = useState({
-    column1Name: "Morning",
-    column2Name: "Midday", 
-    column3Name: "Evening",
-    column4Name: "Night"
-  });
+  // Available data fields for each screen type
+  const availableFields = {
+    crossings: [
+      { value: "safeFrom1-safeTo1", label: "Safe Period 1" },
+      { value: "unsafeFrom1-unsafeTo1", label: "Unsafe Period 1" },
+      { value: "safeFrom2-safeTo2", label: "Safe Period 2" },
+      { value: "unsafeFrom2-unsafeTo2", label: "Unsafe Period 2" },
+      { value: "status", label: "Status" },
+      { value: "notes", label: "Notes" }
+    ],
+    tides: [
+      { value: "highTide1Time-highTide1Height", label: "High Tide 1" },
+      { value: "lowTide1Time-lowTide1Height", label: "Low Tide 1" },
+      { value: "highTide2Time-highTide2Height", label: "High Tide 2" },
+      { value: "lowTide2Time-lowTide2Height", label: "Low Tide 2" }
+    ],
+    weather: [
+      { value: "temperature", label: "Temperature" },
+      { value: "temperatureMax", label: "Max Temperature" },
+      { value: "temperatureMin", label: "Min Temperature" },
+      { value: "windSpeed", label: "Wind Speed" },
+      { value: "windSpeedMax", label: "Max Wind Speed" },
+      { value: "windDirection", label: "Wind Direction" },
+      { value: "humidity", label: "Humidity" },
+      { value: "precipitationSum", label: "Precipitation" },
+      { value: "cloudcover", label: "Cloud Cover" },
+      { value: "uvIndexMax", label: "UV Index" },
+      { value: "condition", label: "Condition" },
+      { value: "description", label: "Description" }
+    ]
+  };
 
-  const [tideColumns, setTideColumns] = useState({
-    column1Name: "High Tide 1",
-    column2Name: "Low Tide 1",
-    column3Name: "High Tide 2", 
-    column4Name: "Low Tide 2"
-  });
-
-  const [weatherColumns, setWeatherColumns] = useState({
-    column1Name: "Temperature",
-    column2Name: "Wind Speed",
-    column3Name: "Precipitation",
-    column4Name: "Visibility"
+  // Local state for column selections
+  const [columnSelections, setColumnSelections] = useState({
+    crossings: {
+      column1: "safeFrom1-safeTo1",
+      column2: "unsafeFrom1-unsafeTo1", 
+      column3: "safeFrom2-safeTo2",
+      column4: "unsafeFrom2-unsafeTo2"
+    },
+    tides: {
+      column1: "highTide1Time-highTide1Height",
+      column2: "lowTide1Time-lowTide1Height",
+      column3: "highTide2Time-highTide2Height",
+      column4: "lowTide2Time-lowTide2Height"
+    },
+    weather: {
+      column1: "temperature",
+      column2: "windSpeed",
+      column3: "precipitationSum",
+      column4: "humidity"
+    }
   });
 
   // Initialize form data when preferences load
-  useState(() => {
+  useEffect(() => {
     if (preferences) {
       const crossingPrefs = preferences.find(p => p.screenType === "crossings");
       const tidePrefs = preferences.find(p => p.screenType === "tides");
       const weatherPrefs = preferences.find(p => p.screenType === "weather");
 
       if (crossingPrefs) {
-        setCrossingColumns({
-          column1Name: crossingPrefs.column1Name,
-          column2Name: crossingPrefs.column2Name,
-          column3Name: crossingPrefs.column3Name,
-          column4Name: crossingPrefs.column4Name,
-        });
+        setColumnSelections(prev => ({
+          ...prev,
+          crossings: {
+            column1: crossingPrefs.column1Name,
+            column2: crossingPrefs.column2Name,
+            column3: crossingPrefs.column3Name,
+            column4: crossingPrefs.column4Name,
+          }
+        }));
       }
 
       if (tidePrefs) {
-        setTideColumns({
-          column1Name: tidePrefs.column1Name,
-          column2Name: tidePrefs.column2Name,
-          column3Name: tidePrefs.column3Name,
-          column4Name: tidePrefs.column4Name,
-        });
+        setColumnSelections(prev => ({
+          ...prev,
+          tides: {
+            column1: tidePrefs.column1Name,
+            column2: tidePrefs.column2Name,
+            column3: tidePrefs.column3Name,
+            column4: tidePrefs.column4Name,
+          }
+        }));
       }
 
       if (weatherPrefs) {
-        setWeatherColumns({
-          column1Name: weatherPrefs.column1Name,
-          column2Name: weatherPrefs.column2Name,
-          column3Name: weatherPrefs.column3Name,
-          column4Name: weatherPrefs.column4Name,
-        });
+        setColumnSelections(prev => ({
+          ...prev,
+          weather: {
+            column1: weatherPrefs.column1Name,
+            column2: weatherPrefs.column2Name,
+            column3: weatherPrefs.column3Name,
+            column4: weatherPrefs.column4Name,
+          }
+        }));
       }
     }
-  });
+  }, [preferences]);
 
   // Mutation for saving preferences
   const savePreferencesMutation = useMutation({
@@ -99,24 +139,34 @@ export default function Settings() {
 
   const handleSavePreferences = async () => {
     try {
-      // Save all three screen preferences
-      await savePreferencesMutation.mutateAsync({
-        screenType: "crossings",
-        ...crossingColumns
-      });
+      // Save all three screen preferences  
+      const screens = ['crossings', 'tides', 'weather'] as const;
       
-      await savePreferencesMutation.mutateAsync({
-        screenType: "tides", 
-        ...tideColumns
-      });
-      
-      await savePreferencesMutation.mutateAsync({
-        screenType: "weather",
-        ...weatherColumns
-      });
+      for (const screenType of screens) {
+        const selections = columnSelections[screenType];
+        const fieldLabels = availableFields[screenType];
+        
+        await savePreferencesMutation.mutateAsync({
+          screenType,
+          column1Name: fieldLabels.find(f => f.value === selections.column1)?.label || selections.column1,
+          column2Name: fieldLabels.find(f => f.value === selections.column2)?.label || selections.column2,
+          column3Name: fieldLabels.find(f => f.value === selections.column3)?.label || selections.column3,
+          column4Name: fieldLabels.find(f => f.value === selections.column4)?.label || selections.column4,
+        });
+      }
     } catch (error) {
       // Error handled by mutation onError
     }
+  };
+
+  const updateColumnSelection = (screenType: keyof typeof columnSelections, column: string, value: string) => {
+    setColumnSelections(prev => ({
+      ...prev,
+      [screenType]: {
+        ...prev[screenType],
+        [column]: value
+      }
+    }));
   };
 
   if (preferencesLoading || settingsLoading) {
@@ -163,46 +213,30 @@ export default function Settings() {
         {/* Safe Crossing Times */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Safe Crossing Times</CardTitle>
+            <CardTitle className="text-lg">Safe Crossing Times - Column Data</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <Label htmlFor="crossing-col1" className="text-sm">Column 1</Label>
-                <Input
-                  id="crossing-col1"
-                  value={crossingColumns.column1Name}
-                  onChange={(e) => setCrossingColumns(prev => ({ ...prev, column1Name: e.target.value }))}
-                  className="mt-1"
-                />
-              </div>
-              <div>
-                <Label htmlFor="crossing-col2" className="text-sm">Column 2</Label>
-                <Input
-                  id="crossing-col2"
-                  value={crossingColumns.column2Name}
-                  onChange={(e) => setCrossingColumns(prev => ({ ...prev, column2Name: e.target.value }))}
-                  className="mt-1"
-                />
-              </div>
-              <div>
-                <Label htmlFor="crossing-col3" className="text-sm">Column 3</Label>
-                <Input
-                  id="crossing-col3"
-                  value={crossingColumns.column3Name}
-                  onChange={(e) => setCrossingColumns(prev => ({ ...prev, column3Name: e.target.value }))}
-                  className="mt-1"
-                />
-              </div>
-              <div>
-                <Label htmlFor="crossing-col4" className="text-sm">Column 4</Label>
-                <Input
-                  id="crossing-col4"
-                  value={crossingColumns.column4Name}
-                  onChange={(e) => setCrossingColumns(prev => ({ ...prev, column4Name: e.target.value }))}
-                  className="mt-1"
-                />
-              </div>
+            <div className="grid grid-cols-1 gap-4">
+              {[1, 2, 3, 4].map((colNum) => (
+                <div key={colNum}>
+                  <Label className="text-sm font-medium">Column {colNum}</Label>
+                  <Select
+                    value={columnSelections.crossings[`column${colNum}` as keyof typeof columnSelections.crossings]}
+                    onValueChange={(value) => updateColumnSelection('crossings', `column${colNum}`, value)}
+                  >
+                    <SelectTrigger className="mt-1">
+                      <SelectValue placeholder="Select data field" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {availableFields.crossings.map((field) => (
+                        <SelectItem key={field.value} value={field.value}>
+                          {field.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              ))}
             </div>
           </CardContent>
         </Card>
@@ -210,46 +244,30 @@ export default function Settings() {
         {/* Tide Times */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Tide Times</CardTitle>
+            <CardTitle className="text-lg">Tide Times - Column Data</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <Label htmlFor="tide-col1" className="text-sm">Column 1</Label>
-                <Input
-                  id="tide-col1"
-                  value={tideColumns.column1Name}
-                  onChange={(e) => setTideColumns(prev => ({ ...prev, column1Name: e.target.value }))}
-                  className="mt-1"
-                />
-              </div>
-              <div>
-                <Label htmlFor="tide-col2" className="text-sm">Column 2</Label>
-                <Input
-                  id="tide-col2"
-                  value={tideColumns.column2Name}
-                  onChange={(e) => setTideColumns(prev => ({ ...prev, column2Name: e.target.value }))}
-                  className="mt-1"
-                />
-              </div>
-              <div>
-                <Label htmlFor="tide-col3" className="text-sm">Column 3</Label>
-                <Input
-                  id="tide-col3"
-                  value={tideColumns.column3Name}
-                  onChange={(e) => setTideColumns(prev => ({ ...prev, column3Name: e.target.value }))}
-                  className="mt-1"
-                />
-              </div>
-              <div>
-                <Label htmlFor="tide-col4" className="text-sm">Column 4</Label>
-                <Input
-                  id="tide-col4"
-                  value={tideColumns.column4Name}
-                  onChange={(e) => setTideColumns(prev => ({ ...prev, column4Name: e.target.value }))}
-                  className="mt-1"
-                />
-              </div>
+            <div className="grid grid-cols-1 gap-4">
+              {[1, 2, 3, 4].map((colNum) => (
+                <div key={colNum}>
+                  <Label className="text-sm font-medium">Column {colNum}</Label>
+                  <Select
+                    value={columnSelections.tides[`column${colNum}` as keyof typeof columnSelections.tides]}
+                    onValueChange={(value) => updateColumnSelection('tides', `column${colNum}`, value)}
+                  >
+                    <SelectTrigger className="mt-1">
+                      <SelectValue placeholder="Select data field" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {availableFields.tides.map((field) => (
+                        <SelectItem key={field.value} value={field.value}>
+                          {field.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              ))}
             </div>
           </CardContent>
         </Card>
@@ -257,51 +275,33 @@ export default function Settings() {
         {/* Weather Data */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Weather Data</CardTitle>
+            <CardTitle className="text-lg">Weather Data - Column Data</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <Label htmlFor="weather-col1" className="text-sm">Column 1</Label>
-                <Input
-                  id="weather-col1"
-                  value={weatherColumns.column1Name}
-                  onChange={(e) => setWeatherColumns(prev => ({ ...prev, column1Name: e.target.value }))}
-                  className="mt-1"
-                />
-              </div>
-              <div>
-                <Label htmlFor="weather-col2" className="text-sm">Column 2</Label>
-                <Input
-                  id="weather-col2"
-                  value={weatherColumns.column2Name}
-                  onChange={(e) => setWeatherColumns(prev => ({ ...prev, column2Name: e.target.value }))}
-                  className="mt-1"
-                />
-              </div>
-              <div>
-                <Label htmlFor="weather-col3" className="text-sm">Column 3</Label>
-                <Input
-                  id="weather-col3"
-                  value={weatherColumns.column3Name}
-                  onChange={(e) => setWeatherColumns(prev => ({ ...prev, column3Name: e.target.value }))}
-                  className="mt-1"
-                />
-              </div>
-              <div>
-                <Label htmlFor="weather-col4" className="text-sm">Column 4</Label>
-                <Input
-                  id="weather-col4"
-                  value={weatherColumns.column4Name}
-                  onChange={(e) => setWeatherColumns(prev => ({ ...prev, column4Name: e.target.value }))}
-                  className="mt-1"
-                />
-              </div>
+            <div className="grid grid-cols-1 gap-4">
+              {[1, 2, 3, 4].map((colNum) => (
+                <div key={colNum}>
+                  <Label className="text-sm font-medium">Column {colNum}</Label>
+                  <Select
+                    value={columnSelections.weather[`column${colNum}` as keyof typeof columnSelections.weather]}
+                    onValueChange={(value) => updateColumnSelection('weather', `column${colNum}`, value)}
+                  >
+                    <SelectTrigger className="mt-1">
+                      <SelectValue placeholder="Select data field" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {availableFields.weather.map((field) => (
+                        <SelectItem key={field.value} value={field.value}>
+                          {field.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              ))}
             </div>
           </CardContent>
         </Card>
-
-        <Separator />
 
         <Button
           onClick={handleSavePreferences}
