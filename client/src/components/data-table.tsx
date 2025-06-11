@@ -30,7 +30,7 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
         return {
           title: "Safe Crossing Times",
           icon: <Navigation className="h-5 w-5 text-primary mr-2" />,
-          defaultColumns: ["Safe to cross", "Unsafe to cross", "Safe to cross", "Unsafe to cross"]
+          defaultColumns: ["Safe", "Unsafe", "Safe", "Unsafe"]
         };
       case "tides":
         return {
@@ -109,15 +109,15 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   };
 
-  const formatTimeWithDay = (time: string, baseDate: Date) => {
+  const formatTimeWithDay = (time: string, baseDate: Date, isSecondPeriod: boolean = false) => {
     if (!time || time === "—") return "—";
     
     const [hours, minutes] = time.split(':').map(Number);
-    const timeDate = new Date(baseDate);
-    timeDate.setHours(hours, minutes, 0, 0);
     
-    // If time is less than 6am, assume it's next day
-    if (hours < 6) {
+    // For second period times (safeFrom2, safeTo2, unsafeFrom2, unsafeTo2), 
+    // if it's in the morning (before 12pm), assume next day
+    if (isSecondPeriod && hours < 12) {
+      const timeDate = new Date(baseDate);
       timeDate.setDate(timeDate.getDate() + 1);
       const dayName = timeDate.toLocaleDateString('en-US', { weekday: 'short' });
       return `${time} (${dayName})`;
@@ -126,11 +126,11 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
     return time;
   };
 
-  const formatTimeRange = (fromTime: string, toTime: string, baseDate: Date) => {
+  const formatTimeRange = (fromTime: string, toTime: string, baseDate: Date, isSecondPeriod: boolean = false) => {
     if (!fromTime || !toTime || fromTime === "—" || toTime === "—") return "—";
     
-    const formattedFrom = formatTimeWithDay(fromTime, baseDate);
-    const formattedTo = formatTimeWithDay(toTime, baseDate);
+    const formattedFrom = formatTimeWithDay(fromTime, baseDate, isSecondPeriod);
+    const formattedTo = formatTimeWithDay(toTime, baseDate, isSecondPeriod);
     
     return (
       <div className="text-sm leading-tight">
@@ -151,10 +151,10 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
     switch (screenType) {
       case "crossings":
         return [
-          formatTimeRange(dayData.safeFrom1, dayData.safeTo1, date),
-          formatTimeRange(dayData.unsafeFrom1, dayData.unsafeTo1, date),
-          formatTimeRange(dayData.safeFrom2, dayData.safeTo2, date),
-          formatTimeRange(dayData.unsafeFrom2, dayData.unsafeTo2, date)
+          formatTimeRange(dayData.safeFrom1, dayData.safeTo1, date, false),
+          formatTimeRange(dayData.unsafeFrom1, dayData.unsafeTo1, date, false),
+          formatTimeRange(dayData.safeFrom2, dayData.safeTo2, date, true),
+          formatTimeRange(dayData.unsafeFrom2, dayData.unsafeTo2, date, true)
         ];
       case "tides":
         return [
