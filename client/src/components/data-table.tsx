@@ -138,21 +138,15 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
   const getRowData = (date: Date) => {
     if (!data || !Array.isArray(data)) return ["—", "—", "—", "—"];
     
-    const dateStr = date.toISOString().split('T')[0];
+    // Use local date string to avoid timezone issues
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const dateStr = `${year}-${month}-${day}`;
+    
     const dayData = data.find((d: any) => d.date === dateStr);
     
-    // Debug Monday issues - show actual date object
-    const dayName = date.toLocaleDateString('en-US', { weekday: 'long' });
-    if (dayName === 'Monday') {
-      console.log(`Monday debug:`, {
-        rawDate: date.toString(),
-        isoString: date.toISOString(),
-        dateStr: dateStr,
-        hasData: !!dayData,
-        availableDates: data.map((d: any) => d.date).slice(0, 3),
-        weekOffset: weekOffset
-      });
-    }
+
     
     if (!dayData) return ["—", "—", "—", "—"];
 
