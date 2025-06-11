@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Waves, CloudSun, Navigation, RefreshCw, AlertTriangle } from "lucide-react";
+import { Waves, CloudSun, Navigation, RefreshCw, AlertTriangle, Umbrella, Wind, Sun, Cloud } from "lucide-react";
 import { getWeekDates, isToday } from "@/lib/date-utils";
 import { useWeekData } from "@/hooks/use-week-data";
 import type { ScreenType } from "@/pages/home";
@@ -33,7 +33,7 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
         return {
           title: "Weather Data",
           icon: <CloudSun className="h-5 w-5 text-primary mr-2" />,
-          defaultColumns: ["Temperature", "Wind Speed", "Precipitation", "Visibility"]
+          defaultColumns: ["Temperature", "Precipitation", "Wind", "UV & Cloud"]
         };
       default:
         return {
@@ -172,11 +172,80 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
           </div>
         ];
       case "weather":
+        // Helper function to get wind direction arrow
+        const getWindDirection = (degrees: number) => {
+          if (degrees === null || degrees === undefined) return "";
+          const directions = ["↓", "↙", "←", "↖", "↑", "↗", "→", "↘"];
+          const index = Math.round(degrees / 45) % 8;
+          return directions[index];
+        };
+
+        // Helper function to determine if precipitation is high
+        const isWetDay = (precipitation: string | null) => {
+          if (!precipitation) return false;
+          const precip = parseFloat(precipitation);
+          return precip > 5; // Consider >5mm as particularly wet
+        };
+
         return [
-          dayData.temperature ? `${dayData.temperature}°` : dayData.temperatureMax ? `${dayData.temperatureMax}°` : "—",
-          dayData.windSpeed ? `${dayData.windSpeed} mph` : dayData.windSpeedMax ? `${dayData.windSpeedMax} mph` : "—",
-          dayData.precipitationSum !== null ? `${dayData.precipitationSum}mm` : "—",
-          dayData.humidity ? `${dayData.humidity}%` : dayData.cloudcover ? `${dayData.cloudcover}%` : "—"
+          // Temperature column: Min/Max
+          <div className="text-sm">
+            {dayData.temperatureMin && dayData.temperatureMax ? (
+              <>
+                <div className="text-blue-600">{dayData.temperatureMin}°</div>
+                <div className="text-red-600">{dayData.temperatureMax}°</div>
+              </>
+            ) : dayData.temperature ? (
+              <div>{dayData.temperature}°</div>
+            ) : "—"}
+          </div>,
+          
+          // Precipitation column with umbrella icon for wet days
+          <div className="text-sm flex items-center justify-center">
+            {dayData.precipitationSum ? (
+              <div className="flex items-center space-x-1">
+                {isWetDay(dayData.precipitationSum) && (
+                  <Umbrella className="h-3 w-3 text-blue-500" />
+                )}
+                <span>{dayData.precipitationSum}mm</span>
+              </div>
+            ) : "—"}
+          </div>,
+          
+          // Wind column: Speed and direction
+          <div className="text-sm">
+            {dayData.windSpeed || dayData.windSpeedMax ? (
+              <div className="flex flex-col items-center">
+                <div className="flex items-center space-x-1">
+                  <Wind className="h-3 w-3 text-gray-600" />
+                  <span>{dayData.windSpeed || dayData.windSpeedMax}mph</span>
+                </div>
+                {dayData.windDirectionDominant && (
+                  <div className="text-lg">{getWindDirection(dayData.windDirectionDominant)}</div>
+                )}
+              </div>
+            ) : "—"}
+          </div>,
+          
+          // UV & Cloud column
+          <div className="text-sm">
+            {dayData.uvIndexMax || dayData.cloudcover ? (
+              <div className="flex flex-col items-center space-y-1">
+                {dayData.uvIndexMax && (
+                  <div className="flex items-center space-x-1">
+                    <Sun className="h-3 w-3 text-yellow-500" />
+                    <span>UV{dayData.uvIndexMax}</span>
+                  </div>
+                )}
+                {dayData.cloudcover && (
+                  <div className="flex items-center space-x-1">
+                    <Cloud className="h-3 w-3 text-gray-500" />
+                    <span>{dayData.cloudcover}%</span>
+                  </div>
+                )}
+              </div>
+            ) : "—"}
+          </div>
         ];
       default:
         return ["—", "—", "—", "—"];
