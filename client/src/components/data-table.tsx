@@ -1,11 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Waves, CloudSun, Navigation, RefreshCw, AlertTriangle } from "lucide-react";
 import { getWeekDates, isToday } from "@/lib/date-utils";
 import { useWeekData } from "@/hooks/use-week-data";
 import type { ScreenType } from "@/pages/home";
-import type { UserPreferences } from "@shared/schema";
 
 interface DataTableProps {
   screenType: ScreenType;
@@ -14,13 +12,6 @@ interface DataTableProps {
 
 export default function DataTable({ screenType, weekOffset }: DataTableProps) {
   const weekDates = getWeekDates(weekOffset);
-  
-  // Get column preferences
-  const { data: preferences } = useQuery<UserPreferences[]>({
-    queryKey: ["/api/preferences"],
-  });
-
-  const currentPreferences = preferences?.find(p => p.screenType === screenType);
   
   const { data, isLoading, error, refetch } = useWeekData(screenType, weekOffset);
 
@@ -54,12 +45,7 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
   };
 
   const config = getScreenConfig();
-  const columns = currentPreferences ? [
-    currentPreferences.column1Name,
-    currentPreferences.column2Name,
-    currentPreferences.column3Name,
-    currentPreferences.column4Name
-  ] : config.defaultColumns;
+  const columns = config.defaultColumns;
 
   if (isLoading) {
     return (
