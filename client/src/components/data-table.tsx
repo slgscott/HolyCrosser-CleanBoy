@@ -232,11 +232,14 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
               {weekDates.map((date, dayIndex) => {
                 const isCurrentDay = isToday(date);
                 const rowData = getRowData(date);
+                const isLastWeekday = dayIndex === 4; // Friday (day index 4)
                 
                 return (
                   <tr
                     key={dayIndex}
-                    className={`border-b border-gray-100 hover:bg-gray-50 ${
+                    className={`border-b hover:bg-gray-50 ${
+                      isLastWeekday ? "border-b-2 border-gray-400" : "border-gray-100"
+                    } ${
                       isCurrentDay ? "bg-primary-light bg-opacity-10 hover:bg-primary-light hover:bg-opacity-20" : ""
                     }`}
                   >
