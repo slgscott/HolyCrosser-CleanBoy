@@ -150,12 +150,20 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
 
     switch (screenType) {
       case "crossings":
-        return [
+        const result = [
           formatTimeRange(dayData.safeFrom1, dayData.safeTo1, date, false),
           formatTimeRange(dayData.unsafeFrom1, dayData.unsafeTo1, date, false),
           formatTimeRange(dayData.safeFrom2, dayData.safeTo2, date, true),
           formatTimeRange(dayData.unsafeFrom2, dayData.unsafeTo2, date, true)
         ];
+        
+        // Debug for June 16th
+        if (dateStr === '2025-06-16') {
+          console.log('Raw data for June 16:', dayData);
+          console.log('Formatted result:', result);
+        }
+        
+        return result;
       case "tides":
         return [
           <div className="text-sm">
