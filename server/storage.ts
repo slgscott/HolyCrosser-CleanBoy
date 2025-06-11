@@ -2,18 +2,18 @@ import {
   users, 
   userPreferences, 
   appSettings,
-  harborCrossingTimes,
-  harborTideTimes,
-  harborWeatherData,
+  crossingTimes,
+  tideData,
+  weatherData,
   type User, 
   type InsertUser,
   type UserPreferences,
   type InsertUserPreferences,
   type AppSettings,
   type InsertAppSettings,
-  type HarborCrossingTime,
-  type HarborTideTime,
-  type HarborWeatherData
+  type CrossingTime,
+  type TideData,
+  type WeatherData
 } from "@shared/schema";
 import { db, harborDb } from "./db";
 import { eq, gte, lte, desc, and } from "drizzle-orm";
@@ -41,9 +41,9 @@ export interface IStorage {
   createUser(insertUser: InsertUser): Promise<User>;
   
   // Harbor data (read-only from external database)
-  getCrossingTimesForWeek(weekOffset: number): Promise<HarborCrossingTime[]>;
-  getTideTimesForWeek(weekOffset: number): Promise<HarborTideTime[]>;
-  getWeatherDataForWeek(weekOffset: number): Promise<HarborWeatherData[]>;
+  getCrossingTimesForWeek(weekOffset: number): Promise<CrossingTime[]>;
+  getTideTimesForWeek(weekOffset: number): Promise<TideData[]>;
+  getWeatherDataForWeek(weekOffset: number): Promise<WeatherData[]>;
   
   // User preferences (local database)
   getAllUserPreferences(): Promise<UserPreferences[]>;

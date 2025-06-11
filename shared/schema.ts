@@ -3,34 +3,51 @@ import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
 // External Harbor Data Manager tables (read-only)
-export const harborCrossingTimes = pgTable("harbor_crossing_times", {
+export const crossingTimes = pgTable("crossing_times", {
   id: serial("id").primaryKey(),
-  date: date("date").notNull(),
-  morning: text("morning"),
-  midday: text("midday"),
-  evening: text("evening"),
-  night: text("night"),
-  createdAt: timestamp("created_at").defaultNow(),
+  date: text("date").notNull(),
+  safeFrom1: text("safe_from_1"),
+  safeTo1: text("safe_to_1"),
+  safeFrom2: text("safe_from_2"),
+  safeTo2: text("safe_to_2"),
+  unsafeFrom1: text("unsafe_from_1"),
+  unsafeTo1: text("unsafe_to_1"),
+  unsafeFrom2: text("unsafe_from_2"),
+  unsafeTo2: text("unsafe_to_2"),
+  status: text("status").notNull().default("active"),
+  notes: text("notes"),
 });
 
-export const harborTideTimes = pgTable("harbor_tide_times", {
+export const tideData = pgTable("tide_data", {
   id: serial("id").primaryKey(),
-  date: date("date").notNull(),
-  highTide1: text("high_tide_1"),
-  lowTide1: text("low_tide_1"),
-  highTide2: text("high_tide_2"),
-  lowTide2: text("low_tide_2"),
-  createdAt: timestamp("created_at").defaultNow(),
+  date: text("date").notNull(),
+  highTide1Time: text("high_tide_1_time"),
+  highTide1Height: text("high_tide_1_height"),
+  lowTide1Time: text("low_tide_1_time"),
+  lowTide1Height: text("low_tide_1_height"),
+  highTide2Time: text("high_tide_2_time"),
+  highTide2Height: text("high_tide_2_height"),
+  lowTide2Time: text("low_tide_2_time"),
+  lowTide2Height: text("low_tide_2_height"),
 });
 
-export const harborWeatherData = pgTable("harbor_weather_data", {
+export const weatherData = pgTable("weather_data", {
   id: serial("id").primaryKey(),
-  date: date("date").notNull(),
-  temperature: text("temperature"),
-  windSpeed: text("wind_speed"),
-  precipitation: text("precipitation"),
-  visibility: text("visibility"),
-  createdAt: timestamp("created_at").defaultNow(),
+  date: text("date").notNull(),
+  temperature: integer("temperature"),
+  condition: text("condition"),
+  description: text("description"),
+  windSpeed: integer("wind_speed"),
+  humidity: integer("humidity"),
+  windDirection: text("wind_direction"),
+  temperatureMin: text("temperature_min"),
+  temperatureMax: text("temperature_max"),
+  precipitationSum: text("precipitation_sum"),
+  windSpeedMax: text("wind_speed_max"),
+  windDirectionDominant: integer("wind_direction_dominant"),
+  uvIndexMax: text("uv_index_max"),
+  source: text("source"),
+  cloudcover: integer("cloudcover"),
 });
 
 // Local preferences tables (for this app's user settings)
@@ -80,9 +97,9 @@ export const insertAppSettingsSchema = createInsertSchema(appSettings).omit({
 });
 
 // Types
-export type HarborCrossingTime = typeof harborCrossingTimes.$inferSelect;
-export type HarborTideTime = typeof harborTideTimes.$inferSelect;
-export type HarborWeatherData = typeof harborWeatherData.$inferSelect;
+export type CrossingTime = typeof crossingTimes.$inferSelect;
+export type TideData = typeof tideData.$inferSelect;
+export type WeatherData = typeof weatherData.$inferSelect;
 export type User = typeof users.$inferSelect;
 export type UserPreferences = typeof userPreferences.$inferSelect;
 export type AppSettings = typeof appSettings.$inferSelect;
