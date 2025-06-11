@@ -141,13 +141,15 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
     const dateStr = date.toISOString().split('T')[0];
     const dayData = data.find((d: any) => d.date === dateStr);
     
-    // Debug Monday issues
+    // Debug Monday issues - show actual date object
     const dayName = date.toLocaleDateString('en-US', { weekday: 'long' });
     if (dayName === 'Monday') {
-      console.log(`Monday ${dateStr}:`, {
+      console.log(`Monday debug:`, {
+        rawDate: date.toString(),
+        isoString: date.toISOString(),
+        dateStr: dateStr,
         hasData: !!dayData,
         availableDates: data.map((d: any) => d.date).slice(0, 3),
-        searchingFor: dateStr,
         weekOffset: weekOffset
       });
     }
