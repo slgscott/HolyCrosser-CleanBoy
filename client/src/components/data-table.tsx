@@ -75,6 +75,7 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
   }
 
   if (error) {
+    console.error('Data fetch error:', error);
     return (
       <div className="p-4">
         <Card className="shadow-sm border-red-200 bg-red-50">
@@ -85,6 +86,9 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
             </div>
             <p className="text-red-700 text-sm mb-3">
               Unable to connect to Harbor Data Manager. Please check your connection and try again.
+            </p>
+            <p className="text-red-600 text-xs mb-3 font-mono">
+              Error: {error?.message || 'Unknown error'}
             </p>
             <Button
               onClick={() => refetch()}
@@ -110,10 +114,10 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
   };
 
   const getRowData = (date: Date) => {
-    if (!data) return ["—", "—", "—", "—"];
+    if (!data || !Array.isArray(data)) return ["—", "—", "—", "—"];
     
     const dateStr = date.toISOString().split('T')[0];
-    const dayData = data.find(d => d.date === dateStr);
+    const dayData = data.find((d: any) => d.date === dateStr);
     
     if (!dayData) return ["—", "—", "—", "—"];
 
@@ -134,10 +138,10 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
         ];
       case "weather":
         return [
-          dayData.temperature ? `${dayData.temperature}°` : "—",
-          dayData.windSpeed ? `${dayData.windSpeed} mph` : "—",
-          dayData.precipitationSum || "—",
-          dayData.humidity ? `${dayData.humidity}%` : "—"
+          dayData.temperature ? `${dayData.temperature}°` : dayData.temperatureMax ? `${dayData.temperatureMax}°` : "—",
+          dayData.windSpeed ? `${dayData.windSpeed} mph` : dayData.windSpeedMax ? `${dayData.windSpeedMax} mph` : "—",
+          dayData.precipitationSum !== null ? `${dayData.precipitationSum}mm` : "—",
+          dayData.humidity ? `${dayData.humidity}%` : dayData.cloudcover ? `${dayData.cloudcover}%` : "—"
         ];
       default:
         return ["—", "—", "—", "—"];
