@@ -229,7 +229,7 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
                       isCurrentDay ? "bg-primary-light bg-opacity-10 hover:bg-primary-light hover:bg-opacity-20" : ""
                     }`}
                   >
-                    <td className={`px-3 py-3 font-medium sticky left-0 z-10 ${
+                    <td className={`px-3 py-3 font-medium sticky left-0 z-5 ${
                       isCurrentDay ? "bg-primary-light bg-opacity-10" : "bg-white"
                     }`}>
                       <div className="flex items-center">
