@@ -132,12 +132,7 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
     const formattedFrom = formatTimeWithDay(fromTime, baseDate, isSecondPeriod);
     const formattedTo = formatTimeWithDay(toTime, baseDate, isSecondPeriod);
     
-    return (
-      <div className="text-sm leading-tight">
-        <div>{formattedFrom} until</div>
-        <div>{formattedTo}</div>
-      </div>
-    );
+    return `${formattedFrom} until\n${formattedTo}`;
   };
 
   const getRowData = (date: Date) => {
@@ -150,20 +145,20 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
 
     switch (screenType) {
       case "crossings":
-        const result = [
-          formatTimeRange(dayData.safeFrom1, dayData.safeTo1, date, false),
-          formatTimeRange(dayData.unsafeFrom1, dayData.unsafeTo1, date, false),
-          formatTimeRange(dayData.safeFrom2, dayData.safeTo2, date, true),
-          formatTimeRange(dayData.unsafeFrom2, dayData.unsafeTo2, date, true)
+        return [
+          <div className="text-sm leading-tight whitespace-pre-line">
+            {formatTimeRange(dayData.safeFrom1, dayData.safeTo1, date, false)}
+          </div>,
+          <div className="text-sm leading-tight whitespace-pre-line">
+            {formatTimeRange(dayData.unsafeFrom1, dayData.unsafeTo1, date, false)}
+          </div>,
+          <div className="text-sm leading-tight whitespace-pre-line">
+            {formatTimeRange(dayData.safeFrom2, dayData.safeTo2, date, true)}
+          </div>,
+          <div className="text-sm leading-tight whitespace-pre-line">
+            {formatTimeRange(dayData.unsafeFrom2, dayData.unsafeTo2, date, true)}
+          </div>
         ];
-        
-        // Debug for June 16th
-        if (dateStr === '2025-06-16') {
-          console.log('Raw data for June 16:', dayData);
-          console.log('Formatted result:', result);
-        }
-        
-        return result;
       case "tides":
         return [
           <div className="text-sm">
