@@ -155,20 +155,20 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
       case "tides":
         return [
           <div className="text-sm">
-            <div>{dayData.highTide1Time || "—"}</div>
-            {dayData.highTide1Height && <div className="text-xs text-gray-600">{dayData.highTide1Height.toFixed(1)}m</div>}
+            <div className="text-blue-600">{dayData.highTide1Time || "—"}</div>
+            {dayData.highTide1Height && <div className="text-xs text-black">{dayData.highTide1Height.toFixed(1)}m</div>}
           </div>,
           <div className="text-sm">
-            <div>{dayData.lowTide1Time || "—"}</div>
-            {dayData.lowTide1Height && <div className="text-xs text-gray-600">{dayData.lowTide1Height.toFixed(1)}m</div>}
+            <div className="text-blue-600">{dayData.lowTide1Time || "—"}</div>
+            {dayData.lowTide1Height && <div className="text-xs text-black">{dayData.lowTide1Height.toFixed(1)}m</div>}
           </div>,
           <div className="text-sm">
-            <div>{dayData.highTide2Time || "—"}</div>
-            {dayData.highTide2Height && <div className="text-xs text-gray-600">{dayData.highTide2Height.toFixed(1)}m</div>}
+            <div className="text-blue-600">{dayData.highTide2Time || "—"}</div>
+            {dayData.highTide2Height && <div className="text-xs text-black">{dayData.highTide2Height.toFixed(1)}m</div>}
           </div>,
           <div className="text-sm">
-            <div>{dayData.lowTide2Time || "—"}</div>
-            {dayData.lowTide2Height && <div className="text-xs text-gray-600">{dayData.lowTide2Height.toFixed(1)}m</div>}
+            <div className="text-blue-600">{dayData.lowTide2Time || "—"}</div>
+            {dayData.lowTide2Height && <div className="text-xs text-black">{dayData.lowTide2Height.toFixed(1)}m</div>}
           </div>
         ];
       case "weather":
