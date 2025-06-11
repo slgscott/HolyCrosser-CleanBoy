@@ -27,7 +27,7 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
         return {
           title: "Tide Times",
           icon: <Waves className="h-5 w-5 text-primary mr-2" />,
-          defaultColumns: ["High Tide 1", "Low Tide 1", "High Tide 2", "Low Tide 2"]
+          defaultColumns: ["High", "Low", "High", "Low"]
         };
       case "weather":
         return {
