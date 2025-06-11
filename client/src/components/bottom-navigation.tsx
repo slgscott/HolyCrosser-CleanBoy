@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Navigation, Waves, CloudSun, Settings } from "lucide-react";
-import { useLocation } from "wouter";
+import { Navigation, Waves, CloudSun } from "lucide-react";
 import type { ScreenType } from "@/pages/home";
 
 interface BottomNavigationProps {
@@ -9,8 +8,6 @@ interface BottomNavigationProps {
 }
 
 export default function BottomNavigation({ currentScreen, onScreenChange }: BottomNavigationProps) {
-  const [, setLocation] = useLocation();
-
   const navItems = [
     {
       id: "crossings" as ScreenType,
@@ -29,12 +26,6 @@ export default function BottomNavigation({ currentScreen, onScreenChange }: Bott
       label: "Weather",
       icon: CloudSun,
       onClick: () => onScreenChange("weather")
-    },
-    {
-      id: "settings" as const,
-      label: "Setup",
-      icon: Settings,
-      onClick: () => setLocation("/settings")
     }
   ];
 
@@ -42,7 +33,7 @@ export default function BottomNavigation({ currentScreen, onScreenChange }: Bott
     <nav className="fixed bottom-0 left-1/2 transform -translate-x-1/2 max-w-md w-full bg-white border-t border-gray-200 shadow-lg">
       <div className="flex justify-around py-2">
         {navItems.map((item) => {
-          const isActive = item.id === currentScreen || (item.id === "settings" && window.location.pathname === "/settings");
+          const isActive = item.id === currentScreen;
           const Icon = item.icon;
           
           return (
