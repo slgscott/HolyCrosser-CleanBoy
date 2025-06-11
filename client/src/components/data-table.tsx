@@ -188,12 +188,12 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
         };
 
         return [
-          // Temperature column: Min/Max
+          // Temperature column: Max/Min
           <div className="text-sm">
             {dayData.temperatureMin && dayData.temperatureMax ? (
               <>
-                <div className="text-blue-600">{dayData.temperatureMin}°</div>
                 <div className="text-red-600">{dayData.temperatureMax}°</div>
+                <div className="text-blue-600">{dayData.temperatureMin}°</div>
               </>
             ) : dayData.temperature ? (
               <div>{dayData.temperature}°</div>
