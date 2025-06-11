@@ -75,7 +75,6 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
   }
 
   if (error) {
-    console.error('Data fetch error:', error);
     return (
       <div className="p-4">
         <Card className="shadow-sm border-red-200 bg-red-50">
@@ -87,14 +86,11 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
             <p className="text-red-700 text-sm mb-3">
               Unable to connect to Harbor Data Manager. Please check your connection and try again.
             </p>
-            <p className="text-red-600 text-xs mb-3 font-mono">
-              Error: {error?.message || 'Unknown error'}
-            </p>
             <Button
               onClick={() => refetch()}
               variant="destructive"
               size="sm"
-              className="bg-red-500 hover:bg-red-600"
+              className="bg-red-500 hover-bg-red-600"
             >
               <RefreshCw className="h-4 w-4 mr-1" />
               Retry
