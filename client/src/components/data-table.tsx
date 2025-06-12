@@ -293,7 +293,7 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
                 <div
                   key={dayIndex}
                   className={`border-b hover:bg-gray-50 flex ${
-                    isLastWeekday ? "border-b-2 border-gray-400" : "border-gray-100"
+                    isLastWeekday ? "border-b-4 border-gray-600" : "border-gray-200"
                   } ${
                     isCurrentDay ? "bg-primary-light bg-opacity-10 hover:bg-primary-light hover:bg-opacity-20" : ""
                   }`}
