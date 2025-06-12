@@ -292,10 +292,15 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
               return (
                 <div key={`row-${dayIndex}`}>
                   <div
-                    className={`border-b hover:bg-gray-50 flex border-gray-200 ${
+                    className={`border-b hover:bg-gray-50 flex ${
                       isCurrentDay ? "bg-primary-light bg-opacity-10 hover:bg-primary-light hover:bg-opacity-20" : ""
                     }`}
-                    style={{ height: "75px" }}
+                    style={{ 
+                      height: "75px",
+                      borderBottomWidth: "1px",
+                      borderBottomColor: "white",
+                      borderBottomStyle: "solid"
+                    }}
                   >
                     <div className={`px-2 py-3 font-medium sticky left-0 z-5 ${
                       isCurrentDay ? "bg-primary-light bg-opacity-10" : "bg-white"
