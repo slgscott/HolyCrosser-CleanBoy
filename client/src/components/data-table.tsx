@@ -307,9 +307,7 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
               return (
                 <div key={`row-${dayIndex}`}>
                   <div
-                    className={`hover:bg-gray-50 flex ${
-                      isCurrentDay ? "bg-primary-light bg-opacity-10 hover:bg-primary-light hover:bg-opacity-20" : ""
-                    }`}
+                    className="flex"
                     style={{ height: "75px" }}
                   >
                     <div className={`px-2 py-3 font-medium sticky left-0 z-5 ${
@@ -344,9 +342,9 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
                           maxWidth: "85px", 
                           height: "75px",
                           backgroundColor: screenType === "tides" && (colIndex === 0 || colIndex === 2) 
-                            ? "var(--blue-25)" 
+                            ? "#eff6ff" 
                             : screenType === "crossings" 
-                              ? (colIndex % 2 === 0 ? "var(--success-light)" : "var(--error-light)")
+                              ? (colIndex % 2 === 0 ? "hsl(120, 60%, 92%)" : "hsl(0, 100%, 96%)")
                               : "#f9fafb"
                         }}
                       >
