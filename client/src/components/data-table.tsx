@@ -270,14 +270,14 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
         </CardHeader>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-xs">
+          <table className="w-full text-xs table-fixed" style={{ width: "420px" }}>
             <thead className="bg-gray-100">
               <tr>
-                <th className="px-2 py-2 text-left font-medium text-gray-700 sticky left-0 bg-gray-100 z-10 w-[70px]">
+                <th className="px-2 py-2 text-left font-medium text-gray-700 sticky left-0 bg-gray-100 z-10" style={{ width: "70px", minWidth: "70px", maxWidth: "70px" }}>
                   Day
                 </th>
                 {columns.map((column, index) => (
-                  <th key={index} className="px-2 py-2 text-center font-medium text-gray-700 w-[70px]">
+                  <th key={index} className="px-2 py-2 text-center font-medium text-gray-700" style={{ width: "70px", minWidth: "70px", maxWidth: "70px" }}>
                     {column}
                   </th>
                 ))}
@@ -298,9 +298,9 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
                       isCurrentDay ? "bg-primary-light bg-opacity-10 hover:bg-primary-light hover:bg-opacity-20" : ""
                     }`}
                   >
-                    <td className={`px-2 py-2 font-medium sticky left-0 z-5 w-[70px] h-[60px] ${
+                    <td className={`px-2 py-2 font-medium sticky left-0 z-5 h-[60px] ${
                       isCurrentDay ? "bg-primary-light bg-opacity-10" : "bg-white"
-                    }`}>
+                    }`} style={{ width: "70px", minWidth: "70px", maxWidth: "70px" }}>
                       <div className="h-full flex flex-col justify-center">
                         <div className="flex items-center">
                           <span className={`text-xs ${isCurrentDay ? "text-primary font-semibold" : "text-gray-800"}`}>
@@ -320,7 +320,8 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
                     {rowData.map((cellData, colIndex) => (
                       <td
                         key={colIndex}
-                        className={`px-2 py-2 text-center text-gray-800 w-[70px] h-[60px] ${getCellBackground(colIndex)}`}
+                        className={`px-2 py-2 text-center text-gray-800 h-[60px] ${getCellBackground(colIndex)}`}
+                        style={{ width: "70px", minWidth: "70px", maxWidth: "70px" }}
                       >
                         <div className="h-full flex items-center justify-center">
                           {cellData}
