@@ -121,6 +121,12 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
     return `${formattedFrom} until\n${formattedTo}`;
   };
 
+  const isNextDayTime = (time: string) => {
+    if (!time || time === "—") return false;
+    const [hours] = time.split(':').map(Number);
+    return hours < 12; // Morning hours indicate next day
+  };
+
   const getRowData = (date: Date) => {
     if (!data || !Array.isArray(data)) return ["—", "—", "—", "—"];
     
@@ -149,7 +155,7 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
             {formatTimeRange(dayData.safeFrom2, dayData.safeTo2, date, true)}
           </div>,
           <div className="text-sm leading-tight whitespace-pre-line font-medium">
-            {formatTimeRange(dayData.unsafeFrom2, dayData.unsafeTo2, date, true)}
+            {isNextDayTime(dayData.unsafeFrom2) ? "—" : formatTimeRange(dayData.unsafeFrom2, dayData.unsafeTo2, date, true)}
           </div>
         ];
       case "tides":
