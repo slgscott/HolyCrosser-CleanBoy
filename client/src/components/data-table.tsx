@@ -343,7 +343,7 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
                   {/* Regular day separator */}
                   {!isLastWeekday && (
                     <div 
-                      className="bg-white" 
+                      className={isCurrentDay ? "bg-primary-light" : "bg-white"} 
                       style={{ height: "1px", width: "100%" }}
                     />
                   )}
