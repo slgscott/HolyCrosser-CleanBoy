@@ -33,7 +33,7 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
         return {
           title: "Weather Data",
           icon: <CloudSun className="h-5 w-5 text-primary mr-2" />,
-          defaultColumns: ["Temperature", "Precipitation", "Wind", "UV & Cloud"]
+          defaultColumns: ["Temp", "Precip", "Wind", "UV/Cloud"]
         };
       default:
         return {
@@ -139,34 +139,34 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
     switch (screenType) {
       case "crossings":
         return [
-          <div className="text-sm leading-tight whitespace-pre-line">
+          <div className="text-xs leading-tight whitespace-pre-line">
             {formatTimeRange(dayData.safeFrom1, dayData.safeTo1, date, false)}
           </div>,
-          <div className="text-sm leading-tight whitespace-pre-line">
+          <div className="text-xs leading-tight whitespace-pre-line">
             {formatTimeRange(dayData.unsafeFrom1, dayData.unsafeTo1, date, false)}
           </div>,
-          <div className="text-sm leading-tight whitespace-pre-line">
+          <div className="text-xs leading-tight whitespace-pre-line">
             {formatTimeRange(dayData.safeFrom2, dayData.safeTo2, date, true)}
           </div>,
-          <div className="text-sm leading-tight whitespace-pre-line">
+          <div className="text-xs leading-tight whitespace-pre-line">
             {formatTimeRange(dayData.unsafeFrom2, dayData.unsafeTo2, date, true)}
           </div>
         ];
       case "tides":
         return [
-          <div className="text-sm">
+          <div className="text-xs">
             <div className="text-blue-600">{dayData.highTide1Time || "—"}</div>
             {dayData.highTide1Height && <div className="text-xs text-black">{dayData.highTide1Height.toFixed(1)}m</div>}
           </div>,
-          <div className="text-sm">
+          <div className="text-xs">
             <div className="text-blue-600">{dayData.lowTide1Time || "—"}</div>
             {dayData.lowTide1Height && <div className="text-xs text-black">{dayData.lowTide1Height.toFixed(1)}m</div>}
           </div>,
-          <div className="text-sm">
+          <div className="text-xs">
             <div className="text-blue-600">{dayData.highTide2Time || "—"}</div>
             {dayData.highTide2Height && <div className="text-xs text-black">{dayData.highTide2Height.toFixed(1)}m</div>}
           </div>,
-          <div className="text-sm">
+          <div className="text-xs">
             <div className="text-blue-600">{dayData.lowTide2Time || "—"}</div>
             {dayData.lowTide2Height && <div className="text-xs text-black">{dayData.lowTide2Height.toFixed(1)}m</div>}
           </div>
@@ -189,7 +189,7 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
 
         return [
           // Temperature column: Max/Min
-          <div className="text-sm">
+          <div className="text-xs">
             {dayData.temperatureMin && dayData.temperatureMax ? (
               <>
                 <div className="text-red-600">{dayData.temperatureMax}°</div>
@@ -201,11 +201,11 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
           </div>,
           
           // Precipitation column with umbrella icon for wet days
-          <div className="text-sm flex items-center justify-center">
+          <div className="text-xs flex items-center justify-center">
             {dayData.precipitationSum ? (
               <div className="flex items-center space-x-1">
                 {isWetDay(dayData.precipitationSum) && (
-                  <Umbrella className="h-3 w-3 text-blue-500" />
+                  <Umbrella className="h-2 w-2 text-blue-500" />
                 )}
                 <span>{dayData.precipitationSum}mm</span>
               </div>
@@ -213,33 +213,33 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
           </div>,
           
           // Wind column: Speed and direction
-          <div className="text-sm">
+          <div className="text-xs">
             {dayData.windSpeed || dayData.windSpeedMax ? (
               <div className="flex flex-col items-center">
                 <div className="flex items-center space-x-1">
-                  <Wind className="h-3 w-3 text-gray-600" />
+                  <Wind className="h-2 w-2 text-gray-600" />
                   <span>{dayData.windSpeed || dayData.windSpeedMax}mph</span>
                 </div>
                 {dayData.windDirectionDominant && (
-                  <div className="text-lg">{getWindDirection(dayData.windDirectionDominant)}</div>
+                  <div className="text-sm">{getWindDirection(dayData.windDirectionDominant)}</div>
                 )}
               </div>
             ) : "—"}
           </div>,
           
           // UV & Cloud column
-          <div className="text-sm">
+          <div className="text-xs">
             {dayData.uvIndexMax || dayData.cloudcover ? (
               <div className="flex flex-col items-center space-y-1">
                 {dayData.uvIndexMax && (
                   <div className="flex items-center space-x-1">
-                    <Sun className="h-3 w-3 text-yellow-500" />
+                    <Sun className="h-2 w-2 text-yellow-500" />
                     <span>UV{dayData.uvIndexMax}</span>
                   </div>
                 )}
                 {dayData.cloudcover && (
                   <div className="flex items-center space-x-1">
-                    <Cloud className="h-3 w-3 text-gray-500" />
+                    <Cloud className="h-2 w-2 text-gray-500" />
                     <span>{dayData.cloudcover}%</span>
                   </div>
                 )}
@@ -270,14 +270,14 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
         </CardHeader>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <table className="w-full text-xs">
             <thead className="bg-gray-100">
               <tr>
-                <th className="px-3 py-2 text-left font-medium text-gray-700 sticky left-0 bg-gray-100 z-10 min-w-[80px]">
+                <th className="px-2 py-2 text-left font-medium text-gray-700 sticky left-0 bg-gray-100 z-10 w-[70px]">
                   Day
                 </th>
                 {columns.map((column, index) => (
-                  <th key={index} className="px-3 py-2 text-center font-medium text-gray-700 min-w-[90px]">
+                  <th key={index} className="px-2 py-2 text-center font-medium text-gray-700 w-[70px]">
                     {column}
                   </th>
                 ))}
@@ -298,7 +298,7 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
                       isCurrentDay ? "bg-primary-light bg-opacity-10 hover:bg-primary-light hover:bg-opacity-20" : ""
                     }`}
                   >
-                    <td className={`px-3 py-3 font-medium sticky left-0 z-5 ${
+                    <td className={`px-2 py-2 font-medium sticky left-0 z-5 w-[70px] h-[50px] ${
                       isCurrentDay ? "bg-primary-light bg-opacity-10" : "bg-white"
                     }`}>
                       <div className="flex items-center">
@@ -318,7 +318,7 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
                     {rowData.map((cellData, colIndex) => (
                       <td
                         key={colIndex}
-                        className={`px-3 py-3 text-center text-gray-800 ${getCellBackground(colIndex)}`}
+                        className={`px-2 py-2 text-center text-gray-800 w-[70px] h-[50px] ${getCellBackground(colIndex)}`}
                       >
                         {cellData}
                       </td>
