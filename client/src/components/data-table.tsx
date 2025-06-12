@@ -298,29 +298,33 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
                       isCurrentDay ? "bg-primary-light bg-opacity-10 hover:bg-primary-light hover:bg-opacity-20" : ""
                     }`}
                   >
-                    <td className={`px-2 py-2 font-medium sticky left-0 z-5 w-[70px] h-[50px] ${
+                    <td className={`px-2 py-2 font-medium sticky left-0 z-5 w-[70px] h-[60px] ${
                       isCurrentDay ? "bg-primary-light bg-opacity-10" : "bg-white"
                     }`}>
-                      <div className="flex items-center">
-                        <span className={isCurrentDay ? "text-primary font-semibold" : "text-gray-800"}>
-                          {formatDayName(date)}
-                        </span>
-                        {isCurrentDay && (
-                          <div className="w-2 h-2 bg-primary rounded-full ml-1"></div>
-                        )}
-                      </div>
-                      <div className={`text-xs ${
-                        isCurrentDay ? "text-primary font-medium" : "text-gray-500"
-                      }`}>
-                        {formatDayDate(date)}{isCurrentDay ? " (Today)" : ""}
+                      <div className="h-full flex flex-col justify-center">
+                        <div className="flex items-center">
+                          <span className={`text-xs ${isCurrentDay ? "text-primary font-semibold" : "text-gray-800"}`}>
+                            {formatDayName(date)}
+                          </span>
+                          {isCurrentDay && (
+                            <div className="w-2 h-2 bg-primary rounded-full ml-1"></div>
+                          )}
+                        </div>
+                        <div className={`text-xs ${
+                          isCurrentDay ? "text-primary font-medium" : "text-gray-500"
+                        }`}>
+                          {formatDayDate(date)}{isCurrentDay ? " (Today)" : ""}
+                        </div>
                       </div>
                     </td>
                     {rowData.map((cellData, colIndex) => (
                       <td
                         key={colIndex}
-                        className={`px-2 py-2 text-center text-gray-800 w-[70px] h-[50px] ${getCellBackground(colIndex)}`}
+                        className={`px-2 py-2 text-center text-gray-800 w-[70px] h-[60px] ${getCellBackground(colIndex)}`}
                       >
-                        {cellData}
+                        <div className="h-full flex items-center justify-center">
+                          {cellData}
+                        </div>
                       </td>
                     ))}
                   </tr>
