@@ -292,6 +292,8 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
             {/* Data Rows */}
             {weekDates.map((date, dayIndex) => {
               const isCurrentDay = isToday(date);
+              const nextDay = weekDates[dayIndex + 1];
+              const isNextDayToday = nextDay ? isToday(nextDay) : false;
               const rowData = getRowData(date);
               const isLastWeekday = dayIndex === 4; // Friday (day index 4)
               
@@ -341,7 +343,7 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
                       style={{ 
                         height: "1px", 
                         width: "100%", 
-                        backgroundColor: isCurrentDay ? "#93c5fd" : "white" 
+                        backgroundColor: (isCurrentDay || isNextDayToday) ? "#93c5fd" : "white" 
                       }}
                     />
                   )}
