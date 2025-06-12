@@ -152,7 +152,7 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
             {formatTimeRange(dayData.unsafeFrom1, dayData.unsafeTo1, date, false)}
           </div>,
           <div className="text-sm leading-tight whitespace-pre-line font-medium">
-            {formatTimeRange(dayData.safeFrom2, dayData.safeTo2, date, true)}
+            {isNextDayTime(dayData.safeFrom2) ? "—" : formatTimeRange(dayData.safeFrom2, dayData.safeTo2, date, true)}
           </div>,
           <div className="text-sm leading-tight whitespace-pre-line font-medium">
             {isNextDayTime(dayData.unsafeFrom2) ? "—" : formatTimeRange(dayData.unsafeFrom2, dayData.unsafeTo2, date, true)}
