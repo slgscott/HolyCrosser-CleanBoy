@@ -334,30 +334,7 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
           </table>
         </div>
 
-        {screenType === "crossings" && (
-          <div className="bg-gray-50 px-4 py-3 border-t border-gray-200">
-            <div className="flex items-center justify-between text-xs text-gray-600">
-              <div className="flex items-center space-x-4">
-                <div className="flex items-center">
-                  <div className="w-3 h-3 bg-success-light rounded mr-1"></div>
-                  <span>Safe</span>
-                </div>
-                <div className="flex items-center">
-                  <div className="w-3 h-3 bg-error-light rounded mr-1"></div>
-                  <span>Caution</span>
-                </div>
-              </div>
-              <div className="text-gray-500">
-                <RefreshCw className="h-3 w-3 inline mr-1" />
-                Updated {new Date().toLocaleTimeString('en-US', { 
-                  hour: 'numeric', 
-                  minute: '2-digit',
-                  hour12: true 
-                })}
-              </div>
-            </div>
-          </div>
-        )}
+
       </Card>
     </div>
   );
