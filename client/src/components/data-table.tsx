@@ -304,7 +304,7 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
                     style={{ 
                       height: "70px",
                       borderBottomWidth: "1px",
-                      borderBottomColor: "white",
+                      borderBottomColor: isCurrentDay ? "#dbeafe" : "white",
                       borderBottomStyle: "solid"
                     }}
                   >
@@ -350,8 +350,7 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
                   {/* Weekend separator */}
                   {isLastWeekday && (
                     <div 
-                      className="bg-gray-600" 
-                      style={{ height: "3px", width: "100%" }}
+                      style={{ height: "3px", width: "100%", backgroundColor: "#4b5563" }}
                     />
                   )}
                 </div>
