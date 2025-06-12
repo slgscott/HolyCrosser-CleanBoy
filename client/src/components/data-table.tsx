@@ -290,51 +290,51 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
               const isLastWeekday = dayIndex === 4; // Friday (day index 4)
               
               return (
-                <div
-                  key={dayIndex}
-                  className={`border-b hover:bg-gray-50 flex ${
-                    isLastWeekday ? "border-b-2 border-gray-400" : "border-gray-200"
-                  } ${
-                    isCurrentDay ? "bg-primary-light bg-opacity-10 hover:bg-primary-light hover:bg-opacity-20" : ""
-                  }`}
-                  style={{ 
-                    height: "90px",
-                    borderBottomWidth: isLastWeekday ? "2px" : "1px",
-                    borderBottomColor: isLastWeekday ? "#9ca3af" : "#e5e7eb",
-                    borderBottomStyle: "solid"
-                  }}
-                >
-                  <div className={`px-2 py-3 font-medium sticky left-0 z-5 ${
-                    isCurrentDay ? "bg-primary-light bg-opacity-10" : "bg-white"
-                  } flex flex-col justify-center items-center text-center`} style={{ width: "65px", minWidth: "65px", maxWidth: "65px", height: "90px" }}>
-                    <div className="flex items-center">
-                      <span className={`text-sm font-semibold ${isCurrentDay ? "text-primary font-bold" : "text-gray-800"}`}>
-                        {formatDayName(date)}
-                      </span>
+                <div key={`row-${dayIndex}`}>
+                  <div
+                    className={`border-b hover:bg-gray-50 flex border-gray-200 ${
+                      isCurrentDay ? "bg-primary-light bg-opacity-10 hover:bg-primary-light hover:bg-opacity-20" : ""
+                    }`}
+                    style={{ height: "90px" }}
+                  >
+                    <div className={`px-2 py-3 font-medium sticky left-0 z-5 ${
+                      isCurrentDay ? "bg-primary-light bg-opacity-10" : "bg-white"
+                    } flex flex-col justify-center items-center text-center`} style={{ width: "65px", minWidth: "65px", maxWidth: "65px", height: "90px" }}>
+                      <div className="flex items-center">
+                        <span className={`text-sm font-semibold ${isCurrentDay ? "text-primary font-bold" : "text-gray-800"}`}>
+                          {formatDayName(date)}
+                        </span>
+                        {isCurrentDay && (
+                          <div className="w-2 h-2 bg-primary rounded-full ml-1"></div>
+                        )}
+                      </div>
+                      <div className={`text-xs ${
+                        isCurrentDay ? "text-primary font-medium" : "text-gray-500"
+                      }`}>
+                        {formatDayDate(date)}
+                      </div>
                       {isCurrentDay && (
-                        <div className="w-2 h-2 bg-primary rounded-full ml-1"></div>
+                        <div className="text-xs text-primary font-medium">
+                          (Today)
+                        </div>
                       )}
                     </div>
-                    <div className={`text-xs ${
-                      isCurrentDay ? "text-primary font-medium" : "text-gray-500"
-                    }`}>
-                      {formatDayDate(date)}
-                    </div>
-                    {isCurrentDay && (
-                      <div className="text-xs text-primary font-medium">
-                        (Today)
+                    {rowData.map((cellData, colIndex) => (
+                      <div
+                        key={colIndex}
+                        className={`px-2 py-3 text-center text-gray-800 flex items-center justify-center ${getCellBackground(colIndex)}`}
+                        style={{ width: "85px", minWidth: "85px", maxWidth: "85px", height: "90px" }}
+                      >
+                        {cellData}
                       </div>
-                    )}
+                    ))}
                   </div>
-                  {rowData.map((cellData, colIndex) => (
-                    <div
-                      key={colIndex}
-                      className={`px-2 py-3 text-center text-gray-800 flex items-center justify-center ${getCellBackground(colIndex)}`}
-                      style={{ width: "85px", minWidth: "85px", maxWidth: "85px", height: "90px" }}
-                    >
-                      {cellData}
-                    </div>
-                  ))}
+                  {isLastWeekday && (
+                    <div 
+                      className="bg-gray-600" 
+                      style={{ height: "3px", width: "100%" }}
+                    />
+                  )}
                 </div>
               );
             })}
