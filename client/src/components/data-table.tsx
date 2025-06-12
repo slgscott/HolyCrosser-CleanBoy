@@ -262,6 +262,10 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
     if (screenType === "crossings") {
       return columnIndex % 2 === 0 ? "bg-success-light" : "bg-error-light";
     }
+    if (screenType === "tides") {
+      // High1 and High2 columns (index 0 and 2) get light blue background
+      return (columnIndex === 0 || columnIndex === 2) ? "bg-blue-50" : "bg-gray-50";
+    }
     return "bg-gray-50";
   };
 
