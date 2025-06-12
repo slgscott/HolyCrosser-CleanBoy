@@ -270,14 +270,14 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
         </CardHeader>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-xs table-fixed" style={{ width: "465px" }}>
+          <table className="w-full text-xs table-fixed" style={{ width: "345px" }}>
             <thead className="bg-gray-100">
               <tr>
                 <th className="px-2 py-3 text-center font-semibold text-gray-700 sticky left-0 bg-gray-100 z-10 text-sm" style={{ width: "65px", minWidth: "65px", maxWidth: "65px" }}>
                   Day
                 </th>
                 {columns.map((column, index) => (
-                  <th key={index} className="px-2 py-3 text-center font-semibold text-gray-700 text-sm" style={{ width: "80px", minWidth: "80px", maxWidth: "80px" }}>
+                  <th key={index} className="px-1 py-3 text-center font-semibold text-gray-700 text-sm" style={{ width: "70px", minWidth: "70px", maxWidth: "70px" }}>
                     {column}
                   </th>
                 ))}
@@ -325,8 +325,8 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
                     {rowData.map((cellData, colIndex) => (
                       <td
                         key={colIndex}
-                        className={`px-2 py-3 text-center text-gray-800 h-[80px] ${getCellBackground(colIndex)}`}
-                        style={{ width: "80px", minWidth: "80px", maxWidth: "80px" }}
+                        className={`px-1 py-3 text-center text-gray-800 h-[80px] ${getCellBackground(colIndex)}`}
+                        style={{ width: "70px", minWidth: "70px", maxWidth: "70px" }}
                       >
                         <div className="h-full flex items-center justify-center">
                           {cellData}
