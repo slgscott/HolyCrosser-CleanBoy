@@ -26,6 +26,7 @@
   --success-light: hsl(120, 60%, 92%);
   --error-light: hsl(0, 100%, 96%);
   --primary-light: hsl(213, 76%, 70%);
+  --blue-25: hsl(213, 100%, 97%);
 }
 
 .dark {

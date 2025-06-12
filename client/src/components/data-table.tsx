@@ -258,13 +258,16 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
     }
   };
 
-  const getCellBackground = (columnIndex: number) => {
+  const getCellBackground = (columnIndex: number, isCurrentDay: boolean = false) => {
     if (screenType === "crossings") {
       return columnIndex % 2 === 0 ? "bg-success-light" : "bg-error-light";
     }
     if (screenType === "tides") {
       // High1 and High2 columns (index 0 and 2) get light blue background
-      return (columnIndex === 0 || columnIndex === 2) ? "bg-blue-50" : "bg-gray-50";
+      if (columnIndex === 0 || columnIndex === 2) {
+        return "bg-blue-25";
+      }
+      return "bg-gray-50";
     }
     return "bg-gray-50";
   };
@@ -334,8 +337,18 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
                     {rowData.map((cellData, colIndex) => (
                       <div
                         key={colIndex}
-                        className={`px-2 py-3 text-center text-gray-800 flex items-center justify-center ${getCellBackground(colIndex)}`}
-                        style={{ width: "85px", minWidth: "85px", maxWidth: "85px", height: "75px" }}
+                        className="px-2 py-3 text-center text-gray-800 flex items-center justify-center"
+                        style={{ 
+                          width: "85px", 
+                          minWidth: "85px", 
+                          maxWidth: "85px", 
+                          height: "75px",
+                          backgroundColor: screenType === "tides" && (colIndex === 0 || colIndex === 2) 
+                            ? "var(--blue-25)" 
+                            : screenType === "crossings" 
+                              ? (colIndex % 2 === 0 ? "var(--success-light)" : "var(--error-light)")
+                              : "#f9fafb"
+                        }}
                       >
                         {cellData}
                       </div>
