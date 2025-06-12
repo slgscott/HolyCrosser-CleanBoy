@@ -272,12 +272,12 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
         <div className="overflow-x-auto">
           <table className="w-full text-xs table-fixed" style={{ width: "405px" }}>
             <thead className="bg-gray-100">
-              <tr>
-                <th className="px-2 py-3 text-center font-semibold text-gray-700 sticky left-0 bg-gray-100 z-10 text-sm" style={{ width: "65px", minWidth: "65px", maxWidth: "65px" }}>
+              <tr className="h-[60px]" style={{ height: "60px" }}>
+                <th className="px-2 py-3 text-center font-semibold text-gray-700 sticky left-0 bg-gray-100 z-10 text-sm h-[60px]" style={{ width: "65px", minWidth: "65px", maxWidth: "65px" }}>
                   Day
                 </th>
                 {columns.map((column, index) => (
-                  <th key={index} className="px-2 py-3 text-center font-semibold text-gray-700 text-sm" style={{ width: "85px", minWidth: "85px", maxWidth: "85px" }}>
+                  <th key={index} className="px-2 py-3 text-center font-semibold text-gray-700 text-sm h-[60px]" style={{ width: "85px", minWidth: "85px", maxWidth: "85px" }}>
                     {column}
                   </th>
                 ))}
@@ -292,11 +292,12 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
                 return (
                   <tr
                     key={dayIndex}
-                    className={`border-b hover:bg-gray-50 ${
+                    className={`border-b hover:bg-gray-50 h-[90px] ${
                       isLastWeekday ? "border-b-2 border-gray-400" : "border-gray-100"
                     } ${
                       isCurrentDay ? "bg-primary-light bg-opacity-10 hover:bg-primary-light hover:bg-opacity-20" : ""
                     }`}
+                    style={{ height: "90px" }}
                   >
                     <td className={`px-2 py-3 font-medium sticky left-0 z-5 h-[90px] ${
                       isCurrentDay ? "bg-primary-light bg-opacity-10" : "bg-white"
