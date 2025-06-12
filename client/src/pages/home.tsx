@@ -22,7 +22,7 @@ export default function Home() {
       {/* Header */}
       <header className="bg-primary text-white px-4 py-6 text-center shadow-md">
         <h1 className="text-2xl font-bold">Holy Crosser</h1>
-        <p className="text-sm opacity-90 mt-1">Version 2.0</p>
+        <p className="text-sm opacity-90 mt-1">Version 2.1.0</p>
       </header>
 
       {/* Week Navigation */}
