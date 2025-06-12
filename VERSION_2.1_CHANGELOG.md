@@ -1,4 +1,4 @@
-# Holy Crosser V2.1.0-dev Changelog
+# Holy Crosser V2.1.0 Changelog
 
 ## Mobile Layout Standardization
 
@@ -14,14 +14,18 @@
 - Improved flex container structure for better content centering
 - Reduced padding and spacing for tighter mobile layout
 - Enhanced day column layout with proper vertical alignment
+- Fixed table layout with explicit width constraints to prevent column jumping
+- Removed Safe/Caution key legend for cleaner interface
 
 ### User Experience
 - Smooth transitions between screens with identical table dimensions
 - Better readability on mobile devices with optimized font sizes
 - Consistent visual hierarchy across all data screens
 - Improved touch targets with standardized cell sizes
+- Stable column widths when navigating between weeks
+- Cleaner interface without footer clutter
 
 ---
-**Version**: 2.1.0-dev  
-**Build Date**: June 12, 2025  
+**Version**: 2.1.0  
+**Release Date**: June 12, 2025  
 **Previous Version**: 2.0.0
