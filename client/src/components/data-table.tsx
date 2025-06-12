@@ -270,10 +270,10 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
         </CardHeader>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-xs table-fixed" style={{ width: "480px" }}>
+          <table className="w-full text-xs table-fixed" style={{ width: "465px" }}>
             <thead className="bg-gray-100">
               <tr>
-                <th className="px-2 py-3 text-left font-semibold text-gray-700 sticky left-0 bg-gray-100 z-10 text-sm" style={{ width: "80px", minWidth: "80px", maxWidth: "80px" }}>
+                <th className="px-2 py-3 text-center font-semibold text-gray-700 sticky left-0 bg-gray-100 z-10 text-sm" style={{ width: "65px", minWidth: "65px", maxWidth: "65px" }}>
                   Day
                 </th>
                 {columns.map((column, index) => (
@@ -300,8 +300,8 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
                   >
                     <td className={`px-2 py-3 font-medium sticky left-0 z-5 h-[80px] ${
                       isCurrentDay ? "bg-primary-light bg-opacity-10" : "bg-white"
-                    }`} style={{ width: "80px", minWidth: "80px", maxWidth: "80px" }}>
-                      <div className="h-full flex flex-col justify-center">
+                    }`} style={{ width: "65px", minWidth: "65px", maxWidth: "65px" }}>
+                      <div className="h-full flex flex-col justify-center items-center text-center">
                         <div className="flex items-center">
                           <span className={`text-sm font-semibold ${isCurrentDay ? "text-primary font-bold" : "text-gray-800"}`}>
                             {formatDayName(date)}
@@ -313,8 +313,13 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
                         <div className={`text-xs ${
                           isCurrentDay ? "text-primary font-medium" : "text-gray-500"
                         }`}>
-                          {formatDayDate(date)}{isCurrentDay ? " (Today)" : ""}
+                          {formatDayDate(date)}
                         </div>
+                        {isCurrentDay && (
+                          <div className="text-xs text-primary font-medium">
+                            (Today)
+                          </div>
+                        )}
                       </div>
                     </td>
                     {rowData.map((cellData, colIndex) => (
