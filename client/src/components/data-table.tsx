@@ -298,7 +298,7 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
                       isCurrentDay ? "bg-primary-light bg-opacity-10 hover:bg-primary-light hover:bg-opacity-20" : ""
                     }`}
                   >
-                    <td className={`px-2 py-3 font-medium sticky left-0 z-5 h-[80px] ${
+                    <td className={`px-2 py-3 font-medium sticky left-0 z-5 h-[90px] ${
                       isCurrentDay ? "bg-primary-light bg-opacity-10" : "bg-white"
                     }`} style={{ width: "65px", minWidth: "65px", maxWidth: "65px" }}>
                       <div className="h-full flex flex-col justify-center items-center text-center">
@@ -325,7 +325,7 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
                     {rowData.map((cellData, colIndex) => (
                       <td
                         key={colIndex}
-                        className={`px-2 py-3 text-center text-gray-800 h-[80px] ${getCellBackground(colIndex)}`}
+                        className={`px-2 py-3 text-center text-gray-800 h-[90px] ${getCellBackground(colIndex)}`}
                         style={{ width: "85px", minWidth: "85px", maxWidth: "85px" }}
                       >
                         <div className="h-full flex items-center justify-center">
