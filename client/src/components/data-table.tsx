@@ -270,75 +270,70 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
         </CardHeader>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-xs table-fixed" style={{ width: "405px" }}>
-            <thead className="bg-gray-100">
-              <tr className="h-[60px]" style={{ height: "60px" }}>
-                <th className="px-2 py-3 text-center font-semibold text-gray-700 sticky left-0 bg-gray-100 z-10 text-sm h-[60px]" style={{ width: "65px", minWidth: "65px", maxWidth: "65px" }}>
-                  Day
-                </th>
-                {columns.map((column, index) => (
-                  <th key={index} className="px-2 py-3 text-center font-semibold text-gray-700 text-sm h-[60px]" style={{ width: "85px", minWidth: "85px", maxWidth: "85px" }}>
-                    {column}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {weekDates.map((date, dayIndex) => {
-                const isCurrentDay = isToday(date);
-                const rowData = getRowData(date);
-                const isLastWeekday = dayIndex === 4; // Friday (day index 4)
-                
-                return (
-                  <tr
-                    key={dayIndex}
-                    className={`border-b hover:bg-gray-50 h-[90px] ${
-                      isLastWeekday ? "border-b-2 border-gray-400" : "border-gray-100"
-                    } ${
-                      isCurrentDay ? "bg-primary-light bg-opacity-10 hover:bg-primary-light hover:bg-opacity-20" : ""
-                    }`}
-                    style={{ height: "90px" }}
-                  >
-                    <td className={`px-2 py-3 font-medium sticky left-0 z-5 h-[90px] ${
-                      isCurrentDay ? "bg-primary-light bg-opacity-10" : "bg-white"
-                    }`} style={{ width: "65px", minWidth: "65px", maxWidth: "65px", height: "90px" }}>
-                      <div className="h-full flex flex-col justify-center items-center text-center">
-                        <div className="flex items-center">
-                          <span className={`text-sm font-semibold ${isCurrentDay ? "text-primary font-bold" : "text-gray-800"}`}>
-                            {formatDayName(date)}
-                          </span>
-                          {isCurrentDay && (
-                            <div className="w-2 h-2 bg-primary rounded-full ml-1"></div>
-                          )}
-                        </div>
-                        <div className={`text-xs ${
-                          isCurrentDay ? "text-primary font-medium" : "text-gray-500"
-                        }`}>
-                          {formatDayDate(date)}
-                        </div>
-                        {isCurrentDay && (
-                          <div className="text-xs text-primary font-medium">
-                            (Today)
-                          </div>
-                        )}
+          <div className="w-full" style={{ width: "405px" }}>
+            {/* Header Row */}
+            <div className="bg-gray-100 flex" style={{ height: "60px" }}>
+              <div className="px-2 py-3 text-center font-semibold text-gray-700 sticky left-0 bg-gray-100 z-10 text-sm flex items-center justify-center" style={{ width: "65px", minWidth: "65px", maxWidth: "65px" }}>
+                Day
+              </div>
+              {columns.map((column, index) => (
+                <div key={index} className="px-2 py-3 text-center font-semibold text-gray-700 text-sm flex items-center justify-center" style={{ width: "85px", minWidth: "85px", maxWidth: "85px" }}>
+                  {column}
+                </div>
+              ))}
+            </div>
+            
+            {/* Data Rows */}
+            {weekDates.map((date, dayIndex) => {
+              const isCurrentDay = isToday(date);
+              const rowData = getRowData(date);
+              const isLastWeekday = dayIndex === 4; // Friday (day index 4)
+              
+              return (
+                <div
+                  key={dayIndex}
+                  className={`border-b hover:bg-gray-50 flex ${
+                    isLastWeekday ? "border-b-2 border-gray-400" : "border-gray-100"
+                  } ${
+                    isCurrentDay ? "bg-primary-light bg-opacity-10 hover:bg-primary-light hover:bg-opacity-20" : ""
+                  }`}
+                  style={{ height: "90px" }}
+                >
+                  <div className={`px-2 py-3 font-medium sticky left-0 z-5 ${
+                    isCurrentDay ? "bg-primary-light bg-opacity-10" : "bg-white"
+                  } flex flex-col justify-center items-center text-center`} style={{ width: "65px", minWidth: "65px", maxWidth: "65px", height: "90px" }}>
+                    <div className="flex items-center">
+                      <span className={`text-sm font-semibold ${isCurrentDay ? "text-primary font-bold" : "text-gray-800"}`}>
+                        {formatDayName(date)}
+                      </span>
+                      {isCurrentDay && (
+                        <div className="w-2 h-2 bg-primary rounded-full ml-1"></div>
+                      )}
+                    </div>
+                    <div className={`text-xs ${
+                      isCurrentDay ? "text-primary font-medium" : "text-gray-500"
+                    }`}>
+                      {formatDayDate(date)}
+                    </div>
+                    {isCurrentDay && (
+                      <div className="text-xs text-primary font-medium">
+                        (Today)
                       </div>
-                    </td>
-                    {rowData.map((cellData, colIndex) => (
-                      <td
-                        key={colIndex}
-                        className={`px-2 py-3 text-center text-gray-800 h-[90px] ${getCellBackground(colIndex)}`}
-                        style={{ width: "85px", minWidth: "85px", maxWidth: "85px", height: "90px" }}
-                      >
-                        <div className="h-full flex items-center justify-center">
-                          {cellData}
-                        </div>
-                      </td>
-                    ))}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                    )}
+                  </div>
+                  {rowData.map((cellData, colIndex) => (
+                    <div
+                      key={colIndex}
+                      className={`px-2 py-3 text-center text-gray-800 flex items-center justify-center ${getCellBackground(colIndex)}`}
+                      style={{ width: "85px", minWidth: "85px", maxWidth: "85px", height: "90px" }}
+                    >
+                      {cellData}
+                    </div>
+                  ))}
+                </div>
+              );
+            })}
+          </div>
         </div>
 
 
