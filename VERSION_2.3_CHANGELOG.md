@@ -27,12 +27,20 @@
 - **Visual Hierarchy**: Enhanced contrast and font weights for mobile readability
 
 ### Technical Improvements
-- **Fixed Table Layout**: Strict width constraints prevent column shifting
-- **Consistent Dimensions**: All screens maintain identical row and column sizing
+- **Flexbox Layout**: Rebuilt table structure using CSS Flexbox for perfect alignment
+- **Consistent Row Heights**: All rows uniform 90px height eliminating visual inconsistencies
+- **Weekend Separator**: Dedicated 3px gray line clearly marking weekend start after Friday
+- **Fixed Column Alignment**: Day column perfectly aligned with maritime data columns
 - **Performance**: Optimized for smooth scrolling and interaction in PWA mode
+
+### Final Layout Specifications
+- **Table Width**: 405px total (65px Day + 4×85px data columns)
+- **Row Heights**: Header 60px, Data rows 90px
+- **Weekend Separator**: 3px gray line after Friday row
+- **Typography**: Enhanced font sizing for PWA readability
 
 ---
 **Version**: 2.3.0  
 **Release Date**: June 12, 2025  
 **Previous Version**: 2.2.0  
-**Focus**: PWA Display Optimization
+**Focus**: PWA Display Optimization & Row Alignment
