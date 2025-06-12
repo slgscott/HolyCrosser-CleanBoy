@@ -341,7 +341,7 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
                       style={{ 
                         height: "1px", 
                         width: "100%", 
-                        backgroundColor: isCurrentDay ? "#6ba3f5" : "white" 
+                        backgroundColor: isCurrentDay ? "#93c5fd" : "white" 
                       }}
                     />
                   )}
