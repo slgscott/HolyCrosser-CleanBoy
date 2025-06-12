@@ -350,7 +350,7 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
                   {/* Weekend separator */}
                   {isLastWeekday && (
                     <div 
-                      style={{ height: "3px", width: "100%", backgroundColor: "#4b5563" }}
+                      style={{ height: "3px", width: "100%", backgroundColor: "#9ca3af" }}
                     />
                   )}
                 </div>
