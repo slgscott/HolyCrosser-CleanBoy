@@ -21,7 +21,7 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <header className="bg-primary text-white px-4 py-6 text-center shadow-md">
+      <header className="bg-primary text-white px-4 py-4 text-center shadow-md">
         <h1 className="text-2xl font-bold">Holy Crosser</h1>
         <p className="text-sm opacity-90 mt-1">Version 2.3.0</p>
       </header>

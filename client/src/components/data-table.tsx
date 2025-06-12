@@ -272,7 +272,7 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
         <div className="overflow-x-auto">
           <div className="w-full" style={{ width: "405px" }}>
             {/* Header Row */}
-            <div className="bg-gray-100 flex" style={{ height: "60px" }}>
+            <div className="bg-gray-100 flex" style={{ height: "45px" }}>
               <div className="px-2 py-3 text-center font-semibold text-gray-700 sticky left-0 bg-gray-100 z-10 text-sm flex items-center justify-center" style={{ width: "65px", minWidth: "65px", maxWidth: "65px" }}>
                 Day
               </div>
@@ -295,11 +295,11 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
                     className={`border-b hover:bg-gray-50 flex border-gray-200 ${
                       isCurrentDay ? "bg-primary-light bg-opacity-10 hover:bg-primary-light hover:bg-opacity-20" : ""
                     }`}
-                    style={{ height: "90px" }}
+                    style={{ height: "75px" }}
                   >
                     <div className={`px-2 py-3 font-medium sticky left-0 z-5 ${
                       isCurrentDay ? "bg-primary-light bg-opacity-10" : "bg-white"
-                    } flex flex-col justify-center items-center text-center`} style={{ width: "65px", minWidth: "65px", maxWidth: "65px", height: "90px" }}>
+                    } flex flex-col justify-center items-center text-center`} style={{ width: "65px", minWidth: "65px", maxWidth: "65px", height: "75px" }}>
                       <div className="flex items-center">
                         <span className={`text-sm font-semibold ${isCurrentDay ? "text-primary font-bold" : "text-gray-800"}`}>
                           {formatDayName(date)}
@@ -323,7 +323,7 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
                       <div
                         key={colIndex}
                         className={`px-2 py-3 text-center text-gray-800 flex items-center justify-center ${getCellBackground(colIndex)}`}
-                        style={{ width: "85px", minWidth: "85px", maxWidth: "85px", height: "90px" }}
+                        style={{ width: "85px", minWidth: "85px", maxWidth: "85px", height: "75px" }}
                       >
                         {cellData}
                       </div>
