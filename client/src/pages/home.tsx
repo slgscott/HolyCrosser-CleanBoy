@@ -22,7 +22,7 @@ export default function Home() {
     <div className="min-h-screen">
       {/* Header */}
       <header className="bg-primary text-white px-4 py-4 shadow-md relative">
-        <div className="text-center flex items-center justify-center gap-6">
+        <div className="text-center flex items-center justify-center gap-12">
           {/* Northumberland Flag Icon - Left */}
           <svg width="24" height="16" viewBox="0 0 24 16" className="flex-shrink-0">
             {/* Yellow background */}
