@@ -68,7 +68,7 @@ export default function Home() {
             <p className="text-xs italic opacity-80 mt-0.5 px-4 leading-tight">
               "{dailyQuote.text}"
             </p>
-            <p className="text-[10px] opacity-60 mt-0.5 leading-tight">
+            <p className="text-xs opacity-60 mt-0.5 leading-tight">
               — {dailyQuote.author}
             </p>
           </div>
@@ -83,7 +83,7 @@ export default function Home() {
             <rect x="0" y="8.5" width="32" height="4" fill="#DC143C"/>
           </svg>
         </div>
-        <p className="opacity-60 absolute top-1 right-3" style={{ fontSize: '9px' }}>Version 2.6.0</p>
+        <p className="opacity-60 absolute top-0 right-3" style={{ fontSize: '9px' }}>Version 2.6.0</p>
       </header>
 
       {/* Week Navigation */}
