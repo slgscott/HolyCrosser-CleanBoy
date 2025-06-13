@@ -275,8 +275,8 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
   return (
     <div className="p-4">
       <Card className="shadow-sm border border-gray-200 overflow-hidden">
-        <CardHeader className="bg-gray-50 px-4 py-3 border-b border-gray-200">
-          <CardTitle className="flex items-center font-semibold text-gray-800">
+        <CardHeader className="bg-gray-50 px-4 py-2 border-b border-gray-200">
+          <CardTitle className="flex items-center text-base font-semibold text-gray-800">
             {config.icon}
             {config.title}
           </CardTitle>
