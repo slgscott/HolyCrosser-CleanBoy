@@ -46,7 +46,7 @@ export default function Home() {
             <rect x="0" y="6" width="24" height="4" fill="#DC143C"/>
           </svg>
         </div>
-        <p className="opacity-60 absolute top-2 right-4" style={{ fontSize: '8px' }}>Version 2.6.0</p>
+        <p className="opacity-60 absolute top-2 right-4" style={{ fontSize: '10px' }}>Version 2.6.0</p>
       </header>
 
       {/* Week Navigation */}
