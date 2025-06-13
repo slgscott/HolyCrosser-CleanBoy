@@ -50,40 +50,40 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <header className="bg-primary text-white px-4 py-4 shadow-md relative">
+      <header className="bg-primary text-white px-3 py-2 shadow-md relative">
         <div className="flex items-center justify-between">
           {/* Left Flag */}
-          <svg width="24" height="16" viewBox="0 0 24 16" className="flex-shrink-0">
+          <svg width="32" height="21" viewBox="0 0 32 21" className="flex-shrink-0">
             {/* Yellow background */}
-            <rect width="24" height="16" fill="#FFD700"/>
+            <rect width="32" height="21" fill="#FFD700"/>
             {/* Red cross - vertical bar */}
-            <rect x="10" y="0" width="4" height="16" fill="#DC143C"/>
+            <rect x="14" y="0" width="4" height="21" fill="#DC143C"/>
             {/* Red cross - horizontal bar */}
-            <rect x="0" y="6" width="24" height="4" fill="#DC143C"/>
+            <rect x="0" y="8.5" width="32" height="4" fill="#DC143C"/>
           </svg>
           
           {/* Center Title and Quote */}
           <div className="flex-1 text-center">
-            <h1 className="text-2xl font-bold">Holy Crosser</h1>
-            <p className="text-sm italic opacity-80 mt-1 px-4">
+            <h1 className="text-xl font-bold leading-tight">Holy Crosser</h1>
+            <p className="text-xs italic opacity-80 mt-0.5 px-4 leading-tight">
               "{dailyQuote.text}"
             </p>
-            <p className="text-xs opacity-60 mt-1">
+            <p className="text-[10px] opacity-60 mt-0.5 leading-tight">
               — {dailyQuote.author}
             </p>
           </div>
           
           {/* Right Flag */}
-          <svg width="24" height="16" viewBox="0 0 24 16" className="flex-shrink-0">
+          <svg width="32" height="21" viewBox="0 0 32 21" className="flex-shrink-0">
             {/* Yellow background */}
-            <rect width="24" height="16" fill="#FFD700"/>
+            <rect width="32" height="21" fill="#FFD700"/>
             {/* Red cross - vertical bar */}
-            <rect x="10" y="0" width="4" height="16" fill="#DC143C"/>
+            <rect x="14" y="0" width="4" height="21" fill="#DC143C"/>
             {/* Red cross - horizontal bar */}
-            <rect x="0" y="6" width="24" height="4" fill="#DC143C"/>
+            <rect x="0" y="8.5" width="32" height="4" fill="#DC143C"/>
           </svg>
         </div>
-        <p className="opacity-60 absolute top-2 right-4" style={{ fontSize: '10px' }}>Version 2.6.0</p>
+        <p className="opacity-60 absolute top-1 right-3" style={{ fontSize: '9px' }}>Version 2.6.0</p>
       </header>
 
       {/* Week Navigation */}
