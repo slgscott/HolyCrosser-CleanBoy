@@ -22,8 +22,8 @@ export default function Home() {
     <div className="min-h-screen">
       {/* Header */}
       <header className="bg-primary text-white px-4 py-4 shadow-md relative">
-        <div className="text-center flex items-center justify-center gap-12">
-          {/* Northumberland Flag Icon - Left */}
+        <div className="flex items-center justify-between">
+          {/* Left Flag */}
           <svg width="24" height="16" viewBox="0 0 24 16" className="flex-shrink-0">
             {/* Yellow background */}
             <rect width="24" height="16" fill="#FFD700"/>
@@ -33,9 +33,10 @@ export default function Home() {
             <rect x="0" y="6" width="24" height="4" fill="#DC143C"/>
           </svg>
           
-          <h1 className="text-2xl font-bold">Holy Crosser</h1>
+          {/* Center Title */}
+          <h1 className="text-2xl font-bold flex-1 text-center">Holy Crosser</h1>
           
-          {/* Northumberland Flag Icon - Right */}
+          {/* Right Flag */}
           <svg width="24" height="16" viewBox="0 0 24 16" className="flex-shrink-0">
             {/* Yellow background */}
             <rect width="24" height="16" fill="#FFD700"/>
