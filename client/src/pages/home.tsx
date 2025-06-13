@@ -21,9 +21,11 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <header className="bg-primary text-white px-4 py-4 text-center shadow-md">
-        <h1 className="text-2xl font-bold">Holy Crosser</h1>
-        <p className="text-sm opacity-90 mt-1">Version 2.6.0</p>
+      <header className="bg-primary text-white px-4 py-4 shadow-md relative">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold">Holy Crosser</h1>
+        </div>
+        <p className="text-xs opacity-70 absolute top-2 right-4">Version 2.6.0</p>
       </header>
 
       {/* Week Navigation */}
