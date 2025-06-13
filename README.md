@@ -31,14 +31,80 @@ Latest release featuring enhanced visual design, improved data presentation, and
 - Installable on mobile devices
 - Responsive design optimized for maritime use
 
-## Technical Stack
+## Complete Tech Stack
 
-- **Frontend**: React 18 with TypeScript
-- **Styling**: Tailwind CSS with custom maritime themes
-- **Data Fetching**: TanStack Query for optimal caching
-- **Database**: PostgreSQL with Neon serverless
-- **Backend**: Express.js with TypeScript
-- **Build Tool**: Vite for fast development and builds
+### **Frontend Architecture**
+- **React 18.3.1** with TypeScript 5.6.3
+- **Wouter 3.3.5** for lightweight client-side routing
+- **Vite 5.4.14** for build tooling and development server
+- **TanStack React Query 5.60.5** for server state management and caching
+
+### **UI Framework & Styling**
+- **Tailwind CSS 3.4.17** for utility-first styling
+- **Radix UI** component library (complete suite):
+  - Dialog, Dropdown, Select, Toast, Tooltip, etc.
+  - Ensures accessibility and consistent behavior
+- **Lucide React 0.453.0** for iconography
+- **Framer Motion 11.13.1** for animations
+- **React Hook Form 7.55.0** with Zod validation
+
+### **Backend Architecture**
+- **Node.js** with **Express.js 4.21.2**
+- **TypeScript** throughout the entire stack
+- **TSX 4.19.1** for TypeScript execution in development
+- **WebSocket support** via ws 8.18.0
+- **Session management** with express-session and connect-pg-simple
+
+### **Database Layer**
+**Dual Database Architecture:**
+
+1. **Harbor Data Manager Database (Read-Only)**
+   - **Provider**: Neon PostgreSQL Serverless
+   - **Location**: AWS US-East-1 (ep-green-brook-ade6jg4t)
+   - **Purpose**: Authentic maritime data from Northumberland County Council
+   - **Tables**: crossing_times, tide_data, weather_data
+   - **Connection**: @neondatabase/serverless 0.10.4
+
+2. **Local Application Database**
+   - **Provider**: Replit PostgreSQL
+   - **Purpose**: User preferences, app settings, authentication
+   - **Tables**: users, user_preferences, app_settings
+
+### **ORM & Database Tools**
+- **Drizzle ORM 0.39.1** for type-safe database operations
+- **Drizzle Kit 0.30.4** for schema management
+- **Drizzle Zod 0.7.0** for schema validation
+- **Connection pooling** via Neon's serverless pools
+
+### **Progressive Web App Features**
+- **Service Worker** for offline functionality
+- **Web App Manifest** for installability
+- **Responsive design** optimized for maritime use
+- **Local storage** for user preferences
+
+### **Development & Build Tools**
+- **ESBuild 0.25.0** for production bundling
+- **PostCSS 8.4.47** for CSS processing
+- **Autoprefixer 10.4.20** for browser compatibility
+- **Replit integration** with custom Vite plugins
+
+### **Authentication & Security**
+- **Passport.js 0.7.0** with local strategy
+- **Session-based authentication**
+- **HTTPS/TLS** handled by Replit deployment
+- **Environment variable management**
+
+### **Data Processing & Utilities**
+- **Date-fns 3.6.0** for maritime time calculations
+- **Zod 3.24.2** for runtime type validation
+- **Class Variance Authority** for component styling
+- **Recharts 2.15.2** for potential data visualization
+
+### **Deployment Platform**
+- **Replit** with automatic scaling
+- **Zero-config deployment** with built-in TLS
+- **Environment variable management**
+- **Workflow automation** for development
 
 ## Installation
 
