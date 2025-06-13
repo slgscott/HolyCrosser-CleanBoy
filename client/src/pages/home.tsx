@@ -6,9 +6,38 @@ import PWAInstallPrompt from "@/components/pwa-install-prompt";
 
 export type ScreenType = "crossings" | "tides" | "weather";
 
+// Maritime quotes that change daily
+const getDailyQuote = () => {
+  const quotes = [
+    { text: "The sea, once it casts its spell, holds one in its net of wonder forever.", author: "Jacques Cousteau" },
+    { text: "A smooth sea never made a skilled sailor.", author: "Franklin D. Roosevelt" },
+    { text: "The cure for anything is salt water: sweat, tears or the sea.", author: "Isak Dinesen" },
+    { text: "We know more about the movement of celestial bodies than about the soil underfoot.", author: "Leonardo da Vinci" },
+    { text: "The sea does not reward those who are too anxious, too greedy, or too impatient.", author: "Anne Morrow Lindbergh" },
+    { text: "In one drop of water are found all the secrets of all the oceans.", author: "Kahlil Gibran" },
+    { text: "The voice of the sea speaks to the soul.", author: "Kate Chopin" },
+    { text: "There are plenty of fish in the sea, but you are my catch of a lifetime.", author: "Linda Poindexter" },
+    { text: "The sea is everything. It covers seven tenths of the terrestrial globe.", author: "Jules Verne" },
+    { text: "I must go down to the seas again, for the call of the running tide is a wild call.", author: "John Masefield" },
+    { text: "The ocean stirs the heart, inspires the imagination and brings eternal joy to the soul.", author: "Robert Wyland" },
+    { text: "You can't cross the sea merely by standing and staring at the water.", author: "Rabindranath Tagore" },
+    { text: "The sea, being smooth, how many shallow bauble boats dare sail upon her patient breast, making their way with those same winds that wrecked them!", author: "William Shakespeare" },
+    { text: "Calm seas never made good sailors.", author: "English Proverb" },
+  ];
+
+  // Use current date to get consistent daily quote
+  const today = new Date();
+  const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / 86400000);
+  const quoteIndex = dayOfYear % quotes.length;
+  
+  return quotes[quoteIndex];
+};
+
 export default function Home() {
   const [currentScreen, setCurrentScreen] = useState<ScreenType>("crossings");
   const [weekOffset, setWeekOffset] = useState(0);
+  
+  const dailyQuote = getDailyQuote();
 
   const handlePreviousWeek = () => {
     setWeekOffset(prev => prev - 1);
@@ -33,8 +62,16 @@ export default function Home() {
             <rect x="0" y="6" width="24" height="4" fill="#DC143C"/>
           </svg>
           
-          {/* Center Title */}
-          <h1 className="text-2xl font-bold flex-1 text-center">Holy Crosser</h1>
+          {/* Center Title and Quote */}
+          <div className="flex-1 text-center">
+            <h1 className="text-2xl font-bold">Holy Crosser</h1>
+            <p className="text-sm italic opacity-80 mt-1 px-4">
+              "{dailyQuote.text}"
+            </p>
+            <p className="text-xs opacity-60 mt-1">
+              — {dailyQuote.author}
+            </p>
+          </div>
           
           {/* Right Flag */}
           <svg width="24" height="16" viewBox="0 0 24 16" className="flex-shrink-0">
