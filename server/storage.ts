@@ -78,8 +78,6 @@ export class DatabaseStorage implements IStorage {
     const startDateStr = startDate.toISOString().split('T')[0];
     const endDateStr = endDate.toISOString().split('T')[0];
     
-    console.log(`[DEBUG] Week offset ${weekOffset}: Querying from ${startDateStr} to ${endDateStr}`);
-    
     const results = await harborDb
       .select()
       .from(crossingTimes)
@@ -90,28 +88,6 @@ export class DatabaseStorage implements IStorage {
         )
       )
       .orderBy(crossingTimes.date);
-    
-    console.log(`[DEBUG] Found ${results.length} crossing times for week ${weekOffset}`);
-    
-    // If no results and this is around October 1st, let's check what data exists
-    if (results.length === 0 && weekOffset >= 16 && weekOffset <= 20) {
-      const allOctoberData = await harborDb
-        .select()
-        .from(crossingTimes)
-        .where(
-          and(
-            gte(crossingTimes.date, '2025-10-01'),
-            lte(crossingTimes.date, '2025-10-31')
-          )
-        )
-        .orderBy(crossingTimes.date)
-        .limit(5);
-      
-      console.log(`[DEBUG] October data check: Found ${allOctoberData.length} records`);
-      if (allOctoberData.length > 0) {
-        console.log(`[DEBUG] First October record: ${JSON.stringify(allOctoberData[0])}`);
-      }
-    }
     
     return results;
   }
