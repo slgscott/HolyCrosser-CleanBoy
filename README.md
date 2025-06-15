@@ -2,9 +2,9 @@
 
 A progressive web app providing real-time maritime navigation data for safe harbor crossings with enhanced mobile experience.
 
-## Version 2.6.0
+## Version 2.8.0
 
-Latest release featuring enhanced visual design, improved data presentation, and optimized layout for maritime navigation.
+Latest release featuring database analysis, data gap investigation, and confirmed authentic data integrity for maritime navigation.
 
 ## Features
 
