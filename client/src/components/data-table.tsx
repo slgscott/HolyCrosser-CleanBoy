@@ -16,16 +16,13 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
   
   const { data, isLoading, error, refetch } = useWeekData(screenType, weekOffset);
 
-  const formatTimestamp = () => {
-    const now = new Date();
-    return now.toLocaleString('en-GB', { 
-      timeZone: 'Europe/London',
-      month: 'short', 
-      day: 'numeric', 
-      hour: '2-digit', 
-      minute: '2-digit' 
-    });
-  };
+  const timestampText = new Date().toLocaleString('en-GB', { 
+    timeZone: 'Europe/London',
+    month: 'short', 
+    day: 'numeric', 
+    hour: '2-digit', 
+    minute: '2-digit' 
+  });
 
   const getScreenConfig = () => {
     switch (screenType) {
@@ -293,7 +290,7 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
             </div>
             {screenType === "weather" && data && Array.isArray(data) && data.length > 0 ? (
               <div className="text-sm font-normal text-blue-600">
-                Updated: {formatTimestamp()}
+                Updated: {timestampText}
               </div>
             ) : null}
           </CardTitle>
