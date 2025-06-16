@@ -17,6 +17,7 @@ import {
 } from "@shared/schema";
 import { db, harborDb } from "./db";
 import { eq, gte, lte, desc, and } from "drizzle-orm";
+import { seedEssentialData, shouldSeedData } from "./seed-data";
 // Import date utils directly since we can't import from client
 function getWeekRange(weekOffset: number) {
   const today = new Date();
@@ -110,6 +111,27 @@ export class DatabaseStorage implements IStorage {
         
         if (localResults.length === 0) {
           console.warn(`No cached crossing data available for ${startDateStr} to ${endDateStr}`);
+          
+          // Check if we need to seed essential data
+          const needsSeeding = await shouldSeedData();
+          if (needsSeeding) {
+            await seedEssentialData();
+            
+            // Retry the query after seeding
+            const seededResults = await db
+              .select()
+              .from(crossingTimes)
+              .where(
+                and(
+                  gte(crossingTimes.date, startDateStr),
+                  lte(crossingTimes.date, endDateStr)
+                )
+              )
+              .orderBy(crossingTimes.date);
+            
+            console.log(`Serving ${seededResults.length} crossing times from seeded data`);
+            return seededResults;
+          }
         } else {
           console.log(`Serving ${localResults.length} crossing times from local cache`);
         }
