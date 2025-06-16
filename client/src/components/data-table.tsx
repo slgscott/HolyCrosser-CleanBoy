@@ -1,3 +1,4 @@
+import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Waves, CloudSun, Navigation, RefreshCw, AlertTriangle, Umbrella, Wind, Sun, Cloud } from "lucide-react";
@@ -15,13 +16,15 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
   
   const { data, isLoading, error, refetch } = useWeekData(screenType, weekOffset);
 
-  const bstTimestamp = new Date().toLocaleString('en-GB', { 
+  // BST timestamp for weather updates
+  const showWeatherTimestamp = screenType === "weather" && data && Array.isArray(data) && data.length > 0;
+  const currentTime = showWeatherTimestamp ? new Date().toLocaleString('en-GB', { 
     timeZone: 'Europe/London',
     month: 'short', 
     day: 'numeric', 
     hour: '2-digit', 
     minute: '2-digit' 
-  });
+  }) : "";
 
   const getScreenConfig = () => {
     switch (screenType) {
@@ -287,10 +290,10 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
               {config.icon}
               {config.title}
             </div>
-            {screenType === "weather" && data && Array.isArray(data) && data.length > 0 && (
-              <div className="text-sm font-normal text-blue-600">
+            {bstTimestamp && (
+              <span className="text-sm font-normal text-blue-600">
                 Updated: {bstTimestamp}
-              </div>
+              </span>
             )}
           </CardTitle>
         </CardHeader>
