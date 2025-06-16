@@ -389,19 +389,19 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
           </div>
         </div>
 
-        {/* Footer with data source and timestamp */}
-        {data && Array.isArray(data) && data.length > 0 && (
-          <div className="px-6 pb-4">
-            <div className="flex justify-between items-center text-xs text-gray-500">
-              <span>Source: Harbor Data Manager</span>
-              {databaseTimestamp && (
-                <span>Last updated: {databaseTimestamp}</span>
-              )}
-            </div>
-          </div>
-        )}
-
       </Card>
+      
+      {/* Footer with data source and timestamp - outside the card */}
+      {data && Array.isArray(data) && data.length > 0 && (
+        <div className="mt-2 px-2">
+          <div className="flex justify-between items-center text-xs text-gray-500">
+            <span>Source: Harbor Data Manager</span>
+            {databaseTimestamp && (
+              <span>Last updated: {databaseTimestamp}</span>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
