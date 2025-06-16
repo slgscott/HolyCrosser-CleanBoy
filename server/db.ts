@@ -24,12 +24,17 @@ if (!localDbUrl) {
   );
 }
 
-// Harbor Data Manager connection with timeout handling
+// Harbor Data Manager connection with enhanced production settings
 const harborPoolConfig = {
   connectionString: harborDbUrl,
-  connectionTimeoutMillis: isProduction ? 5000 : 10000, // Shorter timeout in production
-  idleTimeoutMillis: isProduction ? 10000 : 30000,
-  max: isProduction ? 2 : 10, // Fewer connections in production
+  connectionTimeoutMillis: 15000, // Extended timeout for external connections
+  idleTimeoutMillis: 60000,
+  statement_timeout: 30000,
+  query_timeout: 30000,
+  max: isProduction ? 5 : 10,
+  ssl: {
+    rejectUnauthorized: false // Handle SSL issues in deployment
+  }
 };
 
 export const harborPool = new Pool(harborPoolConfig);
@@ -39,15 +44,33 @@ export const harborDb = drizzle({ client: harborPool, schema });
 export const localPool = new Pool({ connectionString: localDbUrl });
 export const db = drizzle({ client: localPool, schema });
 
-// Test harbor database connectivity on startup
-harborPool.connect()
-  .then(client => {
-    console.log('Harbor database connection successful');
-    client.release();
-  })
-  .catch(error => {
-    console.error('Harbor database connection failed:', error.message);
-    if (isProduction) {
-      console.warn('External database access may be restricted in production deployment');
+// Enhanced startup connection test with retry logic
+async function testHarborConnection() {
+  let attempts = 0;
+  const maxAttempts = isProduction ? 3 : 1;
+  
+  while (attempts < maxAttempts) {
+    try {
+      const client = await harborPool.connect();
+      await client.query('SELECT 1');
+      client.release();
+      console.log(`Harbor database connection successful (attempt ${attempts + 1})`);
+      return true;
+    } catch (error) {
+      attempts++;
+      console.error(`Harbor database connection attempt ${attempts} failed:`, error instanceof Error ? error.message : 'Unknown error');
+      
+      if (attempts < maxAttempts) {
+        console.log(`Retrying connection in 2 seconds...`);
+        await new Promise(resolve => setTimeout(resolve, 2000));
+      }
     }
-  });
+  }
+  
+  if (isProduction) {
+    console.error('Harbor database connection failed after all attempts - deployment may have external access restrictions');
+  }
+  return false;
+}
+
+testHarborConnection();
