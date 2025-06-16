@@ -7,8 +7,12 @@ export function useWeekData(screenType: ScreenType, weekOffset: number) {
                    screenType === "tides" ? "tide-times" : 
                    "weather-data";
   
-  return useQuery({
+  const result = useQuery({
     queryKey: [`/api/${endpoint}/${weekOffset}`],
     enabled: true,
   });
+  
+  console.log(`Query for ${screenType} (${endpoint}) week ${weekOffset}:`, result);
+  
+  return result;
 }

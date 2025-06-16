@@ -128,7 +128,10 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
   };
 
   const getRowData = (date: Date) => {
-    if (!data || !Array.isArray(data)) return ["—", "—", "—", "—"];
+    if (!data || !Array.isArray(data)) {
+      console.log('No data available:', data);
+      return ["—", "—", "—", "—"];
+    }
     
     // Use local date string to avoid timezone issues
     const year = date.getFullYear();
@@ -136,11 +139,14 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
     const day = String(date.getDate()).padStart(2, '0');
     const dateStr = `${year}-${month}-${day}`;
     
+    console.log('Looking for date:', dateStr, 'in data:', data.map(d => d.date));
     const dayData = data.find((d: any) => d.date === dateStr);
+    console.log('Found dayData:', dayData);
     
-
-    
-    if (!dayData) return ["—", "—", "—", "—"];
+    if (!dayData) {
+      console.log('No data found for date:', dateStr);
+      return ["—", "—", "—", "—"];
+    }
 
     switch (screenType) {
       case "crossings":
