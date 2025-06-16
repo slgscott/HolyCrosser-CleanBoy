@@ -278,44 +278,32 @@ export class DatabaseStorage implements IStorage {
 
   async getWeatherDataLastUpdated(): Promise<string | null> {
     try {
-      // First try harbor database
+      // Check if we have recent weather data in the harbor database
       const result = await harborDb.execute(`
-        SELECT MAX(updated_at) as last_updated 
+        SELECT COUNT(*) as count, MAX(date) as latest_date
         FROM weather_data 
-        WHERE updated_at IS NOT NULL
+        WHERE date >= CURRENT_DATE - INTERVAL '7 days'
       `);
       
-      if (result.rows && result.rows.length > 0 && result.rows[0].last_updated) {
-        return new Date(result.rows[0].last_updated as string).toLocaleString('en-GB', {
-          timeZone: 'Europe/London',
-          month: 'short',
-          day: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit'
-        });
+      if (result.rows && result.rows.length > 0 && (result.rows[0] as any).count > 0) {
+        return "Harbor Data Manager";
       }
     } catch (error) {
-      console.error('Harbor database query for last updated failed:', error);
+      console.error('Harbor database check failed:', error);
       
-      // Fallback to local database
+      // Fallback to local database check
       try {
         const result = await db.execute(`
-          SELECT MAX(updated_at) as last_updated 
+          SELECT COUNT(*) as count
           FROM weather_data 
-          WHERE updated_at IS NOT NULL
+          WHERE date >= DATE('now', '-7 days')
         `);
         
-        if (result.rows && result.rows.length > 0 && result.rows[0].last_updated) {
-          return new Date(result.rows[0].last_updated as string).toLocaleString('en-GB', {
-            timeZone: 'Europe/London',
-            month: 'short',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-          });
+        if (result.rows && result.rows.length > 0 && (result.rows[0] as any).count > 0) {
+          return "Local Cache";
         }
       } catch (localError) {
-        console.error('Local database query for last updated also failed:', localError);
+        console.error('Local database check also failed:', localError);
       }
     }
     
