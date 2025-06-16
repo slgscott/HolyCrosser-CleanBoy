@@ -395,7 +395,11 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
       {data && Array.isArray(data) && data.length > 0 && (
         <div className="mt-2 px-2">
           <div className="flex justify-between items-center text-xs text-gray-500">
-            <span>Source: Harbor Data Manager</span>
+            <span>
+              Source: {screenType === "crossings" ? "Northumberland County Council" : 
+                      screenType === "tides" ? "UK Hydrographic Office" : 
+                      "Open-Meteo"}
+            </span>
             {databaseTimestamp && (
               <span>Last updated: {databaseTimestamp}</span>
             )}
