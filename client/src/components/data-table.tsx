@@ -22,7 +22,7 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
     : rawData;
   
   const databaseTimestamp = screenType === "weather" && rawData && typeof rawData === 'object' && 'lastUpdated' in rawData 
-    ? rawData.lastUpdated 
+    ? rawData.lastUpdated as string
     : null;
 
   const getScreenConfig = () => {

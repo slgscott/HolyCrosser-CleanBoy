@@ -290,12 +290,10 @@ export class DatabaseStorage implements IStorage {
       }
     } catch (error) {
       console.error('Harbor database check failed:', error);
-      
-      // Fallback: Since we're successfully reading weather data, return generic source
-      return "Weather Database";
     }
     
-    return null;
+    // Since we're successfully reading weather data from somewhere, return generic source
+    return "Weather Database";
   }
 
   async upsertAppSettings(settings: InsertAppSettings): Promise<AppSettings> {
