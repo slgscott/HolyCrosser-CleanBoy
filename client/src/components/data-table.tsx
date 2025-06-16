@@ -289,15 +289,11 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
               {config.icon}
               {config.title}
             </div>
-            {screenType === "weather" && data && Array.isArray(data) && data.length > 0 && databaseTimestamp ? (
+            {screenType === "weather" && data && Array.isArray(data) && data.length > 0 && (
               <div className="text-sm font-normal text-blue-600">
-                Source: {databaseTimestamp}
+                Source: {databaseTimestamp || "Weather Database"}
               </div>
-            ) : screenType === "weather" && data && Array.isArray(data) && data.length > 0 ? (
-              <div className="text-sm font-normal text-blue-600">
-                Source: Weather Database
-              </div>
-            ) : null}
+            )}
           </CardTitle>
         </CardHeader>
 
