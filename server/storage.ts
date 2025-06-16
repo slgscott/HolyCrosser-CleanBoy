@@ -78,18 +78,23 @@ export class DatabaseStorage implements IStorage {
     const startDateStr = startDate.toISOString().split('T')[0];
     const endDateStr = endDate.toISOString().split('T')[0];
     
-    const results = await harborDb
-      .select()
-      .from(crossingTimes)
-      .where(
-        and(
-          gte(crossingTimes.date, startDateStr),
-          lte(crossingTimes.date, endDateStr)
+    try {
+      const results = await harborDb
+        .select()
+        .from(crossingTimes)
+        .where(
+          and(
+            gte(crossingTimes.date, startDateStr),
+            lte(crossingTimes.date, endDateStr)
+          )
         )
-      )
-      .orderBy(crossingTimes.date);
-    
-    return results;
+        .orderBy(crossingTimes.date);
+      
+      return results;
+    } catch (error) {
+      console.error('Harbor database connection error:', error);
+      throw new Error('Unable to connect to Harbor Data Manager database');
+    }
   }
 
   async getTideTimesForWeek(weekOffset: number): Promise<TideData[]> {
@@ -97,18 +102,23 @@ export class DatabaseStorage implements IStorage {
     const startDateStr = startDate.toISOString().split('T')[0];
     const endDateStr = endDate.toISOString().split('T')[0];
     
-    const results = await harborDb
-      .select()
-      .from(tideData)
-      .where(
-        and(
-          gte(tideData.date, startDateStr),
-          lte(tideData.date, endDateStr)
+    try {
+      const results = await harborDb
+        .select()
+        .from(tideData)
+        .where(
+          and(
+            gte(tideData.date, startDateStr),
+            lte(tideData.date, endDateStr)
+          )
         )
-      )
-      .orderBy(tideData.date);
-    
-    return results;
+        .orderBy(tideData.date);
+      
+      return results;
+    } catch (error) {
+      console.error('Harbor database tide data error:', error);
+      throw new Error('Unable to connect to Harbor Data Manager database for tide data');
+    }
   }
 
   async getWeatherDataForWeek(weekOffset: number): Promise<WeatherData[]> {
@@ -116,18 +126,23 @@ export class DatabaseStorage implements IStorage {
     const startDateStr = startDate.toISOString().split('T')[0];
     const endDateStr = endDate.toISOString().split('T')[0];
     
-    const results = await harborDb
-      .select()
-      .from(weatherData)
-      .where(
-        and(
-          gte(weatherData.date, startDateStr),
-          lte(weatherData.date, endDateStr)
+    try {
+      const results = await harborDb
+        .select()
+        .from(weatherData)
+        .where(
+          and(
+            gte(weatherData.date, startDateStr),
+            lte(weatherData.date, endDateStr)
+          )
         )
-      )
-      .orderBy(weatherData.date);
-    
-    return results;
+        .orderBy(weatherData.date);
+      
+      return results;
+    } catch (error) {
+      console.error('Harbor database weather data error:', error);
+      throw new Error('Unable to connect to Harbor Data Manager database for weather data');
+    }
   }
 
   async getAllUserPreferences(): Promise<UserPreferences[]> {

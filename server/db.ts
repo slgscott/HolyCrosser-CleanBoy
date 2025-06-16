@@ -8,6 +8,12 @@ neonConfig.webSocketConstructor = ws;
 // External Harbor Data Manager database URL
 const harborDbUrl = "postgresql://neondb_owner:npg_mtPkeuFTx3H8@ep-green-brook-ade6jg4t.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require";
 
+// Check if we're in production and log connection attempts
+const isProduction = process.env.NODE_ENV === 'production';
+console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+console.log(`Harbor DB connection attempt: ${harborDbUrl.split('@')[1]?.split('/')[0] || 'unknown'}`);
+console.log(`Local DB URL exists: ${!!process.env.DATABASE_URL}`);
+
 // Local database for user preferences
 const localDbUrl = process.env.DATABASE_URL;
 
