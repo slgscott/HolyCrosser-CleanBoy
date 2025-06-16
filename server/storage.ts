@@ -79,6 +79,7 @@ export class DatabaseStorage implements IStorage {
     const endDateStr = endDate.toISOString().split('T')[0];
     
     try {
+      // Try harbor database first
       const results = await harborDb
         .select()
         .from(crossingTimes)
@@ -92,8 +93,32 @@ export class DatabaseStorage implements IStorage {
       
       return results;
     } catch (error) {
-      console.error('Harbor database connection error:', error);
-      throw new Error('Unable to connect to Harbor Data Manager database');
+      console.error('Harbor database connection error, trying local cache:', error instanceof Error ? error.message : 'Unknown error');
+      
+      // Fallback to local cache
+      try {
+        const localResults = await db
+          .select()
+          .from(crossingTimes)
+          .where(
+            and(
+              gte(crossingTimes.date, startDateStr),
+              lte(crossingTimes.date, endDateStr)
+            )
+          )
+          .orderBy(crossingTimes.date);
+        
+        if (localResults.length === 0) {
+          console.warn(`No cached crossing data available for ${startDateStr} to ${endDateStr}`);
+        } else {
+          console.log(`Serving ${localResults.length} crossing times from local cache`);
+        }
+        
+        return localResults;
+      } catch (localError) {
+        console.error('Local cache also failed:', localError);
+        return [];
+      }
     }
   }
 
@@ -116,8 +141,31 @@ export class DatabaseStorage implements IStorage {
       
       return results;
     } catch (error) {
-      console.error('Harbor database tide data error:', error);
-      throw new Error('Unable to connect to Harbor Data Manager database for tide data');
+      console.error('Harbor database tide data error, trying local cache:', error instanceof Error ? error.message : 'Unknown error');
+      
+      try {
+        const localResults = await db
+          .select()
+          .from(tideData)
+          .where(
+            and(
+              gte(tideData.date, startDateStr),
+              lte(tideData.date, endDateStr)
+            )
+          )
+          .orderBy(tideData.date);
+        
+        if (localResults.length === 0) {
+          console.warn(`No cached tide data available for ${startDateStr} to ${endDateStr}`);
+        } else {
+          console.log(`Serving ${localResults.length} tide times from local cache`);
+        }
+        
+        return localResults;
+      } catch (localError) {
+        console.error('Local tide cache also failed:', localError);
+        return [];
+      }
     }
   }
 
@@ -140,8 +188,31 @@ export class DatabaseStorage implements IStorage {
       
       return results;
     } catch (error) {
-      console.error('Harbor database weather data error:', error);
-      throw new Error('Unable to connect to Harbor Data Manager database for weather data');
+      console.error('Harbor database weather data error, trying local cache:', error instanceof Error ? error.message : 'Unknown error');
+      
+      try {
+        const localResults = await db
+          .select()
+          .from(weatherData)
+          .where(
+            and(
+              gte(weatherData.date, startDateStr),
+              lte(weatherData.date, endDateStr)
+            )
+          )
+          .orderBy(weatherData.date);
+        
+        if (localResults.length === 0) {
+          console.warn(`No cached weather data available for ${startDateStr} to ${endDateStr}`);
+        } else {
+          console.log(`Serving ${localResults.length} weather records from local cache`);
+        }
+        
+        return localResults;
+      } catch (localError) {
+        console.error('Local weather cache also failed:', localError);
+        return [];
+      }
     }
   }
 
