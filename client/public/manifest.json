@@ -12,13 +12,13 @@
   "categories": ["navigation", "weather", "travel"],
   "icons": [
     {
-      "src": "/holy-crosser-icon.png",
+      "src": "/holy-crosser-icon.png?v=2.8.4",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/holy-crosser-icon.png",
+      "src": "/holy-crosser-icon.png?v=2.8.4",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
