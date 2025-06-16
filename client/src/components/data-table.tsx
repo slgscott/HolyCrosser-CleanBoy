@@ -274,9 +274,21 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
     <div className="p-4">
       <Card className="shadow-sm border border-gray-200 overflow-hidden">
         <CardHeader className="bg-gray-50 px-4 py-2 border-b border-gray-200">
-          <CardTitle className="flex items-center text-base font-semibold text-gray-800">
-            {config.icon}
-            {config.title}
+          <CardTitle className="flex items-center justify-between text-base font-semibold text-gray-800">
+            <div className="flex items-center">
+              {config.icon}
+              {config.title}
+            </div>
+            {screenType === "weather" && data && Array.isArray(data) && data.length > 0 && (
+              <div className="text-sm font-normal text-blue-600">
+                Updated: {new Date().toLocaleDateString('en-US', { 
+                  month: 'short', 
+                  day: 'numeric', 
+                  hour: '2-digit', 
+                  minute: '2-digit' 
+                })}
+              </div>
+            )}
           </CardTitle>
         </CardHeader>
 
