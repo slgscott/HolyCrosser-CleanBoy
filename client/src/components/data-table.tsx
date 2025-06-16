@@ -146,35 +146,35 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
       case "crossings":
         return [
           <div className="text-sm leading-tight whitespace-pre-line font-medium">
-            {formatTimeRange(dayData.safeFrom1, dayData.safeTo1, date, false)}
+            {formatTimeRange(dayData.safeFrom1 || dayData.safe_from_1, dayData.safeTo1 || dayData.safe_to_1, date, false)}
           </div>,
           <div className="text-sm leading-tight whitespace-pre-line font-medium">
-            {formatTimeRange(dayData.unsafeFrom1, dayData.unsafeTo1, date, false)}
+            {formatTimeRange(dayData.unsafeFrom1 || dayData.unsafe_from_1, dayData.unsafeTo1 || dayData.unsafe_to_1, date, false)}
           </div>,
           <div className="text-sm leading-tight whitespace-pre-line font-medium">
-            {isNextDayTime(dayData.safeFrom2) ? "—" : formatTimeRange(dayData.safeFrom2, dayData.safeTo2, date, true)}
+            {isNextDayTime(dayData.safeFrom2 || dayData.safe_from_2) ? "—" : formatTimeRange(dayData.safeFrom2 || dayData.safe_from_2, dayData.safeTo2 || dayData.safe_to_2, date, true)}
           </div>,
           <div className="text-sm leading-tight whitespace-pre-line font-medium">
-            {isNextDayTime(dayData.unsafeFrom2) ? "—" : formatTimeRange(dayData.unsafeFrom2, dayData.unsafeTo2, date, true)}
+            {isNextDayTime(dayData.unsafeFrom2 || dayData.unsafe_from_2) ? "—" : formatTimeRange(dayData.unsafeFrom2 || dayData.unsafe_from_2, dayData.unsafeTo2 || dayData.unsafe_to_2, date, true)}
           </div>
         ];
       case "tides":
         return [
           <div className="text-sm">
-            <div className="text-base text-blue-600 font-medium">{dayData.highTide1Time || "—"}</div>
-            {dayData.highTide1Height && <div className="text-sm text-black">{dayData.highTide1Height.toFixed(1)}m</div>}
+            <div className="text-base text-blue-600 font-medium">{dayData.highTide1Time || dayData.high_tide_1_time || "—"}</div>
+            {(dayData.highTide1Height || dayData.high_tide_1_height) && <div className="text-sm text-black">{(dayData.highTide1Height || dayData.high_tide_1_height).toFixed(1)}m</div>}
           </div>,
           <div className="text-sm">
-            <div className="text-base text-blue-600 font-medium">{dayData.lowTide1Time || "—"}</div>
-            {dayData.lowTide1Height && <div className="text-sm text-black">{dayData.lowTide1Height.toFixed(1)}m</div>}
+            <div className="text-base text-blue-600 font-medium">{dayData.lowTide1Time || dayData.low_tide_1_time || "—"}</div>
+            {(dayData.lowTide1Height || dayData.low_tide_1_height) && <div className="text-sm text-black">{(dayData.lowTide1Height || dayData.low_tide_1_height).toFixed(1)}m</div>}
           </div>,
           <div className="text-sm">
-            <div className="text-base text-blue-600 font-medium">{dayData.highTide2Time || "—"}</div>
-            {dayData.highTide2Height && <div className="text-sm text-black">{dayData.highTide2Height.toFixed(1)}m</div>}
+            <div className="text-base text-blue-600 font-medium">{dayData.highTide2Time || dayData.high_tide_2_time || "—"}</div>
+            {(dayData.highTide2Height || dayData.high_tide_2_height) && <div className="text-sm text-black">{(dayData.highTide2Height || dayData.high_tide_2_height).toFixed(1)}m</div>}
           </div>,
           <div className="text-sm">
-            <div className="text-base text-blue-600 font-medium">{dayData.lowTide2Time || "—"}</div>
-            {dayData.lowTide2Height && <div className="text-sm text-black">{dayData.lowTide2Height.toFixed(1)}m</div>}
+            <div className="text-base text-blue-600 font-medium">{dayData.lowTide2Time || dayData.low_tide_2_time || "—"}</div>
+            {(dayData.lowTide2Height || dayData.low_tide_2_height) && <div className="text-sm text-black">{(dayData.lowTide2Height || dayData.low_tide_2_height).toFixed(1)}m</div>}
           </div>
         ];
       case "weather":
