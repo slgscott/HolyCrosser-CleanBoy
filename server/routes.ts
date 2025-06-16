@@ -96,6 +96,42 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Diagnostic endpoint for deployment troubleshooting
+  app.get("/api/health", async (req, res) => {
+    const status: any = {
+      environment: process.env.NODE_ENV || 'development',
+      platform: process.env.REPL_ID ? 'Replit' : 'External',
+      timestamp: new Date().toISOString(),
+      databases: {
+        local: { status: 'unknown', error: null },
+        harbor: { status: 'unknown', error: null, recordCount: 0 }
+      },
+      version: '2.8.2'
+    };
+
+    // Test local database
+    try {
+      await storage.getAllUserPreferences();
+      status.databases.local.status = 'connected';
+    } catch (error) {
+      status.databases.local.status = 'failed';
+      status.databases.local.error = error instanceof Error ? error.message : 'Unknown error';
+    }
+
+    // Test harbor database with quick timeout
+    try {
+      const testData = await storage.getCrossingTimesForWeek(0);
+      status.databases.harbor.status = 'connected';
+      status.databases.harbor.recordCount = testData.length;
+    } catch (error) {
+      status.databases.harbor.status = 'failed';
+      status.databases.harbor.error = error instanceof Error ? error.message : 'Unknown error';
+    }
+
+    res.setHeader('Content-Type', 'application/json');
+    res.json(status);
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

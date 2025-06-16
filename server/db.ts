@@ -24,17 +24,18 @@ if (!localDbUrl) {
   );
 }
 
-// Harbor Data Manager connection with enhanced production settings
+// Harbor Data Manager connection with deployment-optimized settings
 const harborPoolConfig = {
   connectionString: harborDbUrl,
-  connectionTimeoutMillis: 15000, // Extended timeout for external connections
-  idleTimeoutMillis: 60000,
-  statement_timeout: 30000,
-  query_timeout: 30000,
-  max: isProduction ? 5 : 10,
-  ssl: {
-    rejectUnauthorized: false // Handle SSL issues in deployment
-  }
+  connectionTimeoutMillis: 10000,
+  idleTimeoutMillis: 30000,
+  max: 3,
+  min: 0,
+  acquireTimeoutMillis: 8000,
+  createTimeoutMillis: 8000,
+  destroyTimeoutMillis: 5000,
+  createRetryIntervalMillis: 200,
+  allowExitOnIdle: true
 };
 
 export const harborPool = new Pool(harborPoolConfig);
