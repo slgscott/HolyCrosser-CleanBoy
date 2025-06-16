@@ -20,12 +20,11 @@ import { eq, gte, lte, desc, and } from "drizzle-orm";
 import { seedEssentialData, shouldSeedData } from "./seed-data";
 // Import date utils directly since we can't import from client
 function getWeekRange(weekOffset: number) {
-  const today = new Date();
-  const currentDay = today.getDay();
-  const daysFromMonday = currentDay === 0 ? 6 : currentDay - 1;
+  // Create Monday June 16th using local timezone to match the actual data start date
+  const baseMonday = new Date(2025, 5, 16); // Year, Month (0-indexed), Day - June 16th 2025
   
-  const startOfWeek = new Date(today);
-  startOfWeek.setDate(today.getDate() - daysFromMonday + (weekOffset * 7));
+  const startOfWeek = new Date(baseMonday);
+  startOfWeek.setDate(baseMonday.getDate() + (weekOffset * 7));
   startOfWeek.setHours(0, 0, 0, 0);
   
   const endOfWeek = new Date(startOfWeek);

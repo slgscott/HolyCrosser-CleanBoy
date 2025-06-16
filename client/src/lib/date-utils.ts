@@ -1,6 +1,6 @@
 export function getWeekRange(weekOffset: number) {
-  // Create Monday June 9th using local timezone to avoid UTC conversion issues
-  const baseMonday = new Date(2025, 5, 9); // Year, Month (0-indexed), Day - June 9th 2025
+  // Create Monday June 16th using local timezone to match the actual data start date
+  const baseMonday = new Date(2025, 5, 16); // Year, Month (0-indexed), Day - June 16th 2025
   
   const startOfWeek = new Date(baseMonday);
   startOfWeek.setDate(baseMonday.getDate() + (weekOffset * 7));

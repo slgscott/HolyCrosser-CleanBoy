@@ -1,0 +1,150 @@
+Replit version 3671c831, pid2 version 0.0.1416
+o1151714.ingest.sentry.io/api/6318792/envelope/?sentry_key=8aa91189a4274b5a8c9b7b01d46ea360&sentry_version=7&sentry_client=sentry.javascript.browser%2F7.112.0:1 
+            
+            
+           Failed to load resource: net::ERR_BLOCKED_BY_CLIENTUnderstand this error
+_app-f823eb50a92ed830.js:38 
+      /////////////////////
+   ///////////////////////////
+  ////////@@@@@@@//////////////
+  ////////@@@@@@@//////////////
+  ////////@@@@@@@//////////////        Curious and driven?
+  ///////////////@@@@@@@///////        Work with us!
+  ///////////////@@@@@@@///////
+  ///////////////@@@@@@@///////        https://join.replit.com/hack.with.us
+  ////////@@@@@@@//////////////
+  ////////@@@@@@@//////////////
+  ////////@@@@@@#//////////////
+   ///////////////////////////
+      /////////////////////
+      
+_app-f823eb50a92ed830.js:38 [LaunchDarkly] LaunchDarkly client initialized
+cdn.segment.com/next-integrations/actions/tiktok-pixel/920266289e7b08bf066b.js:1 
+            
+            
+           Failed to load resource: net::ERR_BLOCKED_BY_CLIENTUnderstand this error
+_app-f823eb50a92ed830.js:38 Failed to create PluginFactory Object
+(anonymous) @ _app-f823eb50a92ed830.js:38Understand this error
+_app-f823eb50a92ed830.js:38 Failed to load Remote Plugin Error: Failed to load https://cdn.segment.com/next-integrations/actions/tiktok-pixel/920266289e7b08bf066b.js
+    at o.onerror (load-script.ts:53:24)
+(anonymous) @ _app-f823eb50a92ed830.js:38Understand this warning
+www.google-analytics.com/analytics.js:1 
+            
+            
+           Failed to load resource: net::ERR_UNSAFE_REDIRECTUnderstand this error
+www.googletagmanager.com/gtag/js?id=AW-11411994397:1 
+            
+            
+           Failed to load resource: net::ERR_UNSAFE_REDIRECTUnderstand this error
+o1151714.ingest.sentry.io/api/6318792/envelope/?sentry_key=8aa91189a4274b5a8c9b7b01d46ea360&sentry_version=7&sentry_client=sentry.javascript.browser%2F7.112.0:1 
+            
+            
+           Failed to load resource: net::ERR_BLOCKED_BY_CLIENTUnderstand this error
+o1151714.ingest.sentry.io/api/6318792/envelope/?sentry_key=8aa91189a4274b5a8c9b7b01d46ea360&sentry_version=7&sentry_client=sentry.javascript.browser%2F7.112.0:1 
+            
+            
+           Failed to load resource: net::ERR_BLOCKED_BY_CLIENTUnderstand this error
+stallwart.build.js:1 stallwart: failed ping 1
+r.stripe.com/b:1 
+            
+            
+           Failed to load resource: net::ERR_BLOCKED_BY_CLIENTUnderstand this error
+r.stripe.com/b:1 
+            
+            
+           Failed to load resource: net::ERR_BLOCKED_BY_CLIENTUnderstand this error
+shared-62e59c60606a7f3aac0d7e5df81e82f4.js:1 Uncaught (in promise) FetchError: Error fetching https://r.stripe.com/b: Failed to fetch
+    at shared-62e59c60606a7f3aac0d7e5df81e82f4.js:1:211007Understand this error
+r.stripe.com/b:1 
+            
+            
+           Failed to load resource: net::ERR_BLOCKED_BY_CLIENTUnderstand this error
+r.stripe.com/b:1 
+            
+            
+           Failed to load resource: net::ERR_BLOCKED_BY_CLIENTUnderstand this error
+shared-62e59c60606a7f3aac0d7e5df81e82f4.js:1 Uncaught (in promise) FetchError: Error fetching https://r.stripe.com/b: Failed to fetch
+    at shared-62e59c60606a7f3aac0d7e5df81e82f4.js:1:211007Understand this error
+r.stripe.com/b:1 
+            
+            
+           Failed to load resource: net::ERR_BLOCKED_BY_CLIENTUnderstand this error
+r.stripe.com/b:1 
+            
+            
+           Failed to load resource: net::ERR_BLOCKED_BY_CLIENTUnderstand this error
+shared-62e59c60606a7f3aac0d7e5df81e82f4.js:1 Uncaught (in promise) FetchError: Error fetching https://r.stripe.com/b: Failed to fetch
+    at shared-62e59c60606a7f3aac0d7e5df81e82f4.js:1:211007Understand this error
+framework-490d12df31a0de1c.js:1 Error while parsing the 'sandbox' attribute: 'allow-downloads-without-user-activation' is an invalid sandbox flag.
+_ @ framework-490d12df31a0de1c.js:1Understand this error
+framework-490d12df31a0de1c.js:1 Unrecognized feature: 'ambient-light-sensor'.
+_ @ framework-490d12df31a0de1c.js:1Understand this warning
+framework-490d12df31a0de1c.js:1 Unrecognized feature: 'battery'.
+_ @ framework-490d12df31a0de1c.js:1Understand this warning
+framework-490d12df31a0de1c.js:1 Unrecognized feature: 'execution-while-not-rendered'.
+_ @ framework-490d12df31a0de1c.js:1Understand this warning
+framework-490d12df31a0de1c.js:1 Unrecognized feature: 'execution-while-out-of-viewport'.
+_ @ framework-490d12df31a0de1c.js:1Understand this warning
+framework-490d12df31a0de1c.js:1 Unrecognized feature: 'layout-animations'.
+_ @ framework-490d12df31a0de1c.js:1Understand this warning
+framework-490d12df31a0de1c.js:1 Unrecognized feature: 'legacy-image-formats'.
+_ @ framework-490d12df31a0de1c.js:1Understand this warning
+framework-490d12df31a0de1c.js:1 Unrecognized feature: 'navigation-override'.
+_ @ framework-490d12df31a0de1c.js:1Understand this warning
+framework-490d12df31a0de1c.js:1 Unrecognized feature: 'oversized-images'.
+_ @ framework-490d12df31a0de1c.js:1Understand this warning
+framework-490d12df31a0de1c.js:1 Unrecognized feature: 'publickey-credentials'.
+_ @ framework-490d12df31a0de1c.js:1Understand this warning
+framework-490d12df31a0de1c.js:1 Unrecognized feature: 'speaker-selection'.
+_ @ framework-490d12df31a0de1c.js:1Understand this warning
+framework-490d12df31a0de1c.js:1 Unrecognized feature: 'unoptimized-images'.
+_ @ framework-490d12df31a0de1c.js:1Understand this warning
+framework-490d12df31a0de1c.js:1 Unrecognized feature: 'unsized-media'.
+_ @ framework-490d12df31a0de1c.js:1Understand this warning
+framework-490d12df31a0de1c.js:1 Unrecognized feature: 'pointer-lock'.
+_ @ framework-490d12df31a0de1c.js:1Understand this warning
+framework-490d12df31a0de1c.js:1 Allow attribute will take precedence over 'allowfullscreen'.
+_ @ framework-490d12df31a0de1c.js:1Understand this warning
+framework-490d12df31a0de1c.js:1 Allow attribute will take precedence over 'allowpaymentrequest'.
+_ @ framework-490d12df31a0de1c.js:1Understand this warning
+HolyCrosserMobile:1 Banner not shown: beforeinstallpromptevent.preventDefault() called. The page must call beforeinstallpromptevent.prompt() to show the banner.
+workspace_iframe.html:32 Error while parsing the 'sandbox' attribute: 'allow-downloads-without-user-activation' is an invalid sandbox flag.Understand this error
+workspace_iframe.html:32 Unrecognized feature: 'ambient-light-sensor'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'battery'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'execution-while-not-rendered'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'execution-while-out-of-viewport'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'layout-animations'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'legacy-image-formats'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'navigation-override'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'oversized-images'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'publickey-credentials'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'speaker-selection'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'unoptimized-images'.Understand this warning
+workspace_iframe.html:32 Unrecognized feature: 'unsized-media'.Understand this warning
+workspace_iframe.html:32 Allow attribute will take precedence over 'allowfullscreen'.Understand this warning
+workspace_iframe.html:32 Allow attribute will take precedence over 'allowpaymentrequest'.Understand this warning
+use-week-data.tsx:15 Query for crossings (crossing-times) week 0: Object
+main.tsx:10 SW registered:  ServiceWorkerRegistration
+use-week-data.tsx:15 Query for crossings (crossing-times) week 0: Object
+data-table.tsx:142 Looking for date: 2025-06-09 in data: Array(7)
+data-table.tsx:144 Found dayData: undefined
+data-table.tsx:147 No data found for date: 2025-06-09
+data-table.tsx:142 Looking for date: 2025-06-10 in data: Array(7)
+data-table.tsx:144 Found dayData: undefined
+data-table.tsx:147 No data found for date: 2025-06-10
+data-table.tsx:142 Looking for date: 2025-06-11 in data: Array(7)
+data-table.tsx:144 Found dayData: undefined
+data-table.tsx:147 No data found for date: 2025-06-11
+data-table.tsx:142 Looking for date: 2025-06-12 in data: Array(7)
+data-table.tsx:144 Found dayData: undefined
+data-table.tsx:147 No data found for date: 2025-06-12
+data-table.tsx:142 Looking for date: 2025-06-13 in data: Array(7)
+data-table.tsx:144 Found dayData: undefined
+data-table.tsx:147 No data found for date: 2025-06-13
+data-table.tsx:142 Looking for date: 2025-06-14 in data: Array(7)
+data-table.tsx:144 Found dayData: undefined
+data-table.tsx:147 No data found for date: 2025-06-14
+data-table.tsx:142 Looking for date: 2025-06-15 in data: Array(7)
+data-table.tsx:144 Found dayData: undefined
+data-table.tsx:147 No data found for date: 2025-06-15
+4HolyCrosserMobile:1 Uncaught (in promise) Error: A listener indicated an asynchronous response by returning true, but the message channel closed before a response was receivedUnderstand this error
