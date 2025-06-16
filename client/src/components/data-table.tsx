@@ -289,9 +289,9 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
               {config.icon}
               {config.title}
             </div>
-            {screenType === "weather" && data && Array.isArray(data) && data.length > 0 && (
+            {screenType === "weather" && data && Array.isArray(data) && data.length > 0 && databaseTimestamp && (
               <div className="text-sm font-normal text-blue-600">
-                Source: {databaseTimestamp || "Weather Database"}
+                Updated: {databaseTimestamp}
               </div>
             )}
           </CardTitle>

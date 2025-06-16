@@ -278,22 +278,50 @@ export class DatabaseStorage implements IStorage {
 
   async getWeatherDataLastUpdated(): Promise<string | null> {
     try {
-      // Check if we have weather data in the harbor database
+      // Get the latest updated timestamp from the harbor database
       const result = await harborDb.execute(`
-        SELECT 1 as has_data
+        SELECT MAX(updated_at) as last_updated 
         FROM weather_data 
-        LIMIT 1
+        WHERE updated_at IS NOT NULL
       `);
       
-      if (result.rows && result.rows.length > 0) {
-        return "Harbor Data Manager";
+      if (result.rows && result.rows.length > 0 && (result.rows[0] as any).last_updated) {
+        const timestamp = new Date((result.rows[0] as any).last_updated);
+        return timestamp.toLocaleString('en-GB', {
+          timeZone: 'Europe/London',
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
       }
     } catch (error) {
-      console.error('Harbor database check failed:', error);
+      console.error('Harbor database timestamp query failed:', error);
+      
+      // Fallback to local database if available
+      try {
+        const localResult = await db.execute(`
+          SELECT MAX(updated_at) as last_updated 
+          FROM weather_data 
+          WHERE updated_at IS NOT NULL
+        `);
+        
+        if (localResult.rows && localResult.rows.length > 0 && (localResult.rows[0] as any).last_updated) {
+          const timestamp = new Date((localResult.rows[0] as any).last_updated);
+          return timestamp.toLocaleString('en-GB', {
+            timeZone: 'Europe/London',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+        }
+      } catch (localError) {
+        console.error('Local database timestamp query also failed:', localError);
+      }
     }
     
-    // Since we're successfully reading weather data from somewhere, return generic source
-    return "Weather Database";
+    return null;
   }
 
   async upsertAppSettings(settings: InsertAppSettings): Promise<AppSettings> {
