@@ -16,12 +16,12 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
   
   const { data: rawData, isLoading, error, refetch } = useWeekData(screenType, weekOffset);
 
-  // Extract data and timestamp from weather API response
-  const data = screenType === "weather" && rawData && typeof rawData === 'object' && 'data' in rawData 
+  // Extract data and timestamp from API response (all endpoints now return {data, lastUpdated})
+  const data = rawData && typeof rawData === 'object' && 'data' in rawData 
     ? rawData.data 
     : rawData;
   
-  const databaseTimestamp = screenType === "weather" && rawData && typeof rawData === 'object' && 'lastUpdated' in rawData 
+  const databaseTimestamp = rawData && typeof rawData === 'object' && 'lastUpdated' in rawData 
     ? rawData.lastUpdated as string
     : null;
 
@@ -389,6 +389,17 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
           </div>
         </div>
 
+        {/* Footer with data source and timestamp */}
+        {data && Array.isArray(data) && data.length > 0 && (
+          <div className="px-6 pb-4">
+            <div className="flex justify-between items-center text-xs text-gray-500">
+              <span>Source: Harbor Data Manager</span>
+              {databaseTimestamp && (
+                <span>Last updated: {databaseTimestamp}</span>
+              )}
+            </div>
+          </div>
+        )}
 
       </Card>
     </div>

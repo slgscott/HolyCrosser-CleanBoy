@@ -11,7 +11,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const weekOffset = parseInt(req.params.weekOffset);
       const data = await storage.getCrossingTimesForWeek(weekOffset);
-      res.json(data);
+      const lastUpdated = await storage.getCrossingTimesLastUpdated();
+      res.json({ data, lastUpdated });
     } catch (error) {
       console.error("Error fetching crossing times:", error);
       res.status(500).json({ message: "Failed to fetch crossing times" });
@@ -23,7 +24,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const weekOffset = parseInt(req.params.weekOffset);
       const data = await storage.getTideTimesForWeek(weekOffset);
-      res.json(data);
+      const lastUpdated = await storage.getTideTimesLastUpdated();
+      res.json({ data, lastUpdated });
     } catch (error) {
       console.error("Error fetching tide times:", error);
       res.status(500).json({ message: "Failed to fetch tide times" });

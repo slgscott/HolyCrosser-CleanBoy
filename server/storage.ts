@@ -44,6 +44,8 @@ export interface IStorage {
   getCrossingTimesForWeek(weekOffset: number): Promise<CrossingTime[]>;
   getTideTimesForWeek(weekOffset: number): Promise<TideData[]>;
   getWeatherDataForWeek(weekOffset: number): Promise<WeatherData[]>;
+  getCrossingTimesLastUpdated(): Promise<string | null>;
+  getTideTimesLastUpdated(): Promise<string | null>;
   getWeatherDataLastUpdated(): Promise<string | null>;
   
   // User preferences (local database)
@@ -274,6 +276,56 @@ export class DatabaseStorage implements IStorage {
   async getAppSettings(): Promise<AppSettings | undefined> {
     const [settings] = await db.select().from(appSettings).orderBy(desc(appSettings.id));
     return settings || undefined;
+  }
+
+  async getCrossingTimesLastUpdated(): Promise<string | null> {
+    try {
+      const result = await harborDb.execute(`
+        SELECT MAX(updated_at) as last_updated 
+        FROM crossing_times 
+        WHERE updated_at IS NOT NULL
+      `);
+      
+      if (result.rows && result.rows.length > 0 && (result.rows[0] as any).last_updated) {
+        const timestamp = new Date((result.rows[0] as any).last_updated);
+        return timestamp.toLocaleString('en-GB', {
+          timeZone: 'Europe/London',
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+      }
+    } catch (error) {
+      console.error('Harbor database crossing times timestamp query failed:', error);
+    }
+    
+    return null;
+  }
+
+  async getTideTimesLastUpdated(): Promise<string | null> {
+    try {
+      const result = await harborDb.execute(`
+        SELECT MAX(updated_at) as last_updated 
+        FROM tide_data 
+        WHERE updated_at IS NOT NULL
+      `);
+      
+      if (result.rows && result.rows.length > 0 && (result.rows[0] as any).last_updated) {
+        const timestamp = new Date((result.rows[0] as any).last_updated);
+        return timestamp.toLocaleString('en-GB', {
+          timeZone: 'Europe/London',
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+      }
+    } catch (error) {
+      console.error('Harbor database tide times timestamp query failed:', error);
+    }
+    
+    return null;
   }
 
   async getWeatherDataLastUpdated(): Promise<string | null> {
