@@ -278,7 +278,6 @@ export class DatabaseStorage implements IStorage {
 
   async getWeatherDataLastUpdated(): Promise<string | null> {
     try {
-      // Get the latest updated timestamp from the harbor database
       const result = await harborDb.execute(`
         SELECT MAX(updated_at) as last_updated 
         FROM weather_data 
@@ -296,29 +295,7 @@ export class DatabaseStorage implements IStorage {
         });
       }
     } catch (error) {
-      console.error('Harbor database timestamp query failed:', error);
-      
-      // Fallback to local database if available
-      try {
-        const localResult = await db.execute(`
-          SELECT MAX(updated_at) as last_updated 
-          FROM weather_data 
-          WHERE updated_at IS NOT NULL
-        `);
-        
-        if (localResult.rows && localResult.rows.length > 0 && (localResult.rows[0] as any).last_updated) {
-          const timestamp = new Date((localResult.rows[0] as any).last_updated);
-          return timestamp.toLocaleString('en-GB', {
-            timeZone: 'Europe/London',
-            month: 'short',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-          });
-        }
-      } catch (localError) {
-        console.error('Local database timestamp query also failed:', localError);
-      }
+      console.error('Harbor database weather timestamp query failed:', error);
     }
     
     return null;
