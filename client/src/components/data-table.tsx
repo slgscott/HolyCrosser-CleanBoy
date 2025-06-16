@@ -290,9 +290,9 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
               {config.icon}
               {config.title}
             </div>
-            {bstTimestamp && (
+            {showWeatherTimestamp && (
               <span className="text-sm font-normal text-blue-600">
-                Updated: {bstTimestamp}
+                Updated: {currentTime}
               </span>
             )}
           </CardTitle>
