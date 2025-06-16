@@ -14,15 +14,16 @@ interface DataTableProps {
 export default function DataTable({ screenType, weekOffset }: DataTableProps) {
   const weekDates = getWeekDates(weekOffset);
   
-  const { data, isLoading, error, refetch } = useWeekData(screenType, weekOffset);
+  const { data: rawData, isLoading, error, refetch } = useWeekData(screenType, weekOffset);
 
-  const timestampText = new Date().toLocaleString('en-GB', { 
-    timeZone: 'Europe/London',
-    month: 'short', 
-    day: 'numeric', 
-    hour: '2-digit', 
-    minute: '2-digit' 
-  });
+  // Extract data and timestamp from weather API response
+  const data = screenType === "weather" && rawData && typeof rawData === 'object' && 'data' in rawData 
+    ? rawData.data 
+    : rawData;
+  
+  const databaseTimestamp = screenType === "weather" && rawData && typeof rawData === 'object' && 'lastUpdated' in rawData 
+    ? rawData.lastUpdated 
+    : null;
 
   const getScreenConfig = () => {
     switch (screenType) {
@@ -288,9 +289,9 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
               {config.icon}
               {config.title}
             </div>
-            {screenType === "weather" && data && Array.isArray(data) && data.length > 0 ? (
+            {screenType === "weather" && data && Array.isArray(data) && data.length > 0 && databaseTimestamp ? (
               <div className="text-sm font-normal text-blue-600">
-                Updated: {timestampText}
+                Updated: {databaseTimestamp}
               </div>
             ) : null}
           </CardTitle>

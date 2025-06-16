@@ -35,7 +35,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const weekOffset = parseInt(req.params.weekOffset);
       const data = await storage.getWeatherDataForWeek(weekOffset);
-      res.json(data);
+      const lastUpdated = await storage.getWeatherDataLastUpdated();
+      res.json({ data, lastUpdated });
     } catch (error) {
       console.error("Error fetching weather data:", error);
       res.status(500).json({ message: "Failed to fetch weather data" });

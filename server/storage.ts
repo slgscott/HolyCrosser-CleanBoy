@@ -44,6 +44,7 @@ export interface IStorage {
   getCrossingTimesForWeek(weekOffset: number): Promise<CrossingTime[]>;
   getTideTimesForWeek(weekOffset: number): Promise<TideData[]>;
   getWeatherDataForWeek(weekOffset: number): Promise<WeatherData[]>;
+  getWeatherDataLastUpdated(): Promise<string | null>;
   
   // User preferences (local database)
   getAllUserPreferences(): Promise<UserPreferences[]>;
@@ -273,6 +274,52 @@ export class DatabaseStorage implements IStorage {
   async getAppSettings(): Promise<AppSettings | undefined> {
     const [settings] = await db.select().from(appSettings).orderBy(desc(appSettings.id));
     return settings || undefined;
+  }
+
+  async getWeatherDataLastUpdated(): Promise<string | null> {
+    try {
+      // First try harbor database
+      const result = await harborDb.execute(`
+        SELECT MAX(updated_at) as last_updated 
+        FROM weather_data 
+        WHERE updated_at IS NOT NULL
+      `);
+      
+      if (result.rows && result.rows.length > 0 && result.rows[0].last_updated) {
+        return new Date(result.rows[0].last_updated as string).toLocaleString('en-GB', {
+          timeZone: 'Europe/London',
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+      }
+    } catch (error) {
+      console.error('Harbor database query for last updated failed:', error);
+      
+      // Fallback to local database
+      try {
+        const result = await db.execute(`
+          SELECT MAX(updated_at) as last_updated 
+          FROM weather_data 
+          WHERE updated_at IS NOT NULL
+        `);
+        
+        if (result.rows && result.rows.length > 0 && result.rows[0].last_updated) {
+          return new Date(result.rows[0].last_updated as string).toLocaleString('en-GB', {
+            timeZone: 'Europe/London',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+        }
+      } catch (localError) {
+        console.error('Local database query for last updated also failed:', localError);
+      }
+    }
+    
+    return null;
   }
 
   async upsertAppSettings(settings: InsertAppSettings): Promise<AppSettings> {
