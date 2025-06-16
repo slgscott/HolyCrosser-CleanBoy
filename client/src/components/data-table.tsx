@@ -15,6 +15,14 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
   
   const { data, isLoading, error, refetch } = useWeekData(screenType, weekOffset);
 
+  const bstTimestamp = new Date().toLocaleString('en-GB', { 
+    timeZone: 'Europe/London',
+    month: 'short', 
+    day: 'numeric', 
+    hour: '2-digit', 
+    minute: '2-digit' 
+  });
+
   const getScreenConfig = () => {
     switch (screenType) {
       case "crossings":
@@ -281,12 +289,7 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
             </div>
             {screenType === "weather" && data && Array.isArray(data) && data.length > 0 && (
               <div className="text-sm font-normal text-blue-600">
-                Updated: {new Date().toLocaleDateString('en-US', { 
-                  month: 'short', 
-                  day: 'numeric', 
-                  hour: '2-digit', 
-                  minute: '2-digit' 
-                })}
+                Updated: {bstTimestamp}
               </div>
             )}
           </CardTitle>
