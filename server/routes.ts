@@ -11,7 +11,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json({ 
       status: 'healthy', 
       timestamp: new Date().toISOString(),
-      version: '2.9.0',
+      version: '2.9.1',
       environment: process.env.NODE_ENV || 'development'
     });
   });
