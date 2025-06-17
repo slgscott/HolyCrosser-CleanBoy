@@ -1,49 +1,69 @@
-# Deploy API Functions to Vercel
+# Vercel API Deployment Steps
 
-## Files to Add to GitHub Repository
+## Add Debug Endpoint
 
-Add these new API files to your HolyCrosserMobile repository:
+1. Copy this file to your GitHub repository as `api/debug-connection.js`:
 
-### 1. api/health.js
 ```javascript
-export default function handler(req, res) {
-  res.status(200).json({
-    status: 'healthy',
-    timestamp: new Date().toISOString(),
-    version: '2.9.0',
-    environment: 'production'
-  });
-}
-```
+import { Pool, neonConfig } from '@neondatabase/serverless';
+import ws from 'ws';
 
-### 2. api/package.json
-```json
-{
-  "type": "module",
-  "dependencies": {
-    "@neondatabase/serverless": "^0.10.4",
-    "drizzle-orm": "^0.39.1",
-    "ws": "^8.18.0"
+neonConfig.webSocketConstructor = ws;
+
+export default async function handler(req, res) {
+  try {
+    // Check if DATABASE_URL exists
+    const hasDbUrl = !!process.env.DATABASE_URL;
+    const dbUrlLength = process.env.DATABASE_URL ? process.env.DATABASE_URL.length : 0;
+    const dbUrlPrefix = process.env.DATABASE_URL ? process.env.DATABASE_URL.substring(0, 20) + '...' : 'NOT_SET';
+    
+    if (!hasDbUrl) {
+      return res.status(500).json({
+        error: 'DATABASE_URL environment variable is not set',
+        hasDbUrl,
+        dbUrlLength,
+        dbUrlPrefix
+      });
+    }
+    
+    // Test connection
+    const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+    const client = await pool.connect();
+    
+    // Simple query to test connection
+    const result = await client.query('SELECT NOW() as current_time');
+    client.release();
+    
+    res.status(200).json({
+      success: true,
+      hasDbUrl,
+      dbUrlLength,
+      dbUrlPrefix,
+      connectionTest: 'SUCCESS',
+      serverTime: result.rows[0].current_time
+    });
+    
+  } catch (error) {
+    res.status(500).json({
+      error: 'Database connection failed',
+      message: error.message,
+      hasDbUrl: !!process.env.DATABASE_URL,
+      dbUrlLength: process.env.DATABASE_URL ? process.env.DATABASE_URL.length : 0,
+      dbUrlPrefix: process.env.DATABASE_URL ? process.env.DATABASE_URL.substring(0, 20) + '...' : 'NOT_SET'
+    });
   }
 }
 ```
 
-### 3. api/crossing-times/[weekOffset].js
-(Copy the crossing times API function created above)
+## Test Steps
 
-### 4. api/tide-times/[weekOffset].js
-(Copy the tide times API function created above)
+1. Add the debug file to GitHub
+2. Redeploy in Vercel
+3. Visit `/api/debug-connection` to test database connectivity
+4. Check if tables exist with proper schema
 
-### 5. api/weather-data/[weekOffset].js
-(Copy the weather data API function created above)
+## Expected DATABASE_URL Format
 
-## Steps to Deploy:
+Your current: `postgresql://neondb_owner:npg_6UhpKZiB0wjN@ep-falling-feather-adrxwfqv.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require`
 
-1. Add all API files to your GitHub repository
-2. Commit changes
-3. In Vercel project settings, add environment variable:
-   - DATABASE_URL: postgresql://neondb_owner:npg_mtPkeuFTx3H8@ep-green-brook-ade6jg4t.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require
-4. Redeploy
-
-## Result:
-Your Holy Crosser app will have full database integration with authentic harbor data from Northumberland County Council.
+This looks correct for Neon database format.
