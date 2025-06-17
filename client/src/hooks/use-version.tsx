@@ -10,11 +10,7 @@ interface HealthResponse {
 export function useVersion() {
   const { data, isLoading, error } = useQuery<HealthResponse>({
     queryKey: ["/api/health"],
-<<<<<<< HEAD
     staleTime: 0,
-=======
-    staleTime: 0, // 5 minutes
->>>>>>> bd23dc6eafd966bc176fceb3c19fd7cb20ff5371
     refetchOnWindowFocus: false,
   });
 
