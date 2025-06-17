@@ -25,6 +25,7 @@
 - **Environment configuration** - Simplified deployment variable setup
 - **Custom domain support** - Complete DNS configuration documentation
 - **Alternative hosting preparation** - Multi-platform deployment readiness
+- **Dynamic version display** - App automatically shows current version from backend API
 
 ## Features Maintained
 - Authentic harbor data from Northumberland County Council ✓
