@@ -2,19 +2,10 @@
   "buildCommand": "vite build",
   "outputDirectory": "dist/client",
   "functions": {
-    "api/health.js": {
-      "maxDuration": 10
-    },
-    "api/health-v291.js": {
+    "api/v291.js": {
       "maxDuration": 10
     }
   },
-  "rewrites": [
-    {
-      "source": "/api/health",
-      "destination": "/api/health-v291"
-    }
-  ],
   "headers": [
     {
       "source": "/api/(.*)",
