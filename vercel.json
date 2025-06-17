@@ -1,28 +1,4 @@
 {
   "buildCommand": "vite build",
-  "outputDirectory": "dist/client",
-  "functions": {
-    "api/v291.js": {
-      "maxDuration": 10
-    }
-  },
-  "headers": [
-    {
-      "source": "/api/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-cache, no-store, must-revalidate, max-age=0"
-        },
-        {
-          "key": "Pragma",
-          "value": "no-cache"
-        },
-        {
-          "key": "Expires",
-          "value": "0"
-        }
-      ]
-    }
-  ]
+  "outputDirectory": "dist/client"
 }

@@ -9,7 +9,7 @@ interface HealthResponse {
 
 export function useVersion() {
   const { data, isLoading, error } = useQuery<HealthResponse>({
-    queryKey: ["/api/v291"],
+    queryKey: ["/api/health"],
     staleTime: 0,
     refetchOnWindowFocus: false,
   });
