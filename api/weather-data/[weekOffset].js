@@ -1,20 +1,28 @@
 import { Pool, neonConfig } from '@neondatabase/serverless';
 import { drizzle } from 'drizzle-orm/neon-serverless';
-import { pgTable, serial, varchar, decimal, integer, timestamp } from 'drizzle-orm/pg-core';
-import { gte, lte, sql } from 'drizzle-orm';
+import { pgTable, text, serial, integer } from 'drizzle-orm/pg-core';
+import { gte, lte } from 'drizzle-orm';
 import ws from 'ws';
 
 neonConfig.webSocketConstructor = ws;
 
-const weatherData = pgTable('weather_data', {
-  id: serial('id').primaryKey(),
-  date: varchar('date', { length: 10 }).notNull(),
-  time: varchar('time', { length: 5 }).notNull(),
-  temperature: decimal('temperature', { precision: 4, scale: 1 }).notNull(),
-  windSpeed: decimal('wind_speed', { precision: 4, scale: 1 }).notNull(),
-  windDirection: integer('wind_direction').notNull(),
-  description: varchar('description', { length: 255 }).notNull(),
-  lastUpdated: timestamp('last_updated').default(sql`CURRENT_TIMESTAMP`)
+const weatherData = pgTable("weather_data", {
+  id: serial("id").primaryKey(),
+  date: text("date").notNull(),
+  temperature: integer("temperature"),
+  condition: text("condition"),
+  description: text("description"),
+  windSpeed: integer("wind_speed"),
+  humidity: integer("humidity"),
+  windDirection: text("wind_direction"),
+  temperatureMin: text("temperature_min"),
+  temperatureMax: text("temperature_max"),
+  precipitationSum: text("precipitation_sum"),
+  windSpeedMax: text("wind_speed_max"),
+  windDirectionDominant: integer("wind_direction_dominant"),
+  uvIndexMax: text("uv_index_max"),
+  source: text("source"),
+  cloudcover: integer("cloudcover"),
 });
 
 function getWeekRange(weekOffset) {
