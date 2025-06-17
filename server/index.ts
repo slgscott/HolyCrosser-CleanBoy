@@ -66,24 +66,15 @@ app.use((req, res, next) => {
     serveStatic(app);
   }
 
-  // Use dynamic port for deployment, fallback to 5000
-  const port = process.env.PORT || 5000;
-  const server_instance = server.listen(port, "0.0.0.0", () => {
+  // ALWAYS serve the app on port 5000
+  // this serves both the API and the client.
+  // It is the only port that is not firewalled.
+  const port = 5000;
+  server.listen({
+    port,
+    host: "0.0.0.0",
+    reusePort: true,
+  }, () => {
     log(`serving on port ${port}`);
-  });
-
-  // Handle deployment environment gracefully
-  server_instance.on('error', (error: any) => {
-    if (error.code === 'EADDRINUSE') {
-      console.error(`Port ${port} is already in use. Trying alternative port...`);
-      const altPort = port + 1;
-      const altServer = server.listen(altPort, "0.0.0.0", () => {
-        log(`serving on alternative port ${altPort}`);
-      });
-      return altServer;
-    } else {
-      console.error('Server error:', error);
-      process.exit(1);
-    }
   });
 })();
