@@ -1,12 +1,11 @@
 {
   "version": 2,
   "name": "holy-crosser",
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/node"
+  "functions": {
+    "server/index.ts": {
+      "includeFiles": "server/**"
     }
-  ],
+  },
   "routes": [
     {
       "src": "/api/(.*)",
@@ -16,10 +15,5 @@
       "src": "/(.*)",
       "dest": "/client/dist/index.html"
     }
-  ],
-  "functions": {
-    "server/index.ts": {
-      "includeFiles": "server/**"
-    }
-  }
+  ]
 }
