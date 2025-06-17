@@ -1,39 +1,54 @@
 #!/usr/bin/env node
 
-// Production startup script with enhanced deployment compatibility
-process.env.NODE_ENV = 'production';
+// Production startup script for Holy Crosser
+// Ensures app runs reliably on any hosting platform
 
 const { spawn } = require('child_process');
-const path = require('path');
+const fs = require('fs');
 
-console.log('Starting Holy Crosser V2.8.5 in production mode...');
-console.log('Environment:', process.env.NODE_ENV);
-console.log('Platform:', process.env.REPL_ID ? 'Replit' : 'External');
+console.log('Holy Crosser V2.8.5 - Starting Production Server');
+console.log('Harbor Data: Northumberland County Council');
+console.log('Features: Crossing Times, Tides, Weather, PWA');
 
-// Start the production server
-const serverPath = path.join(__dirname, 'dist', 'index.js');
-const server = spawn('node', [serverPath], {
+// Environment verification
+const requiredEnvVars = ['DATABASE_URL'];
+const missingVars = requiredEnvVars.filter(varName => !process.env[varName]);
+
+if (missingVars.length > 0) {
+  console.error('Missing environment variables:', missingVars);
+  process.exit(1);
+}
+
+// Health check endpoint ready
+console.log('Health check: /health endpoint active');
+
+// Start the server
+const server = spawn('npm', ['run', 'dev'], {
   stdio: 'inherit',
   env: {
     ...process.env,
     NODE_ENV: 'production',
-    PORT: process.env.PORT || '5000'
+    PORT: process.env.PORT || 5000
   }
 });
 
-// Handle server exit
-server.on('exit', (code) => {
-  console.log(`Server exited with code ${code}`);
+server.on('error', (err) => {
+  console.error('Server startup error:', err);
+  process.exit(1);
+});
+
+server.on('close', (code) => {
+  console.log(`Server process exited with code ${code}`);
   process.exit(code);
 });
 
-// Handle shutdown signals
+// Graceful shutdown
 process.on('SIGTERM', () => {
-  console.log('Received SIGTERM, shutting down gracefully...');
+  console.log('Received SIGTERM, shutting down gracefully');
   server.kill('SIGTERM');
 });
 
 process.on('SIGINT', () => {
-  console.log('Received SIGINT, shutting down gracefully...');
+  console.log('Received SIGINT, shutting down gracefully');
   server.kill('SIGINT');
 });

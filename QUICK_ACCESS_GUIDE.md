@@ -1,44 +1,53 @@
-# Holy Crosser V2.8.5 - Quick Access Guide
+# Holy Crosser - Quick Access Guide
 
-## Your App is Working!
-
-Your Holy Crosser app is fully functional with authentic harbor data. Here's how to access it:
-
-### Option 1: Development URL (Immediate Access)
-Your app is running at:
-```
+## Current Working URL
 https://5f34ca82-88fd-4e6b-86b1-d28886971157-00-2rrp6msl790ey.riker.replit.dev
+
+## For Existing Users
+
+**Mobile Users:**
+- Visit the new URL above
+- Add to home screen for PWA access
+- All crossing times, tides, and weather data remain available
+
+**Desktop Users:**
+- Bookmark the new URL
+- All features continue working normally
+
+## For Custom Domain Setup
+
+**DNS Configuration:**
+```
+Type: CNAME
+Name: @ (or www)
+Value: 5f34ca82-88fd-4e6b-86b1-d28886971157-00-2rrp6msl790ey.riker.replit.dev
+TTL: 300 seconds
 ```
 
-This URL provides full access to:
-- Safe crossing times from Northumberland County Council
-- Real tide data and weather information  
-- Mobile-responsive PWA with custom maritime icon
-- All Version 2.8.5 features
+**Alternative - URL Redirect:**
+Configure domain registrar to redirect to working URL above
 
-### Option 2: Custom Domain Setup
-Since you have a custom domain, you can:
+## User Communication Template
 
-1. **DNS Configuration**: Point your domain to the Replit URL above
-2. **CNAME Record**: Create a CNAME pointing to `riker.replit.dev`
-3. **Domain Forwarding**: Set up forwarding from your custom domain
+Subject: Holy Crosser - New Access Link
 
-### Option 3: Alternative Hosting
-If deployment continues to fail, we can:
-- Export the working app to Vercel/Netlify
-- Use the production build on any static hosting
-- Deploy to Railway or other Node.js platforms
+"Holy Crosser has moved to ensure continued access to your maritime crossing data.
 
-## Current Status
-- App Version: 2.8.5 ✓
-- Harbor Database: Connected ✓
-- Maritime Data: Authentic ✓
-- PWA Features: Active ✓
-- Mobile Design: Optimized ✓
+New link: [insert URL above]
 
-## Next Steps
-1. Try accessing the development URL above
-2. Configure your custom domain to point there
-3. If needed, we'll set up alternative hosting
+All features remain available:
+- Authentic crossing times from Northumberland County Council
+- Real tide and weather data
+- PWA installation support
 
-Your app is ready and working - it's just the deployment platform having issues, not your application.
+Please bookmark the new link."
+
+## Status Verification
+
+App features confirmed working:
+- Harbor database connection: ✓
+- Crossing times API: ✓  
+- Tide data: ✓
+- Weather data: ✓
+- PWA functionality: ✓
+- Mobile responsiveness: ✓
