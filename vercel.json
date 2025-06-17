@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "framework": null,
   "buildCommand": "npm run build",
   "outputDirectory": "dist/client",
@@ -20,9 +19,3 @@
     }
   ]
 }
-=======
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist/public",
-  "installCommand": "npm install"
-}
->>>>>>> bd23dc6eafd966bc176fceb3c19fd7cb20ff5371
