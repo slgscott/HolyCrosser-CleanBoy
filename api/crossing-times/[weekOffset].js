@@ -9,11 +9,17 @@ neonConfig.webSocketConstructor = ws;
 // Define schema
 const crossingTimes = pgTable('crossing_times', {
   id: serial('id').primaryKey(),
-  date: date('date').notNull(),
-  fromTime: time('from_time').notNull(),
-  toTime: time('to_time').notNull(),
-  direction: text('direction').notNull(),
-  lastUpdated: timestamp('last_updated')
+  date: text('date').notNull(),
+  safeFrom1: text('safe_from_1'),
+  safeTo1: text('safe_to_1'),
+  safeFrom2: text('safe_from_2'),
+  safeTo2: text('safe_to_2'),
+  unsafeFrom1: text('unsafe_from_1'),
+  unsafeTo1: text('unsafe_to_1'),
+  unsafeFrom2: text('unsafe_from_2'),
+  unsafeTo2: text('unsafe_to_2'),
+  status: text('status').notNull().default('active'),
+  notes: text('notes')
 });
 
 function getWeekRange(weekOffset) {

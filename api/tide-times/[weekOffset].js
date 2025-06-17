@@ -8,11 +8,15 @@ neonConfig.webSocketConstructor = ws;
 
 const tideData = pgTable('tide_data', {
   id: serial('id').primaryKey(),
-  date: date('date').notNull(),
-  time: time('time').notNull(),
-  height: decimal('height', { precision: 4, scale: 2 }).notNull(),
-  type: text('type').notNull(),
-  lastUpdated: timestamp('last_updated')
+  date: text('date').notNull(),
+  highTide1Time: text('high_tide_1_time'),
+  highTide1Height: text('high_tide_1_height'),
+  lowTide1Time: text('low_tide_1_time'),
+  lowTide1Height: text('low_tide_1_height'),
+  highTide2Time: text('high_tide_2_time'),
+  highTide2Height: text('high_tide_2_height'),
+  lowTide2Time: text('low_tide_2_time'),
+  lowTide2Height: text('low_tide_2_height')
 });
 
 function getWeekRange(weekOffset) {
