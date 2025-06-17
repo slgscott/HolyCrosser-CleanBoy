@@ -1,20 +1,20 @@
 import { Pool, neonConfig } from '@neondatabase/serverless';
 import { drizzle } from 'drizzle-orm/neon-serverless';
-import { pgTable, serial, date, time, decimal, integer, text, timestamp } from 'drizzle-orm/pg-core';
-import { gte, lte } from 'drizzle-orm';
+import { pgTable, serial, varchar, decimal, integer, timestamp } from 'drizzle-orm/pg-core';
+import { gte, lte, sql } from 'drizzle-orm';
 import ws from 'ws';
 
 neonConfig.webSocketConstructor = ws;
 
 const weatherData = pgTable('weather_data', {
   id: serial('id').primaryKey(),
-  date: date('date').notNull(),
-  time: time('time').notNull(),
+  date: varchar('date', { length: 10 }).notNull(),
+  time: varchar('time', { length: 5 }).notNull(),
   temperature: decimal('temperature', { precision: 4, scale: 1 }).notNull(),
   windSpeed: decimal('wind_speed', { precision: 4, scale: 1 }).notNull(),
   windDirection: integer('wind_direction').notNull(),
-  description: text('description').notNull(),
-  lastUpdated: timestamp('last_updated')
+  description: varchar('description', { length: 255 }).notNull(),
+  lastUpdated: timestamp('last_updated').default(sql`CURRENT_TIMESTAMP`)
 });
 
 function getWeekRange(weekOffset) {
