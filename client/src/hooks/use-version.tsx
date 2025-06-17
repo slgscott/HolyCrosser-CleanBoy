@@ -1,24 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
-
-interface HealthResponse {
-  status: string;
-  timestamp: string;
-  version: string;
-  environment: string;
-}
+import { APP_VERSION, APP_STATUS, APP_ENVIRONMENT } from "@/lib/version";
 
 export function useVersion() {
-  const { data, isLoading, error } = useQuery<HealthResponse>({
-    queryKey: ["/api/version"],
-    staleTime: 0, // Force fresh data
-    refetchOnWindowFocus: true,
-  });
-
   return {
-    version: data?.version || "Unknown",
-    status: data?.status || "Unknown",
-    environment: data?.environment || "Unknown",
-    isLoading,
-    error,
+    version: APP_VERSION,
+    status: APP_STATUS,
+    environment: APP_ENVIRONMENT,
+    isLoading: false,
+    error: null,
   };
 }
