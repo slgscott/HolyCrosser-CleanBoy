@@ -4,15 +4,18 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { queryClient, apiRequest } from "@/lib/queryClient";
-import { ChevronLeft, Save } from "lucide-react";
+import { useVersion } from "@/hooks/use-version";
+import { ChevronLeft, Save, Info } from "lucide-react";
 import { useLocation } from "wouter";
 import type { UserPreferences, AppSettings } from "@shared/schema";
 
 export default function Settings() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
+  const { version, status, environment } = useVersion();
 
   // Query for preferences
   const { data: preferences, isLoading: preferencesLoading } = useQuery<UserPreferences[]>({
@@ -311,6 +314,35 @@ export default function Settings() {
           <Save className="h-4 w-4 mr-2" />
           {savePreferencesMutation.isPending ? "Saving..." : "Save Column Settings"}
         </Button>
+
+        {/* App Information */}
+        <Card className="mt-6">
+          <CardHeader>
+            <CardTitle className="text-lg flex items-center">
+              <Info className="h-5 w-5 mr-2" />
+              App Information
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="flex justify-between items-center">
+              <span className="text-sm font-medium">Version:</span>
+              <Badge variant="secondary">{version}</Badge>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm font-medium">Status:</span>
+              <Badge variant={status === 'healthy' ? 'default' : 'destructive'}>{status}</Badge>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm font-medium">Environment:</span>
+              <Badge variant="outline">{environment}</Badge>
+            </div>
+            <div className="pt-2 border-t">
+              <p className="text-xs text-gray-600">
+                Maritime navigation app with authentic harbor data from Northumberland County Council
+              </p>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

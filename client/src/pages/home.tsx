@@ -3,6 +3,7 @@ import WeekNavigation from "@/components/week-navigation";
 import DataTable from "@/components/data-table";
 import BottomNavigation from "@/components/bottom-navigation";
 import PWAInstallPrompt from "@/components/pwa-install-prompt";
+import { useVersion } from "@/hooks/use-version";
 
 export type ScreenType = "crossings" | "tides" | "weather";
 
@@ -66,6 +67,7 @@ const getDailyQuote = () => {
 export default function Home() {
   const [currentScreen, setCurrentScreen] = useState<ScreenType>("crossings");
   const [weekOffset, setWeekOffset] = useState(0);
+  const { version } = useVersion();
   
   const dailyQuote = getDailyQuote();
 
@@ -113,7 +115,7 @@ export default function Home() {
             <rect x="0" y="8.5" width="32" height="4" fill="#DC143C"/>
           </svg>
         </div>
-        <p className="opacity-60 absolute top-0 right-3" style={{ fontSize: '9px' }}>Version 2.8.5</p>
+        <p className="opacity-60 absolute top-0 right-3" style={{ fontSize: '9px' }}>Version {version}</p>
       </header>
 
       {/* Week Navigation */}
