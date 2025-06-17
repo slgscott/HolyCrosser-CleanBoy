@@ -15,10 +15,10 @@ console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
 console.log(`Platform: ${isReplit ? 'Replit' : 'External'}`);
 console.log(`Harbor DB connection attempt: ${harborDbUrl.split('@')[1]?.split('/')[0] || 'unknown'}`);
 
-// Local database for user preferences
+// Local database for user preferences (optional in deployment)
 const localDbUrl = process.env.DATABASE_URL;
 
-if (!localDbUrl) {
+if (!localDbUrl && !isProduction) {
   throw new Error(
     "DATABASE_URL must be set. Did you forget to provision a database?",
   );
@@ -42,8 +42,8 @@ export const harborPool = new Pool(harborPoolConfig);
 export const harborDb = drizzle({ client: harborPool, schema });
 
 // Local database connection (for user preferences and app settings)
-export const localPool = new Pool({ connectionString: localDbUrl });
-export const db = drizzle({ client: localPool, schema });
+export const localPool = localDbUrl ? new Pool({ connectionString: localDbUrl }) : null;
+export const db = localPool ? drizzle({ client: localPool, schema }) : null;
 
 // Initialize local database tables if needed
 async function initializeLocalTables() {
