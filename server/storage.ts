@@ -65,11 +65,13 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
+    if (!db) return undefined;
     const [user] = await db.select().from(users).where(eq(users.username, username));
     return user || undefined;
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
+    if (!db) throw new Error("User authentication not available in deployment");
     const [user] = await db
       .insert(users)
       .values(insertUser)
@@ -100,6 +102,11 @@ export class DatabaseStorage implements IStorage {
       console.error('Harbor database connection error, trying local cache:', error instanceof Error ? error.message : 'Unknown error');
       
       // Fallback to local cache
+      if (!db) {
+        console.warn('Local database not available in deployment environment');
+        return [];
+      }
+      
       try {
         const localResults = await db
           .select()
@@ -121,7 +128,7 @@ export class DatabaseStorage implements IStorage {
             await seedEssentialData();
             
             // Retry the query after seeding
-            const seededResults = await db
+            const seededResults = await db!
               .select()
               .from(crossingTimes)
               .where(
@@ -167,6 +174,11 @@ export class DatabaseStorage implements IStorage {
       return results;
     } catch (error) {
       console.error('Harbor database tide data error, trying local cache:', error instanceof Error ? error.message : 'Unknown error');
+      
+      if (!db) {
+        console.warn('Local database not available in deployment environment');
+        return [];
+      }
       
       try {
         const localResults = await db
