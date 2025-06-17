@@ -3,15 +3,8 @@
   "name": "holy-crosser",
   "builds": [
     {
-      "src": "server/index.ts",
+      "src": "package.json",
       "use": "@vercel/node"
-    },
-    {
-      "src": "client/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
     }
   ],
   "routes": [
@@ -21,12 +14,9 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/client/dist/$1"
+      "dest": "/client/dist/index.html"
     }
   ],
-  "env": {
-    "DATABASE_URL": "@database_url"
-  },
   "functions": {
     "server/index.ts": {
       "includeFiles": "server/**"
