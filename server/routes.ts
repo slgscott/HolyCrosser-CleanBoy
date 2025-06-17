@@ -6,6 +6,16 @@ import { insertUserPreferencesSchema, insertAppSettingsSchema } from "@shared/sc
 
 export async function registerRoutes(app: Express): Promise<Server> {
   
+  // Health check endpoint for deployment monitoring
+  app.get("/api/health", (req, res) => {
+    res.json({ 
+      status: 'healthy', 
+      timestamp: new Date().toISOString(),
+      version: '2.8.5',
+      environment: process.env.NODE_ENV || 'development'
+    });
+  });
+
   // Get crossing times for a specific week
   app.get("/api/crossing-times/:weekOffset", async (req, res) => {
     try {

@@ -46,4 +46,7 @@ async function testHarborConnection() {
   }
 }
 
-testHarborConnection();
+// Test connection asynchronously without blocking startup
+testHarborConnection().catch(() => {
+  console.log('Harbor database connection will be retried on first request');
+});
