@@ -1,0 +1,39 @@
+HOLY CROSSER VERCEL DEPLOYMENT PACKAGE
+
+Copy these files from your Replit project to a new folder on your computer:
+
+1. ROOT FILES:
+   - package.json
+   - vercel.json
+   - tsconfig.json
+   - tailwind.config.ts
+   - vite.config.ts
+   - drizzle.config.ts
+   - postcss.config.js
+   - components.json
+
+2. CLIENT FOLDER (copy entire folder with all contents):
+   - client/index.html
+   - client/public/ (all files inside)
+   - client/src/ (all files and subfolders)
+
+3. SERVER FOLDER (copy entire folder):
+   - server/index.ts
+   - server/routes.ts
+   - server/storage.ts
+   - server/db.ts
+   - server/vite.ts
+
+4. SHARED FOLDER:
+   - shared/schema.ts
+
+VERCEL UPLOAD STEPS:
+1. Create folder "holy-crosser" on your computer
+2. Copy all files above maintaining folder structure
+3. Zip the folder
+4. Go to vercel.com
+5. Click "New Project" → "Browse" → select your zip
+6. Add environment variable DATABASE_URL with your Neon database connection
+7. Add your custom domain in settings
+
+Result: Users access via your custom domain with authentic harbor data.
