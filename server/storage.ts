@@ -2,9 +2,15 @@ import {
   crossingTimes,
   tideData,
   weatherData,
+  userPreferences,
+  appSettings,
   type CrossingTime,
   type TideData,
-  type WeatherData
+  type WeatherData,
+  type UserPreferences,
+  type AppSettings,
+  type InsertUserPreferences,
+  type InsertAppSettings
 } from "@shared/schema";
 import { harborDb } from "./db";
 import { gte, lte, and } from "drizzle-orm";
@@ -34,6 +40,12 @@ export interface IStorage {
   getCrossingTimesLastUpdated(): Promise<string | null>;
   getTideTimesLastUpdated(): Promise<string | null>;
   getWeatherDataLastUpdated(): Promise<string | null>;
+  
+  // User preferences and app settings
+  getAllUserPreferences(): Promise<UserPreferences[]>;
+  upsertUserPreferences(preferences: InsertUserPreferences): Promise<UserPreferences>;
+  getAppSettings(): Promise<AppSettings | null>;
+  upsertAppSettings(settings: InsertAppSettings): Promise<AppSettings>;
 }
 
 export class DatabaseStorage implements IStorage {
