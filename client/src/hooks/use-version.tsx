@@ -15,9 +15,9 @@ export function useVersion() {
   });
 
   return {
-    version: data?.version || "2.9.2",
-    status: data?.status || "healthy",
-    environment: data?.environment || "production",
+    version: data?.version || "Loading...",
+    status: data?.status || "Unknown",
+    environment: data?.environment || "Unknown",
     isLoading,
     error,
   };

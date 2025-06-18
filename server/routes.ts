@@ -3,6 +3,17 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { z } from "zod";
 import { insertUserPreferencesSchema, insertAppSettingsSchema } from "@shared/schema";
+import { readFileSync } from "fs";
+import { join } from "path";
+
+// Read version from VERSION file
+function getAppVersion(): string {
+  try {
+    return readFileSync(join(process.cwd(), 'VERSION'), 'utf8').trim();
+  } catch {
+    return 'Unknown';
+  }
+}
 
 export async function registerRoutes(app: Express): Promise<Server> {
   
@@ -11,7 +22,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json({ 
       status: 'healthy', 
       timestamp: new Date().toISOString(),
-      version: '2.9.1',
+      version: getAppVersion(),
       environment: process.env.NODE_ENV || 'development'
     });
   });
