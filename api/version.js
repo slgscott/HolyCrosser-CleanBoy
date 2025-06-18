@@ -1,26 +1,12 @@
-import { readFileSync } from 'fs';
-import { join } from 'path';
+import { createHealthResponse } from '../version-utils.js';
 
-// Read version dynamically from VERSION file
-function getAppVersion() {
-  try {
-    return readFileSync(join(process.cwd(), 'VERSION'), 'utf8').trim();
-  } catch {
-    return 'Unknown';
-  }
-}
-
-// Dynamic version endpoint - reads from VERSION file
+// Dynamic version endpoint - centralized system
 export default function handler(req, res) {
   res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
   res.setHeader('Pragma', 'no-cache');
   res.setHeader('Expires', '0');
   
-  res.status(200).json({
-    status: 'healthy',
-    timestamp: new Date().toISOString(),
-    version: getAppVersion(),
-    environment: 'production',
+  res.status(200).json(createHealthResponse({
     cacheBuster: Date.now()
-  });
+  }));
 }

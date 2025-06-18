@@ -6,14 +6,7 @@ import { insertUserPreferencesSchema, insertAppSettingsSchema } from "@shared/sc
 import { readFileSync } from "fs";
 import { join } from "path";
 
-// Read version from VERSION file
-function getAppVersion(): string {
-  try {
-    return readFileSync(join(process.cwd(), 'VERSION'), 'utf8').trim();
-  } catch {
-    return 'Unknown';
-  }
-}
+import { getAppVersion } from "../version-utils.js";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   
