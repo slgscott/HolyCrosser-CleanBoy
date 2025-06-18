@@ -1,4 +1,4 @@
-// Force version 2.9.1 bypass cache
+// Force version 2.9.2 bypass cache
 export default function handler(req, res) {
   res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
   res.setHeader('Pragma', 'no-cache');
@@ -7,7 +7,7 @@ export default function handler(req, res) {
   res.status(200).json({
     status: 'healthy',
     timestamp: new Date().toISOString(),
-    version: '2.9.1',
+    version: '2.9.2',
     environment: 'production',
     cacheBuster: Date.now()
   });
