@@ -23,6 +23,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get crossing times for a specific week
   app.get("/api/crossing-times/:weekOffset", async (req, res) => {
     try {
+      // Prevent caching to ensure fresh data
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+      res.setHeader('Pragma', 'no-cache');
+      res.setHeader('Expires', '0');
+      
       const weekOffset = parseInt(req.params.weekOffset);
       const data = await storage.getCrossingTimesForWeek(weekOffset);
       const lastUpdated = await storage.getCrossingTimesLastUpdated();
@@ -36,6 +41,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get tide times for a specific week
   app.get("/api/tide-times/:weekOffset", async (req, res) => {
     try {
+      // Prevent caching to ensure fresh data
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+      res.setHeader('Pragma', 'no-cache');
+      res.setHeader('Expires', '0');
+      
       const weekOffset = parseInt(req.params.weekOffset);
       const data = await storage.getTideTimesForWeek(weekOffset);
       const lastUpdated = await storage.getTideTimesLastUpdated();
@@ -49,6 +59,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get weather data for a specific week
   app.get("/api/weather-data/:weekOffset", async (req, res) => {
     try {
+      // Prevent caching to ensure fresh data
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+      res.setHeader('Pragma', 'no-cache');
+      res.setHeader('Expires', '0');
+      
       const weekOffset = parseInt(req.params.weekOffset);
       const data = await storage.getWeatherDataForWeek(weekOffset);
       const lastUpdated = await storage.getWeatherDataLastUpdated();
