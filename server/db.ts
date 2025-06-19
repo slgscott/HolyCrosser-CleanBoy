@@ -5,19 +5,23 @@ import * as schema from "@shared/schema";
 
 neonConfig.webSocketConstructor = ws;
 
-// External Harbor Data Manager database URL
-const harborDbUrl = "postgresql://neondb_owner:npg_mtPkeuFTx3H8@ep-green-brook-ade6jg4t.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require";
+// Use DATABASE_URL environment variable
+const databaseUrl = process.env.DATABASE_URL;
+
+if (!databaseUrl) {
+  throw new Error('DATABASE_URL environment variable is not set');
+}
 
 // Check if we're in production and log connection attempts
 const isProduction = process.env.NODE_ENV === 'production';
 const isReplit = !!process.env.REPL_ID;
 console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
 console.log(`Platform: ${isReplit ? 'Replit' : 'External'}`);
-console.log(`Harbor DB connection attempt: ${harborDbUrl.split('@')[1]?.split('/')[0] || 'unknown'}`);
+console.log(`Database connection attempt: ${databaseUrl.split('@')[1]?.split('/')[0] || 'unknown'}`);
 
-// Harbor Data Manager connection with deployment-optimized settings
+// Database connection with deployment-optimized settings
 const poolConfig = {
-  connectionString: harborDbUrl,
+  connectionString: databaseUrl,
   connectionTimeoutMillis: 10000,
   idleTimeoutMillis: 30000,
   max: 3,
