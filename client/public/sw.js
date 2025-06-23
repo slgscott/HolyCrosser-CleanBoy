@@ -1,12 +1,11 @@
-const CACHE_NAME = 'holy-crosser-v2.4.0';
-const STATIC_CACHE = 'holy-crosser-static-v2.4.0';
-const DATA_CACHE = 'holy-crosser-data-v2.4.0';
+const CACHE_NAME = 'holy-crosser-v2.9.3';
+const STATIC_CACHE = 'holy-crosser-static-v2.9.3';
+const DATA_CACHE = 'holy-crosser-data-v2.9.3';
 
 const staticFiles = [
   '/',
   '/manifest.json',
-  '/icon-192.svg',
-  '/icon-512.svg'
+  '/holy-crosser-icon.png'
 ];
 
 // Install service worker

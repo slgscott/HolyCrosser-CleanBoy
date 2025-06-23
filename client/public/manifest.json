@@ -1,5 +1,5 @@
 {
-  "name": "Holy Crosser V2.9.2",
+  "name": "Holy Crosser V2.9.3",
   "short_name": "Holy Crosser",
   "description": "Maritime navigation app providing safe harbor crossing times, tide data, and weather information",
   "start_url": "/",
@@ -11,6 +11,12 @@
   "lang": "en",
   "categories": ["navigation", "weather", "travel"],
   "icons": [
+    {
+      "src": "/holy-crosser-icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
     {
       "src": "/icon-192.png",
       "sizes": "192x192",
