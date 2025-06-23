@@ -1,6 +1,6 @@
-const CACHE_NAME = 'holy-crosser-v2.9.3';
-const STATIC_CACHE = 'holy-crosser-static-v2.9.3';
-const DATA_CACHE = 'holy-crosser-data-v2.9.3';
+const CACHE_NAME = 'holy-crosser-v2.9.4';
+const STATIC_CACHE = 'holy-crosser-static-v2.9.4';
+const DATA_CACHE = 'holy-crosser-data-v2.9.4';
 
 const staticFiles = [
   '/',

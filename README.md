@@ -89,5 +89,5 @@ This project is licensed under the MIT License.
 
 ---
 
-**Version**: 2.9.3  
-**Status**: Production Ready
+**Version**: 2.9.4  
+**Status**: Production Ready - Mobile Optimized
