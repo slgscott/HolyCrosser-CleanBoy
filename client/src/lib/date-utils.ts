@@ -1,10 +1,15 @@
 export function getWeekRange(weekOffset: number) {
-  // Create Monday June 23rd using local timezone to match the actual data start date
-  const baseMonday = new Date(2025, 5, 23); // Year, Month (0-indexed), Day - June 23rd 2025
+  // Calculate the current week dynamically based on today's date
+  const today = new Date();
+  const currentDay = today.getDay(); // 0 = Sunday, 1 = Monday, etc.
+  const daysToMonday = currentDay === 0 ? 6 : currentDay - 1; // Days to subtract to get to Monday
   
-  const startOfWeek = new Date(baseMonday);
-  startOfWeek.setDate(baseMonday.getDate() + (weekOffset * 7));
-  startOfWeek.setHours(0, 0, 0, 0);
+  const currentMonday = new Date(today);
+  currentMonday.setDate(today.getDate() - daysToMonday);
+  currentMonday.setHours(0, 0, 0, 0);
+  
+  const startOfWeek = new Date(currentMonday);
+  startOfWeek.setDate(currentMonday.getDate() + (weekOffset * 7));
   
   const endOfWeek = new Date(startOfWeek);
   endOfWeek.setDate(startOfWeek.getDate() + 6);
