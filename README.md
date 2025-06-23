@@ -1,32 +1,93 @@
-# Holy Crosser V2.9.0
+# Holy Crosser ⚓
 
-Maritime navigation Progressive Web App with authentic harbor data from Northumberland County Council.
-
-## Quick Deploy to Vercel (Free)
-
-1. Fork this repository to GitHub
-2. Connect GitHub repo to Vercel
-3. Add environment variable: `DATABASE_URL` (your Neon database URL)
-4. Deploy automatically
-5. Configure custom domain in Vercel dashboard
-
-## Current Access
-
-App is functional at: `https://5f34ca82-88fd-4e6b-86b1-d28886971157-00-2rrp6msl790ey.riker.replit.dev`
+A Progressive Web App for maritime navigation providing real-time harbor crossing times, tide data, and weather information.
 
 ## Features
 
-- Authentic crossing times from Northumberland County Council
-- Real tide data integration
-- Weather information
-- Progressive Web App (PWA) support
-- Mobile-responsive design
-- Custom maritime branding
+- **Safe Crossing Times**: Real-time harbor crossing safety windows
+- **Tide Information**: High/low tide times and heights  
+- **Weather Data**: Temperature, precipitation, wind, and conditions
+- **Progressive Web App**: Install on mobile devices
+- **Offline Support**: Service worker for offline functionality
+- **Week Navigation**: Browse data for multiple weeks
 
-## Database
+## Tech Stack
 
-Connected to Harbor Data Manager database with read-only access to authentic maritime data.
+- **Frontend**: React, TypeScript, Tailwind CSS, Vite
+- **Backend**: Node.js, Express, TypeScript
+- **Database**: PostgreSQL (Neon)
+- **Deployment**: Vercel
+- **UI Components**: shadcn/ui, Radix UI
+
+## Local Development
+
+1. **Clone & Install**:
+   ```bash
+   git clone https://github.com/yourusername/holy-crosser.git
+   cd holy-crosser
+   npm install
+   ```
+
+2. **Environment Setup**:
+   Create `.env` file:
+   ```env
+   DATABASE_URL=your_postgresql_connection_string
+   NODE_ENV=development
+   ```
+
+3. **Start Development**:
+   ```bash
+   npm run dev
+   ```
+   App will be available at `http://localhost:5000`
 
 ## Deployment
 
-Configured for zero-cost deployment on Vercel free tier with custom domain support.
+### Vercel (Recommended)
+
+1. Push code to GitHub
+2. Connect repository to Vercel
+3. Set environment variables in Vercel dashboard:
+   - `DATABASE_URL`: PostgreSQL connection string
+   - `NODE_ENV`: production
+4. Deploy automatically on push
+
+## Project Structure
+
+```
+├── client/          # React frontend
+│   ├── src/
+│   │   ├── components/  # UI components
+│   │   ├── hooks/       # Custom React hooks
+│   │   ├── lib/         # Utilities
+│   │   └── pages/       # Page components
+│   └── public/      # Static assets
+├── server/          # Express backend
+│   ├── routes.ts    # API routes
+│   ├── storage.ts   # Database layer
+│   └── index.ts     # Server entry
+├── shared/          # Shared types/schemas
+└── api/            # Vercel serverless functions
+```
+
+## Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run db:push` - Push database schema changes
+
+## Data Sources
+
+- **Harbor Data**: Northumberland County Council
+- **Database**: Real-time crossing, tide, and weather data
+- **Updates**: Automatic data refresh from external sources
+
+## License
+
+This project is licensed under the MIT License.
+
+---
+
+**Version**: 2.9.3  
+**Status**: Production Ready

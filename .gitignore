@@ -1,7 +1,108 @@
+# Dependencies
 node_modules/
-dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Production builds
+/dist
+/build
+
+# Environment variables
 .env
 .env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
 .DS_Store
+Thumbs.db
+
+# Logs
+logs
 *.log
-.vercel
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# Dependency directories
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# parcel-bundler cache
+.cache
+.parcel-cache
+
+# Next.js build output
+.next
+
+# Nuxt.js build / generate output
+.nuxt
+dist
+
+# Storybook build outputs
+.out
+.storybook-out
+
+# Temporary folders
+tmp/
+temp/
+
+# Replit specific
+.replit
+replit.nix
+
+# Attached assets (development files)
+attached_assets/
+
+# Development documentation files (keep only essential ones)
+DEPLOYMENT_*.md
+COMPLETE_*.md
+CORRECTED_*.md
+EMERGENCY_*.md
+EXISTING_*.md
+FASTEST_*.md
+FORCE_*.md
+GITHUB_*.md
+MISSING_*.md
+NO_*.md
+QUICK_*.md
+SCHEMA_*.md
+SIMPLE_*.md
+USER_*.md
+VERCEL_*.md
+WEATHER_*.md
+V2.9.0_*.md
+copy-to-vercel.txt
+deploy-*.js
+deploy-*.cjs
+export-production.js
+start-production.js
+public-access.html
+vercel-fixed.json
+build.json
+version-utils.js
