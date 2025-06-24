@@ -8,11 +8,25 @@ import * as schema from "@shared/schema";
 // Configure Neon WebSocket for serverless environments
 neonConfig.webSocketConstructor = ws;
 
-// Use DATABASE_URL environment variable
-const databaseUrl = process.env.DATABASE_URL;
+// Use DATABASE_URL environment variable or construct from Railway variables
+let databaseUrl = process.env.DATABASE_URL;
+
+// If DATABASE_URL is not set or if we're on Railway with individual variables, construct it
+if (!databaseUrl || (process.env.RAILWAY_ENVIRONMENT && process.env.PGHOST)) {
+  const host = process.env.PGHOST || process.env.DB_HOST;
+  const port = process.env.PGPORT || process.env.DB_PORT || '5432';
+  const user = process.env.PGUSER || process.env.DB_USER || 'postgres';
+  const password = process.env.PGPASSWORD || process.env.DB_PASSWORD;
+  const database = process.env.PGDATABASE || process.env.DB_NAME || 'railway';
+  
+  if (host && password) {
+    databaseUrl = `postgresql://${user}:${password}@${host}:${port}/${database}`;
+    console.log('Constructed DATABASE_URL from individual variables');
+  }
+}
 
 if (!databaseUrl) {
-  throw new Error('DATABASE_URL environment variable is not set');
+  throw new Error('DATABASE_URL environment variable is not set and cannot be constructed from individual variables');
 }
 
 // Check if we're in production and log connection attempts
@@ -51,12 +65,18 @@ if (isNeonUrl) {
   // Use standard PostgreSQL client for Railway and other PostgreSQL instances
   const pgPoolConfig = {
     connectionString: databaseUrl,
-    connectionTimeoutMillis: isRailway ? 15000 : 10000,
+    connectionTimeoutMillis: isRailway ? 20000 : 10000,
     idleTimeoutMillis: isRailway ? 60000 : 30000,
     max: isRailway ? 5 : 3,
     min: 0,
     allowExitOnIdle: true,
-    ssl: isRailway ? { rejectUnauthorized: false } : false
+    ssl: isRailway ? { rejectUnauthorized: false } : false,
+    // Railway-specific connection options
+    ...(isRailway && {
+      query_timeout: 30000,
+      statement_timeout: 30000,
+      application_name: 'holy-crosser'
+    })
   };
   
   harborPool = new PgPool(pgPoolConfig);
@@ -72,11 +92,18 @@ async function testDatabaseConnection() {
     console.log('Database connection attempt:', dbUrl?.split('@')[1]?.split('/')[0] || 'unknown');
     console.log('DATABASE_URL starts with:', dbUrl?.substring(0, 20) || 'not set');
     console.log('Is WebSocket URL?', dbUrl?.includes('wss://') ? 'YES - WRONG FORMAT' : 'NO - Good');
+    console.log('Full DATABASE_URL (masked):', dbUrl?.replace(/:([^:@]+)@/, ':****@') || 'not set');
     console.log('Available Railway Postgres vars:', {
       PGHOST: process.env.PGHOST || 'not set',
       PGPORT: process.env.PGPORT || 'not set', 
       PGUSER: process.env.PGUSER || 'not set',
-      PGDATABASE: process.env.PGDATABASE || 'not set'
+      PGDATABASE: process.env.PGDATABASE || 'not set',
+      PGPASSWORD: process.env.PGPASSWORD ? '****' : 'not set',
+      DB_HOST: process.env.DB_HOST || 'not set',
+      DB_PORT: process.env.DB_PORT || 'not set',
+      DB_USER: process.env.DB_USER || 'not set',
+      DB_PASSWORD: process.env.DB_PASSWORD ? '****' : 'not set',
+      DB_NAME: process.env.DB_NAME || 'not set'
     });
     
     if (isNeonUrl) {
