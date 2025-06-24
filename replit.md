@@ -71,8 +71,10 @@ The application operates on a week-based data model where:
 ## External Dependencies
 
 ### Database Integration
-- **Neon Database**: Serverless PostgreSQL with WebSocket connections
-- **Connection Pooling**: Optimized pool settings for serverless deployment
+- **Dual Database Client**: Automatic detection and appropriate client selection
+  - Neon databases: Uses `@neondatabase/serverless` with WebSocket protocol
+  - Standard PostgreSQL (Railway): Uses `pg` client with TCP protocol
+- **Connection Pooling**: Optimized pool settings for both serverless and traditional deployments
 - **Migration System**: Drizzle Kit for schema migrations
 
 ### Third-Party Services
@@ -109,6 +111,7 @@ The application operates on a week-based data model where:
 - **Health Monitoring**: Built-in health checks for deployment verification
 
 ## Changelog
+- June 24, 2025: v2.9.6 - Fixed dual database client implementation and carousel component React hook errors for Railway deployment compatibility
 - June 24, 2025: v2.9.5 - Railway deployment preparation with Vercel code removal and tide formatting fixes
 - June 24, 2025: v2.9.4.1 - Stable release with Neon database integration and tide display fixes
 - June 24, 2025: Initial setup
