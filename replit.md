@@ -135,3 +135,4 @@ The application operates on a week-based data model where:
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+User feedback: Deployment debugging sessions are frustrating when they go in circles without clear resolution.
