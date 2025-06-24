@@ -46,7 +46,7 @@ if (isNeonUrl) {
   };
   
   harborPool = new NeonPool(neonPoolConfig);
-  harborDb = drizzleNeon({ client: harborPool, schema });
+  harborDb = drizzleNeon(harborPool, { schema });
 } else {
   // Use standard PostgreSQL client for Railway and other PostgreSQL instances
   const pgPoolConfig = {
@@ -81,9 +81,9 @@ async function testDatabaseConnection() {
     
     if (isNeonUrl) {
       // Neon client connection test
-      const client = (harborPool as NeonPool).connect();
+      const client = await (harborPool as NeonPool).connect();
       await client.query('SELECT 1');
-      client.release();
+      await client.release();
     } else {
       // Standard PostgreSQL client connection test
       const client = await (harborPool as PgPool).connect();

@@ -25,29 +25,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Database connection test endpoint
   app.get("/api/test-db", async (req, res) => {
     try {
-      // Test basic connection
-      const testResult = await harborDb.execute('SELECT 1 as test');
+      // Test connection using a simple query
+      await harborDb.execute('SELECT 1 as test');
       
-      // Test table existence
-      const tables = await harborDb.execute(`
-        SELECT table_name 
-        FROM information_schema.tables 
-        WHERE table_schema = 'public'
-      `);
-      
-      // Test data counts
-      const crossings = await harborDb.execute('SELECT COUNT(*) as count FROM crossing_times');
-      const tides = await harborDb.execute('SELECT COUNT(*) as count FROM tide_data');
-      const weather = await harborDb.execute('SELECT COUNT(*) as count FROM weather_data');
+      const isNeonUrl = process.env.DATABASE_URL?.includes('neon.tech');
       
       res.json({
         connected: true,
-        tables: tables.map((t: any) => t.table_name),
-        counts: {
-          crossings: parseInt(crossings[0].count),
-          tides: parseInt(tides[0].count),
-          weather: parseInt(weather[0].count)
-        }
+        message: `Database connection successful (${isNeonUrl ? 'Neon' : 'PostgreSQL'})`,
+        databaseType: isNeonUrl ? 'Neon' : 'PostgreSQL'
       });
     } catch (error: any) {
       res.status(500).json({
