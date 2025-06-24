@@ -1,54 +1,39 @@
 #!/usr/bin/env node
 
-// Production startup script for Holy Crosser
-// Ensures app runs reliably on any hosting platform
+// Production startup script for Railway deployment
+import { execSync } from 'child_process';
+import { readFileSync } from 'fs';
 
-const { spawn } = require('child_process');
-const fs = require('fs');
+console.log('🚀 Holy Crosser v2.9.5 - Railway Production Startup');
+console.log('===============================================');
 
-console.log('Holy Crosser V2.8.5 - Starting Production Server');
-console.log('Harbor Data: Northumberland County Council');
-console.log('Features: Crossing Times, Tides, Weather, PWA');
+// Check environment
+const requiredEnvs = ['DATABASE_URL'];
+const missingEnvs = requiredEnvs.filter(env => !process.env[env]);
 
-// Environment verification
-const requiredEnvVars = ['DATABASE_URL'];
-const missingVars = requiredEnvVars.filter(varName => !process.env[varName]);
-
-if (missingVars.length > 0) {
-  console.error('Missing environment variables:', missingVars);
+if (missingEnvs.length > 0) {
+  console.error('❌ Missing required environment variables:', missingEnvs.join(', '));
   process.exit(1);
 }
 
-// Health check endpoint ready
-console.log('Health check: /health endpoint active');
+console.log('✅ Environment variables verified');
+console.log(`📍 Platform: ${process.env.RAILWAY_ENVIRONMENT ? 'Railway' : 'Other'}`);
+console.log(`🌐 Environment: ${process.env.NODE_ENV || 'development'}`);
 
-// Start the server
-const server = spawn('npm', ['run', 'dev'], {
-  stdio: 'inherit',
-  env: {
-    ...process.env,
-    NODE_ENV: 'production',
-    PORT: process.env.PORT || 5000
-  }
-});
-
-server.on('error', (err) => {
-  console.error('Server startup error:', err);
+// Verify build exists
+try {
+  const stats = readFileSync('dist/index.js');
+  console.log('✅ Production build found');
+} catch (err) {
+  console.error('❌ Production build not found - run npm run build first');
   process.exit(1);
-});
+}
 
-server.on('close', (code) => {
-  console.log(`Server process exited with code ${code}`);
-  process.exit(code);
-});
-
-// Graceful shutdown
-process.on('SIGTERM', () => {
-  console.log('Received SIGTERM, shutting down gracefully');
-  server.kill('SIGTERM');
-});
-
-process.on('SIGINT', () => {
-  console.log('Received SIGINT, shutting down gracefully');
-  server.kill('SIGINT');
-});
+// Start the application
+console.log('🎯 Starting Holy Crosser server...');
+try {
+  execSync('node dist/index.js', { stdio: 'inherit' });
+} catch (err) {
+  console.error('❌ Failed to start server:', err.message);
+  process.exit(1);
+}

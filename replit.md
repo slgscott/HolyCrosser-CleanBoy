@@ -94,9 +94,8 @@ The application operates on a week-based data model where:
 - **Environment**: Development mode with hot module replacement
 
 ### Production Deployment Options
-- **Vercel**: Recommended platform with serverless functions
-- **Railway**: Alternative with full-stack deployment support
-- **Netlify**: Static site hosting with serverless function support
+- **Railway**: Primary deployment target with full-stack Node.js support and PostgreSQL integration
+- **Alternative platforms**: Other Node.js hosting services with PostgreSQL support
 
 ### Build Process
 1. **Client Build**: Vite compiles React application to static assets
@@ -110,6 +109,7 @@ The application operates on a week-based data model where:
 - **Health Monitoring**: Built-in health checks for deployment verification
 
 ## Changelog
+- June 24, 2025: v2.9.5 - Railway deployment preparation with Vercel code removal and tide formatting fixes
 - June 24, 2025: v2.9.4.1 - Stable release with Neon database integration and tide display fixes
 - June 24, 2025: Initial setup
 
