@@ -40,6 +40,16 @@ export const harborDb = drizzle({ client: harborPool, schema });
 // Database connection test
 async function testDatabaseConnection() {
   try {
+    const dbUrl = process.env.DATABASE_URL;
+    console.log('Database connection attempt:', dbUrl?.split('@')[1]?.split('/')[0] || 'unknown');
+    console.log('DATABASE_URL pattern:', dbUrl?.replace(/:[^:@]*@/, ':***@') || 'not set');
+    console.log('Available Railway Postgres vars:', {
+      PGHOST: process.env.PGHOST || 'not set',
+      PGPORT: process.env.PGPORT || 'not set', 
+      PGUSER: process.env.PGUSER || 'not set',
+      PGDATABASE: process.env.PGDATABASE || 'not set'
+    });
+    
     const client = await harborPool.connect();
     await client.query('SELECT 1');
     client.release();
@@ -47,6 +57,7 @@ async function testDatabaseConnection() {
     return true;
   } catch (error) {
     console.error('Database connection failed:', error instanceof Error ? error.message : 'Unknown error');
+    console.error('Full connection error:', error);
     return false;
   }
 }
