@@ -42,7 +42,7 @@ app.use((req, res, next) => {
     res.status(200).json({ 
       status: 'healthy', 
       timestamp: new Date().toISOString(),
-      version: '2.9.7',
+      version: '2.9.8',
       environment: process.env.NODE_ENV || 'development',
       platform: process.env.RAILWAY_ENVIRONMENT ? 'Railway' : process.env.REPL_ID ? 'Replit' : 'Local'
     });
