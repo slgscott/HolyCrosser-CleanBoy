@@ -42,7 +42,8 @@ async function testDatabaseConnection() {
   try {
     const dbUrl = process.env.DATABASE_URL;
     console.log('Database connection attempt:', dbUrl?.split('@')[1]?.split('/')[0] || 'unknown');
-    console.log('DATABASE_URL pattern:', dbUrl?.replace(/:[^:@]*@/, ':***@') || 'not set');
+    console.log('DATABASE_URL starts with:', dbUrl?.substring(0, 20) || 'not set');
+    console.log('Is WebSocket URL?', dbUrl?.includes('wss://') ? 'YES - WRONG FORMAT' : 'NO - Good');
     console.log('Available Railway Postgres vars:', {
       PGHOST: process.env.PGHOST || 'not set',
       PGPORT: process.env.PGPORT || 'not set', 
