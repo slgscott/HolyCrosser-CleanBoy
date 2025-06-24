@@ -25,15 +25,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Database connection test endpoint
   app.get("/api/test-db", async (req, res) => {
     try {
-      // Test connection using a simple query
-      await harborDb.execute('SELECT 1 as test');
+      // Test connection using storage interface
+      const testData = await storage.getCrossingTimesForWeek(0);
       
       const isNeonUrl = process.env.DATABASE_URL?.includes('neon.tech');
       
       res.json({
         connected: true,
         message: `Database connection successful (${isNeonUrl ? 'Neon' : 'PostgreSQL'})`,
-        databaseType: isNeonUrl ? 'Neon' : 'PostgreSQL'
+        databaseType: isNeonUrl ? 'Neon' : 'PostgreSQL',
+        recordCount: testData.length
       });
     } catch (error: any) {
       res.status(500).json({
