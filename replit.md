@@ -111,6 +111,7 @@ The application operates on a week-based data model where:
 - **Health Monitoring**: Built-in health checks for deployment verification
 
 ## Changelog
+- June 24, 2025: v2.9.10 - Reverted Railway build configuration to original working setup (frontend was working before)
 - June 24, 2025: v2.9.9 - Enhanced Railway build script with comprehensive static file detection and copying
 - June 24, 2025: v2.9.8 - Improved Railway build script with better error handling and explicit build commands
 - June 24, 2025: v2.9.7 - Fixed Railway static file serving by copying built files to server/public directory
