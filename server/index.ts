@@ -42,7 +42,7 @@ app.use((req, res, next) => {
     res.status(200).json({ 
       status: 'healthy', 
       timestamp: new Date().toISOString(),
-      version: '2.8.5',
+      version: '2.9.5',
       environment: process.env.NODE_ENV || 'development'
     });
   });
@@ -66,10 +66,8 @@ app.use((req, res, next) => {
     serveStatic(app);
   }
 
-  // ALWAYS serve the app on port 5000
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
-  const port = 5000;
+  // Use Railway's provided PORT environment variable in production, fallback to 5000 for development
+  const port = process.env.PORT ? parseInt(process.env.PORT) : 5000;
   server.listen({
     port,
     host: "0.0.0.0",
