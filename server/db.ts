@@ -15,19 +15,20 @@ if (!databaseUrl) {
 // Check if we're in production and log connection attempts
 const isProduction = process.env.NODE_ENV === 'production';
 const isReplit = !!process.env.REPL_ID;
+const isRailway = !!process.env.RAILWAY_ENVIRONMENT;
 console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
-console.log(`Platform: ${isReplit ? 'Replit' : 'External'}`);
+console.log(`Platform: ${isRailway ? 'Railway' : isReplit ? 'Replit' : 'External'}`);
 console.log(`Database connection attempt: ${databaseUrl.split('@')[1]?.split('/')[0] || 'unknown'}`);
 
-// Database connection with deployment-optimized settings
+// Database connection with Railway-optimized settings
 const poolConfig = {
   connectionString: databaseUrl,
-  connectionTimeoutMillis: 10000,
-  idleTimeoutMillis: 30000,
-  max: 3,
+  connectionTimeoutMillis: isRailway ? 15000 : 10000,
+  idleTimeoutMillis: isRailway ? 60000 : 30000,
+  max: isRailway ? 5 : 3, // Railway can handle more connections
   min: 0,
-  acquireTimeoutMillis: 8000,
-  createTimeoutMillis: 8000,
+  acquireTimeoutMillis: isRailway ? 10000 : 8000,
+  createTimeoutMillis: isRailway ? 10000 : 8000,
   destroyTimeoutMillis: 5000,
   createRetryIntervalMillis: 200,
   allowExitOnIdle: true
