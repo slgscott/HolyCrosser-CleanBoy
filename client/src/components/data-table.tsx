@@ -170,19 +170,19 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
         return [
           <div className="text-sm">
             <div className="text-base text-blue-600 font-medium">{dayData.highTide1Time || dayData.high_tide_1_time || "—"}</div>
-            {(dayData.highTide1Height || dayData.high_tide_1_height) && <div className="text-sm text-black">{(dayData.highTide1Height || dayData.high_tide_1_height).toFixed(1)}m</div>}
+            {(dayData.highTide1Height || dayData.high_tide_1_height) && <div className="text-sm text-black">{dayData.highTide1Height || dayData.high_tide_1_height}</div>}
           </div>,
           <div className="text-sm">
             <div className="text-base text-blue-600 font-medium">{dayData.lowTide1Time || dayData.low_tide_1_time || "—"}</div>
-            {(dayData.lowTide1Height || dayData.low_tide_1_height) && <div className="text-sm text-black">{(dayData.lowTide1Height || dayData.low_tide_1_height).toFixed(1)}m</div>}
+            {(dayData.lowTide1Height || dayData.low_tide_1_height) && <div className="text-sm text-black">{dayData.lowTide1Height || dayData.low_tide_1_height}</div>}
           </div>,
           <div className="text-sm">
             <div className="text-base text-blue-600 font-medium">{dayData.highTide2Time || dayData.high_tide_2_time || "—"}</div>
-            {(dayData.highTide2Height || dayData.high_tide_2_height) && <div className="text-sm text-black">{(dayData.highTide2Height || dayData.high_tide_2_height).toFixed(1)}m</div>}
+            {(dayData.highTide2Height || dayData.high_tide_2_height) && <div className="text-sm text-black">{dayData.highTide2Height || dayData.high_tide_2_height}</div>}
           </div>,
           <div className="text-sm">
             <div className="text-base text-blue-600 font-medium">{dayData.lowTide2Time || dayData.low_tide_2_time || "—"}</div>
-            {(dayData.lowTide2Height || dayData.low_tide_2_height) && <div className="text-sm text-black">{(dayData.lowTide2Height || dayData.low_tide_2_height).toFixed(1)}m</div>}
+            {(dayData.lowTide2Height || dayData.low_tide_2_height) && <div className="text-sm text-black">{dayData.lowTide2Height || dayData.low_tide_2_height}</div>}
           </div>
         ];
       case "weather":
