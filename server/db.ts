@@ -129,6 +129,7 @@ async function testDatabaseConnection() {
 }
 
 // Test connection asynchronously without blocking startup
-testDatabaseConnection().catch(() => {
+testDatabaseConnection().catch((error) => {
+  console.error('Initial database connection failed:', error.message);
   console.log('Database connection will be retried on first request');
 });

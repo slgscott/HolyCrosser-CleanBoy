@@ -37,12 +37,12 @@ app.use((req, res, next) => {
 });
 
 (async () => {
-  // Add deployment health check endpoint first
+  // Add deployment health check endpoint first (Railway backup)
   app.get('/health', (_req, res) => {
     res.status(200).json({ 
       status: 'healthy', 
       timestamp: new Date().toISOString(),
-      version: '2.9.5',
+      version: '2.9.6',
       environment: process.env.NODE_ENV || 'development',
       platform: process.env.RAILWAY_ENVIRONMENT ? 'Railway' : process.env.REPL_ID ? 'Replit' : 'Local'
     });
