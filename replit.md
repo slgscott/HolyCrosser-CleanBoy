@@ -2,93 +2,114 @@
 
 ## Overview
 
-Holy Crosser is a Progressive Web App (PWA) designed for maritime navigation, providing real-time harbor crossing times, tide data, and weather information. The application serves authentic data from Northumberland County Council's Harbor Data Manager and is optimized for mobile devices with PWA capabilities.
+Holy Crosser is a Progressive Web Application (PWA) designed for maritime navigation, providing safe harbor crossing times, tide data, and weather information. The application integrates authentic harbor data from Northumberland County Council and is built as a mobile-first web application with offline capabilities.
 
 ## System Architecture
 
 ### Frontend Architecture
-- **Framework**: React with TypeScript
-- **Build Tool**: Vite for fast development and optimized builds
-- **Styling**: Tailwind CSS with shadcn/ui components
-- **State Management**: React Query (@tanstack/react-query) for server state
-- **PWA Features**: Service worker, web app manifest, offline caching
+- **Framework**: React 18 with TypeScript
+- **Build Tool**: Vite for fast development and optimized production builds
+- **Styling**: Tailwind CSS with shadcn/ui component library
+- **UI Components**: Radix UI primitives for accessibility and consistency
+- **State Management**: TanStack Query (React Query) for server state management
+- **Routing**: Wouter for lightweight client-side routing
+- **PWA Features**: Service worker registration for offline functionality
 
 ### Backend Architecture
-- **Runtime**: Node.js with Express.js
-- **Database ORM**: Drizzle ORM with PostgreSQL
-- **API Design**: RESTful endpoints with TypeScript
-- **Build Process**: ESBuild for server bundling
-- **Development**: TSX for hot reloading
+- **Runtime**: Node.js with Express.js server
+- **Language**: TypeScript with ES modules
+- **Database ORM**: Drizzle ORM for type-safe database operations
+- **Database**: PostgreSQL (Neon serverless database)
+- **API Design**: RESTful endpoints with JSON responses
+- **Session Management**: Express sessions for user state
 
-### Database Strategy
-- **Primary**: External PostgreSQL (Neon) - Harbor Data Manager
-- **Fallback**: Local cache for deployment environments with network restrictions
-- **Schema**: Authentic maritime data tables (crossing_times, tide_data, weather_data)
+### Development Environment
+- **Platform**: Replit with Node.js 20 runtime
+- **Package Manager**: npm
+- **Database**: PostgreSQL 16 module in Replit
+- **Hot Reload**: Vite HMR with Express middleware integration
 
 ## Key Components
 
-### Data Sources
-1. **Crossing Times**: Official data from Northumberland County Council
-2. **Tide Information**: UK Hydrographic Office data via Harbor Data Manager
-3. **Weather Data**: Open-Meteo API integration
+### Data Models
+- **Crossing Times**: Safe/unsafe harbor crossing periods with timestamps
+- **Tide Data**: High/low tide times and heights for multiple periods per day
+- **Weather Data**: Temperature, wind, precipitation, and UV index information
+- **User Preferences**: Customizable display settings and data field selections
+- **App Settings**: Global application configuration
 
-### Core Features
-- **Safe Crossing Times**: Real-time harbor crossing safety windows with color-coded display
-- **Tide Times**: High/low tide predictions with heights and timestamps
-- **Weather Dashboard**: Temperature, precipitation, wind, UV index, and cloud coverage
-- **Week Navigation**: Browse data across multiple weeks with intuitive controls
-- **Mobile-First Design**: Responsive layout optimized for maritime use
+### API Endpoints
+- `/api/health` - Application health check and version information
+- `/api/crossing-times/:weekOffset` - Weekly crossing time data
+- `/api/tide-times/:weekOffset` - Weekly tide information
+- `/api/weather-data/:weekOffset` - Weekly weather forecasts
+- `/api/preferences` - User preference management
+- `/api/settings` - Application settings
 
-### PWA Implementation
-- **Service Worker**: Intelligent caching strategy (network-first for data, cache-first for assets)
-- **App Manifest**: Complete metadata for home screen installation
-- **Offline Support**: Previously viewed data accessible without connectivity
-- **Install Prompts**: Cross-platform installation support
+### User Interface Components
+- **Week Navigation**: Calendar-based week selection with arrow controls
+- **Data Table**: Responsive grid displaying maritime data by day
+- **Bottom Navigation**: Tab-based navigation between data types
+- **PWA Install Prompt**: Native app installation prompts
 
 ## Data Flow
 
-1. **Client Request**: React components request data via custom hooks
-2. **API Layer**: Express routes handle requests and query database
-3. **Database**: Drizzle ORM queries PostgreSQL for authentic maritime data
-4. **Response Processing**: Data formatted and cached for optimal display
-5. **UI Rendering**: Components display data with maritime-themed styling
-6. **PWA Caching**: Service worker caches responses for offline access
+1. **Client Request**: User navigates between weeks or data types
+2. **API Call**: TanStack Query manages HTTP requests with caching
+3. **Database Query**: Drizzle ORM executes type-safe PostgreSQL queries
+4. **Data Transformation**: Server formats raw database data for client consumption
+5. **Cache Management**: Client-side caching prevents unnecessary API calls
+6. **UI Update**: React components re-render with fresh data
+
+### Week-Based Data Architecture
+The application operates on a week-based data model where:
+- Week 0 represents the current week (Monday to Sunday)
+- Negative offsets represent past weeks
+- Positive offsets represent future weeks
+- All data is grouped and cached by week for optimal performance
 
 ## External Dependencies
 
-### Production Dependencies
-- **Database**: @neondatabase/serverless for PostgreSQL connectivity
-- **UI Framework**: React ecosystem with shadcn/ui components
-- **Data Fetching**: @tanstack/react-query for server state management
-- **Date Handling**: date-fns for maritime time calculations
-- **Styling**: Tailwind CSS with Radix UI primitives
+### Database Integration
+- **Neon Database**: Serverless PostgreSQL with WebSocket connections
+- **Connection Pooling**: Optimized pool settings for serverless deployment
+- **Migration System**: Drizzle Kit for schema migrations
 
-### Development Tools
-- **TypeScript**: Full type safety across client and server
-- **Vite**: Fast development server and optimized builds
-- **Drizzle Kit**: Database schema management and migrations
-- **ESBuild**: Server-side bundling for production
+### Third-Party Services
+- **Harbor Data Source**: Northumberland County Council maritime data
+- **Weather API**: Integration for real-time weather information
+- **PWA Manifest**: Web app manifest for native-like installation
+
+### UI Libraries
+- **shadcn/ui**: Pre-built accessible components
+- **Radix UI**: Headless UI primitives
+- **Lucide React**: Icon library for consistent iconography
+- **date-fns**: Date manipulation and formatting utilities
 
 ## Deployment Strategy
 
-### Multi-Platform Support
-- **Primary**: Vercel serverless deployment with edge functions
-- **Alternatives**: Railway, Netlify, or any Node.js hosting platform
-- **Build Output**: Static client assets + serverless API functions
+### Development Deployment
+- **Platform**: Replit with automatic deployments
+- **URL Structure**: Dynamic Replit URLs with SSL
+- **Environment**: Development mode with hot module replacement
+
+### Production Deployment Options
+- **Vercel**: Recommended platform with serverless functions
+- **Railway**: Alternative with full-stack deployment support
+- **Netlify**: Static site hosting with serverless function support
+
+### Build Process
+1. **Client Build**: Vite compiles React application to static assets
+2. **Server Build**: esbuild bundles Express server for production
+3. **Asset Optimization**: Automatic compression and optimization
+4. **Environment Variables**: DATABASE_URL and platform-specific configuration
 
 ### Environment Configuration
-- **DATABASE_URL**: PostgreSQL connection string (required)
-- **NODE_ENV**: Environment detection for connection strategies
-- **PORT**: Dynamic port assignment for various hosting platforms
-
-### Production Optimizations
-- **SSL Configuration**: Deployment-compatible database connections
-- **Connection Pooling**: Optimized for serverless environments
-- **Error Handling**: Graceful degradation with authentic data fallbacks
-- **Caching**: Smart cache headers prevent stale maritime data
+- **Development**: Local database connection with debug logging
+- **Production**: Neon serverless database with connection pooling
+- **Health Monitoring**: Built-in health checks for deployment verification
 
 ## Changelog
-
 - June 24, 2025. Initial setup
 
 ## User Preferences
