@@ -1,9 +1,6 @@
-import { Pool, neonConfig } from '@neondatabase/serverless';
-import { drizzle } from 'drizzle-orm/neon-serverless';
-import ws from "ws";
+import { Pool } from 'pg';
+import { drizzle } from 'drizzle-orm/node-postgres';
 import * as schema from "@shared/schema";
-
-neonConfig.webSocketConstructor = ws;
 
 // Use DATABASE_URL environment variable
 const databaseUrl = process.env.DATABASE_URL;
@@ -27,15 +24,12 @@ const poolConfig = {
   idleTimeoutMillis: isRailway ? 60000 : 30000,
   max: isRailway ? 5 : 3, // Railway can handle more connections
   min: 0,
-  acquireTimeoutMillis: isRailway ? 10000 : 8000,
-  createTimeoutMillis: isRailway ? 10000 : 8000,
-  destroyTimeoutMillis: 5000,
-  createRetryIntervalMillis: 200,
-  allowExitOnIdle: true
+  allowExitOnIdle: true,
+  ssl: isRailway ? { rejectUnauthorized: false } : false
 };
 
 export const harborPool = new Pool(poolConfig);
-export const harborDb = drizzle({ client: harborPool, schema });
+export const harborDb = drizzle(harborPool, { schema });
 
 // Database connection test
 async function testDatabaseConnection() {
