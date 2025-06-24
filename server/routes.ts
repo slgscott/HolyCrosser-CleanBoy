@@ -5,6 +5,7 @@ import { z } from "zod";
 import { insertUserPreferencesSchema, insertAppSettingsSchema } from "@shared/schema";
 import { readFileSync } from "fs";
 import { join } from "path";
+import { harborDb } from "./db";
 
 import { getAppVersion } from "../version-utils.js";
 
@@ -16,8 +17,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
       status: 'healthy', 
       timestamp: new Date().toISOString(),
       version: getAppVersion(),
-      environment: process.env.NODE_ENV || 'development'
+      environment: process.env.NODE_ENV || 'development',
+      platform: process.env.RAILWAY_ENVIRONMENT ? 'Railway' : process.env.REPL_ID ? 'Replit' : 'Local'
     });
+  });
+
+  // Database connection test endpoint
+  app.get("/api/test-db", async (req, res) => {
+    try {
+      // Test basic connection
+      const testResult = await harborDb.execute('SELECT 1 as test');
+      
+      // Test table existence
+      const tables = await harborDb.execute(`
+        SELECT table_name 
+        FROM information_schema.tables 
+        WHERE table_schema = 'public'
+      `);
+      
+      // Test data counts
+      const crossings = await harborDb.execute('SELECT COUNT(*) as count FROM crossing_times');
+      const tides = await harborDb.execute('SELECT COUNT(*) as count FROM tide_data');
+      const weather = await harborDb.execute('SELECT COUNT(*) as count FROM weather_data');
+      
+      res.json({
+        connected: true,
+        tables: tables.map((t: any) => t.table_name),
+        counts: {
+          crossings: parseInt(crossings[0].count),
+          tides: parseInt(tides[0].count),
+          weather: parseInt(weather[0].count)
+        }
+      });
+    } catch (error: any) {
+      res.status(500).json({
+        connected: false,
+        error: error.message
+      });
+    }
   });
 
   // Get crossing times for a specific week
