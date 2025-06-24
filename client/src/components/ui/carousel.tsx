@@ -152,19 +152,7 @@ const CarouselContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
-  const context = React.useContext(CarouselContext)
-  
-  if (!context) {
-    return (
-      <div
-        ref={ref}
-        className={cn("flex", className)}
-        {...props}
-      />
-    )
-  }
-
-  const { carouselRef, orientation } = context
+  const { carouselRef, orientation } = useCarousel()
 
   return (
     <div ref={carouselRef} className="overflow-hidden">
@@ -186,8 +174,7 @@ const CarouselItem = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
-  const context = React.useContext(CarouselContext)
-  const orientation = context?.orientation || "horizontal"
+  const { orientation } = useCarousel()
 
   return (
     <div
@@ -209,25 +196,7 @@ const CarouselPrevious = React.forwardRef<
   HTMLButtonElement,
   React.ComponentProps<typeof Button>
 >(({ className, variant = "outline", size = "icon", ...props }, ref) => {
-  const context = React.useContext(CarouselContext)
-  
-  if (!context) {
-    return (
-      <Button
-        ref={ref}
-        variant={variant}
-        size={size}
-        className={cn("absolute h-8 w-8 rounded-full -left-12 top-1/2 -translate-y-1/2", className)}
-        disabled={true}
-        {...props}
-      >
-        <ArrowLeft className="h-4 w-4" />
-        <span className="sr-only">Previous slide</span>
-      </Button>
-    )
-  }
-
-  const { orientation, scrollPrev, canScrollPrev } = context
+  const { orientation, scrollPrev, canScrollPrev } = useCarousel()
 
   return (
     <Button
@@ -256,25 +225,7 @@ const CarouselNext = React.forwardRef<
   HTMLButtonElement,
   React.ComponentProps<typeof Button>
 >(({ className, variant = "outline", size = "icon", ...props }, ref) => {
-  const context = React.useContext(CarouselContext)
-  
-  if (!context) {
-    return (
-      <Button
-        ref={ref}
-        variant={variant}
-        size={size}
-        className={cn("absolute h-8 w-8 rounded-full -right-12 top-1/2 -translate-y-1/2", className)}
-        disabled={true}
-        {...props}
-      >
-        <ArrowRight className="h-4 w-4" />
-        <span className="sr-only">Next slide</span>
-      </Button>
-    )
-  }
-
-  const { orientation, scrollNext, canScrollNext } = context
+  const { orientation, scrollNext, canScrollNext } = useCarousel()
 
   return (
     <Button
