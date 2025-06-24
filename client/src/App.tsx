@@ -21,7 +21,6 @@ function App() {
         <Toaster />
         <div className="max-w-md mx-auto bg-white min-h-screen shadow-lg relative">
           <Router />
-          {/* Cache bust v2.9.4 */}
         </div>
       </TooltipProvider>
     </QueryClientProvider>
