@@ -111,6 +111,7 @@ The application operates on a week-based data model where:
 - **Health Monitoring**: Built-in health checks for deployment verification
 
 ## Changelog
+- June 24, 2025: v2.9.7 - Fixed Railway static file serving by copying built files to server/public directory
 - June 24, 2025: v2.9.6 - Fixed dual database client implementation, carousel component React hook errors, and Railway database authentication with dynamic credential detection
 - June 24, 2025: v2.9.5 - Railway deployment preparation with Vercel code removal and tide formatting fixes
 - June 24, 2025: v2.9.4.1 - Stable release with Neon database integration and tide display fixes
