@@ -12,7 +12,8 @@ neonConfig.webSocketConstructor = ws;
 let databaseUrl = process.env.DATABASE_URL;
 
 // If DATABASE_URL is not set or if we're on Railway with individual variables, construct it
-if (!databaseUrl || (process.env.RAILWAY_ENVIRONMENT && process.env.PGHOST)) {
+// Force construction on Railway even if DATABASE_URL exists (in case it's outdated)
+if (!databaseUrl || process.env.RAILWAY_ENVIRONMENT) {
   const host = process.env.PGHOST || process.env.DB_HOST;
   const port = process.env.PGPORT || process.env.DB_PORT || '5432';
   const user = process.env.PGUSER || process.env.DB_USER || 'postgres';
