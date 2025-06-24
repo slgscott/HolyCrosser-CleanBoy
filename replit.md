@@ -111,6 +111,7 @@ The application operates on a week-based data model where:
 - **Health Monitoring**: Built-in health checks for deployment verification
 
 ## Changelog
+- June 24, 2025: v2.9.16 - Minimal Railway config: Let Railway auto-detect everything
 - June 24, 2025: v2.9.15 - Simplified Railway start: Use npm run start instead of missing start-production.js
 - June 24, 2025: v2.9.14 - Fixed Railway build: Changed npm ci to npm install to resolve cache issues
 - June 24, 2025: v2.9.13 - Deep rollback: Restored pre-2.9.6 Railway production startup script configuration
