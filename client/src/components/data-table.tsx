@@ -181,17 +181,14 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
           <div key="high1" className="text-sm">
             <div className="text-base text-blue-600 font-medium">{dayData.highTide1 || dayData.highTide1Time || dayData.high_tide_1_time || dayData.high_tide_1 || "—"}</div>
           </div>,
-          <div className="text-sm">
-            <div className="text-base text-blue-600 font-medium">{dayData.lowTide1Time || dayData.low_tide_1_time || "—"}</div>
-            <div className="text-sm text-black">{formatTideHeight(dayData.lowTide1Height || dayData.low_tide_1_height)}</div>
+          <div key="low1" className="text-sm">
+            <div className="text-base text-blue-500 font-medium">{dayData.lowTide1 || dayData.lowTide1Time || dayData.low_tide_1_time || dayData.low_tide_1 || "—"}</div>
           </div>,
-          <div className="text-sm">
-            <div className="text-base text-blue-600 font-medium">{dayData.highTide2Time || dayData.high_tide_2_time || "—"}</div>
-            <div className="text-sm text-black">{formatTideHeight(dayData.highTide2Height || dayData.high_tide_2_height)}</div>
+          <div key="high2" className="text-sm">
+            <div className="text-base text-blue-600 font-medium">{dayData.highTide2 || dayData.highTide2Time || dayData.high_tide_2_time || dayData.high_tide_2 || "—"}</div>
           </div>,
-          <div className="text-sm">
-            <div className="text-base text-blue-600 font-medium">{dayData.lowTide2Time || dayData.low_tide_2_time || "—"}</div>
-            <div className="text-sm text-black">{formatTideHeight(dayData.lowTide2Height || dayData.low_tide_2_height)}</div>
+          <div key="low2" className="text-sm">
+            <div className="text-base text-blue-500 font-medium">{dayData.lowTide2 || dayData.lowTide2Time || dayData.low_tide_2_time || dayData.low_tide_2 || "—"}</div>
           </div>
         ];
       case "weather":
@@ -211,16 +208,9 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
         };
 
         return [
-          // Temperature column: Max/Min
-          <div className="text-sm">
-            {dayData.temperatureMin && dayData.temperatureMax ? (
-              <>
-                <div className="text-red-600 font-medium">{dayData.temperatureMax}°</div>
-                <div className="text-blue-600 font-medium">{dayData.temperatureMin}°</div>
-              </>
-            ) : dayData.temperature ? (
-              <div className="font-medium">{dayData.temperature}°</div>
-            ) : "—"}
+          <div key="temp" className="flex items-center justify-center">
+            <Sun className="h-4 w-4 text-yellow-500 mr-1" />
+            <span className="text-sm font-medium">{dayData.temperature || dayData.temp || "—"}°</span>
           </div>,
           
           // Precipitation column with umbrella icon for wet days
@@ -234,40 +224,13 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
               </div>
             ) : "—"}
           </div>,
-          
-          // Wind column: Speed and direction
-          <div className="text-sm">
-            {dayData.windSpeed || dayData.windSpeedMax ? (
-              <div className="flex flex-col items-center">
-                <div className="flex items-center space-x-1">
-                  <Wind className="h-3 w-3 text-gray-600" />
-                  <span className="font-medium">{dayData.windSpeed || dayData.windSpeedMax}mph</span>
-                </div>
-                {dayData.windDirectionDominant && (
-                  <div className="text-base">{getWindDirection(dayData.windDirectionDominant)}</div>
-                )}
-              </div>
-            ) : "—"}
+          <div key="wind" className="flex items-center justify-center">
+            <Wind className="h-4 w-4 text-gray-500 mr-1" />
+            <span className="text-sm">{dayData.windSpeed || dayData.wind || "—"} mph</span>
           </div>,
-          
-          // UV & Cloud column
-          <div className="text-sm">
-            {dayData.uvIndexMax || dayData.cloudcover ? (
-              <div className="flex flex-col items-center space-y-1">
-                {dayData.uvIndexMax && (
-                  <div className="flex items-center space-x-1">
-                    <Sun className="h-3 w-3 text-yellow-500" />
-                    <span className="font-medium">UV{dayData.uvIndexMax}</span>
-                  </div>
-                )}
-                {dayData.cloudcover && (
-                  <div className="flex items-center space-x-1">
-                    <Cloud className="h-3 w-3 text-gray-500" />
-                    <span className="font-medium">{dayData.cloudcover}%</span>
-                  </div>
-                )}
-              </div>
-            ) : "—"}
+          <div key="vis" className="flex items-center justify-center">
+            <Cloud className="h-4 w-4 text-gray-400 mr-1" />
+            <span className="text-sm">{dayData.visibility || dayData.vis || "—"} mi</span>
           </div>
         ];
       default:
