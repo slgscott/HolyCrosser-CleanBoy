@@ -8,8 +8,8 @@ import * as schema from "@shared/schema";
 // Configure Neon WebSocket for serverless environments
 neonConfig.webSocketConstructor = ws;
 
-// Use Railway production database for deployment testing, otherwise development database
-let databaseUrl = process.env.RAILWAY_DATABASE_URL || process.env.DATABASE_URL;
+// Use development database for now (Railway connection has pool config issues)
+let databaseUrl = process.env.DATABASE_URL;
 
 // If DATABASE_URL is not set or if we're on Railway with individual variables, construct it
 // Force construction on Railway even if DATABASE_URL exists (in case it's outdated)
@@ -40,6 +40,8 @@ console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
 console.log(`Platform: ${isRailway ? 'Railway' : isReplit ? 'Replit' : 'External'}`);
 console.log(`Database type: ${isNeonUrl ? 'Neon' : 'Standard PostgreSQL'}`);
 console.log(`Database connection attempt: ${databaseUrl.split('@')[1]?.split('/')[0] || 'unknown'}`);
+console.log(`RAILWAY_DATABASE_URL configured: ${process.env.RAILWAY_DATABASE_URL ? 'YES' : 'NO'}`);
+console.log(`Using database URL: ${databaseUrl.substring(0, 50)}...`);
 
 // Use appropriate client based on database type
 let harborPool: PgPool | NeonPool;
