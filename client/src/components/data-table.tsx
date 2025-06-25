@@ -152,31 +152,34 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
     const day = String(date.getDate()).padStart(2, '0');
     const dateStr = `${year}-${month}-${day}`;
     
-    const dayData = data.find((d: any) => d.date === dateStr);
+    // Handle both date formats: "2025-06-25" and "2025-06-25T00:00:00.000Z"
+    const dayData = data.find((d: any) => {
+      const dbDate = d.date ? d.date.split('T')[0] : d.date; // Extract date part from ISO string
+      return dbDate === dateStr;
+    });
     
     if (!dayData) return ["—", "—", "—", "—"];
 
     switch (screenType) {
       case "crossings":
         return [
-          <div className="text-sm leading-tight whitespace-pre-line font-medium">
-            {formatTimeRange(dayData.safeFrom1 || dayData.safe_from_1, dayData.safeTo1 || dayData.safe_to_1, date, false)}
+          <div key="morning" className="text-sm leading-tight whitespace-pre-line font-medium">
+            {dayData.morning || dayData.safeFrom1 || dayData.safe_from_1 || "—"}
           </div>,
-          <div className="text-sm leading-tight whitespace-pre-line font-medium">
-            {formatTimeRange(dayData.unsafeFrom1 || dayData.unsafe_from_1, dayData.unsafeTo1 || dayData.unsafe_to_1, date, false)}
+          <div key="midday" className="text-sm leading-tight whitespace-pre-line font-medium">
+            {dayData.midday || dayData.unsafeFrom1 || dayData.unsafe_from_1 || "—"}
           </div>,
-          <div className="text-sm leading-tight whitespace-pre-line font-medium">
-            {isNextDayTime(dayData.safeFrom2 || dayData.safe_from_2) ? "—" : formatTimeRange(dayData.safeFrom2 || dayData.safe_from_2, dayData.safeTo2 || dayData.safe_to_2, date, true)}
+          <div key="evening" className="text-sm leading-tight whitespace-pre-line font-medium">
+            {dayData.evening || dayData.safeFrom2 || dayData.safe_from_2 || "—"}
           </div>,
-          <div className="text-sm leading-tight whitespace-pre-line font-medium">
-            {isNextDayTime(dayData.unsafeFrom2 || dayData.unsafe_from_2) ? "—" : formatTimeRange(dayData.unsafeFrom2 || dayData.unsafe_from_2, dayData.unsafeTo2 || dayData.unsafe_to_2, date, true)}
+          <div key="night" className="text-sm leading-tight whitespace-pre-line font-medium">
+            {dayData.night || dayData.unsafeFrom2 || dayData.unsafe_from_2 || "—"}
           </div>
         ];
       case "tides":
         return [
-          <div className="text-sm">
-            <div className="text-base text-blue-600 font-medium">{dayData.highTide1Time || dayData.high_tide_1_time || "—"}</div>
-            <div className="text-sm text-black">{formatTideHeight(dayData.highTide1Height || dayData.high_tide_1_height)}</div>
+          <div key="high1" className="text-sm">
+            <div className="text-base text-blue-600 font-medium">{dayData.highTide1 || dayData.highTide1Time || dayData.high_tide_1_time || dayData.high_tide_1 || "—"}</div>
           </div>,
           <div className="text-sm">
             <div className="text-base text-blue-600 font-medium">{dayData.lowTide1Time || dayData.low_tide_1_time || "—"}</div>
