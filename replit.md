@@ -112,12 +112,12 @@ The application operates on a week-based data model where:
 
 ## Current Status
 - **Local Development**: Working perfectly (frontend + backend + database)
-- **Railway Backend**: Working (API responds, database connected)  
-- **Railway Frontend**: BROKEN - White screen persists
-- **Root Issue**: Application architecture may be incompatible with Railway deployment model
-- **Failed Approaches**: Multiple rollbacks, build script modifications, file copying attempts
+- **Railway**: Abandoned due to repeated frontend serving failures
+- **Next Step**: Deploy using Replit's built-in deployment system
+- **Goal**: Get production deployment working with existing codebase
 
 ## Changelog
+- June 25, 2025: v2.9.19 - Final Railway abandonment: Prepare for Replit deployment
 - June 25, 2025: v2.9.18 - Stop circular debugging: Revert failed static file fixes, need new approach
 - June 25, 2025: v2.9.17 - FAILED: Repeated same static file copying approach that didn't work
 - June 24, 2025: v2.9.16 - Minimal Railway config: Let Railway auto-detect everything
@@ -139,3 +139,4 @@ The application operates on a week-based data model where:
 Preferred communication style: Simple, everyday language.
 User feedback: Deployment debugging sessions are frustrating when they go in circles without clear resolution.
 CRITICAL: Stop trying to fix static file serving with build scripts - this approach has failed multiple times.
+Decision: Move to Replit deployment instead of continuing Railway debugging.
