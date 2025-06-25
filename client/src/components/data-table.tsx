@@ -164,31 +164,43 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
       case "crossings":
         return [
           <div key="morning" className="text-sm leading-tight whitespace-pre-line font-medium">
-            {dayData.morning || dayData.safeFrom1 || dayData.safe_from_1 || "—"}
+            <div className="text-green-600 font-semibold">Safe</div>
+            <div>{formatTimeRange(dayData.safeFrom1 || dayData.morning, dayData.safeTo1, date)}</div>
           </div>,
           <div key="midday" className="text-sm leading-tight whitespace-pre-line font-medium">
-            {dayData.midday || dayData.unsafeFrom1 || dayData.unsafe_from_1 || "—"}
+            <div className="text-red-600 font-semibold">Unsafe</div>
+            <div>{formatTimeRange(dayData.unsafeFrom1 || dayData.midday, dayData.unsafeTo1, date)}</div>
           </div>,
           <div key="evening" className="text-sm leading-tight whitespace-pre-line font-medium">
-            {dayData.evening || dayData.safeFrom2 || dayData.safe_from_2 || "—"}
+            <div className="text-green-600 font-semibold">Safe</div>
+            <div>{formatTimeRange(dayData.safeFrom2 || dayData.evening, dayData.safeTo2, date, true)}</div>
           </div>,
           <div key="night" className="text-sm leading-tight whitespace-pre-line font-medium">
-            {dayData.night || dayData.unsafeFrom2 || dayData.unsafe_from_2 || "—"}
+            <div className="text-red-600 font-semibold">Unsafe</div>
+            <div>{dayData.unsafeFrom2 ? formatTimeRange(dayData.unsafeFrom2, dayData.unsafeTo2, date, true) : "—"}</div>
           </div>
         ];
       case "tides":
         return [
           <div key="high1" className="text-sm">
-            <div className="text-base text-blue-600 font-medium">{dayData.highTide1 || dayData.highTide1Time || dayData.high_tide_1_time || dayData.high_tide_1 || "—"}</div>
+            <div className="text-blue-600 font-semibold">High</div>
+            <div className="text-base font-medium">{dayData.highTide1Time || "—"}</div>
+            <div className="text-xs text-gray-600">{formatTideHeight(dayData.highTide1Height)}</div>
           </div>,
           <div key="low1" className="text-sm">
-            <div className="text-base text-blue-500 font-medium">{dayData.lowTide1 || dayData.lowTide1Time || dayData.low_tide_1_time || dayData.low_tide_1 || "—"}</div>
+            <div className="text-blue-500 font-semibold">Low</div>
+            <div className="text-base font-medium">{dayData.lowTide1Time || "—"}</div>
+            <div className="text-xs text-gray-600">{formatTideHeight(dayData.lowTide1Height)}</div>
           </div>,
           <div key="high2" className="text-sm">
-            <div className="text-base text-blue-600 font-medium">{dayData.highTide2 || dayData.highTide2Time || dayData.high_tide_2_time || dayData.high_tide_2 || "—"}</div>
+            <div className="text-blue-600 font-semibold">High</div>
+            <div className="text-base font-medium">{dayData.highTide2Time || "—"}</div>
+            <div className="text-xs text-gray-600">{formatTideHeight(dayData.highTide2Height)}</div>
           </div>,
           <div key="low2" className="text-sm">
-            <div className="text-base text-blue-500 font-medium">{dayData.lowTide2 || dayData.lowTide2Time || dayData.low_tide_2_time || dayData.low_tide_2 || "—"}</div>
+            <div className="text-blue-500 font-semibold">Low</div>
+            <div className="text-base font-medium">{dayData.lowTide2Time || "—"}</div>
+            <div className="text-xs text-gray-600">{formatTideHeight(dayData.lowTide2Height)}</div>
           </div>
         ];
       case "weather":
@@ -210,27 +222,25 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
         return [
           <div key="temp" className="flex items-center justify-center">
             <Sun className="h-4 w-4 text-yellow-500 mr-1" />
-            <span className="text-sm font-medium">{dayData.temperature || dayData.temp || "—"}°</span>
+            <span className="text-sm font-medium">{dayData.temperature || dayData.temp || "—"}°C</span>
           </div>,
           
-          // Precipitation column with umbrella icon for wet days
-          <div className="text-sm flex items-center justify-center">
-            {dayData.precipitationSum ? (
-              <div className="flex items-center space-x-1">
-                {isWetDay(dayData.precipitationSum) && (
-                  <Umbrella className="h-3 w-3 text-blue-500" />
-                )}
-                <span className="font-medium">{dayData.precipitationSum}mm</span>
-              </div>
-            ) : "—"}
+          <div key="condition" className="text-sm text-center">
+            <div className="font-medium">{dayData.condition || "—"}</div>
+            {dayData.precipitation && <div className="text-xs text-gray-600">{dayData.precipitation}mm</div>}
           </div>,
+          
           <div key="wind" className="flex items-center justify-center">
             <Wind className="h-4 w-4 text-gray-500 mr-1" />
-            <span className="text-sm">{dayData.windSpeed || dayData.wind || "—"} mph</span>
+            <div className="text-sm text-center">
+              <div>{dayData.windSpeed || dayData.wind || "—"} km/h</div>
+              <div className="text-xs">{dayData.windDirection || "—"}</div>
+            </div>
           </div>,
-          <div key="vis" className="flex items-center justify-center">
+          
+          <div key="humidity" className="flex items-center justify-center">
             <Cloud className="h-4 w-4 text-gray-400 mr-1" />
-            <span className="text-sm">{dayData.visibility || dayData.vis || "—"} mi</span>
+            <span className="text-sm">{dayData.humidity || "—"}%</span>
           </div>
         ];
       default:
