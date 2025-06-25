@@ -113,11 +113,12 @@ The application operates on a week-based data model where:
 ## Current Status
 - **Local Development**: Working perfectly (frontend + backend + database)
 - **Railway Backend**: Working (API responds, database connected)  
-- **Railway Frontend**: BROKEN (white screen/not serving static files)
-- **Issue**: Static file serving path mismatch in production
-- **Next Session**: Examine fundamental app architecture for production deployment
+- **Railway Frontend**: FIXED - Static file path mismatch resolved
+- **Issue Found**: Server looks in `server/public/` but build creates `dist/public/`
+- **Solution**: Railway build now copies files to correct location
 
 ## Changelog
+- June 25, 2025: v2.9.17 - FIXED Railway frontend: Copy static files from dist/public to server/public during build
 - June 24, 2025: v2.9.16 - Minimal Railway config: Let Railway auto-detect everything
 - June 24, 2025: v2.9.15 - Simplified Railway start: Use npm run start instead of missing start-production.js
 - June 24, 2025: v2.9.14 - Fixed Railway build: Changed npm ci to npm install to resolve cache issues
