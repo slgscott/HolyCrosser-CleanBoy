@@ -3,7 +3,7 @@ import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
 // External Harbor Data Manager tables (read-only)
-export const crossingTimes = pgTable("crossing_times", {
+export const crossingTimes = pgTable("harbor_crossing_times", {
   id: serial("id").primaryKey(),
   date: text("date").notNull(),
   safeFrom1: text("safe_from_1"),
@@ -18,7 +18,7 @@ export const crossingTimes = pgTable("crossing_times", {
   notes: text("notes"),
 });
 
-export const tideData = pgTable("tide_data", {
+export const tideData = pgTable("harbor_tide_times", {
   id: serial("id").primaryKey(),
   date: text("date").notNull(),
   highTide1Time: text("high_tide_1_time"),
@@ -31,7 +31,7 @@ export const tideData = pgTable("tide_data", {
   lowTide2Height: text("low_tide_2_height"),
 });
 
-export const weatherData = pgTable("weather_data", {
+export const weatherData = pgTable("harbor_weather_data", {
   id: serial("id").primaryKey(),
   date: text("date").notNull(),
   temperature: integer("temperature"),
