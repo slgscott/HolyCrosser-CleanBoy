@@ -6,29 +6,21 @@ import { z } from "zod";
 export const crossingTimes = pgTable("harbor_crossing_times", {
   id: serial("id").primaryKey(),
   date: text("date").notNull(),
-  safeFrom1: text("safe_from_1"),
-  safeTo1: text("safe_to_1"),
-  safeFrom2: text("safe_from_2"),
-  safeTo2: text("safe_to_2"),
-  unsafeFrom1: text("unsafe_from_1"),
-  unsafeTo1: text("unsafe_to_1"),
-  unsafeFrom2: text("unsafe_from_2"),
-  unsafeTo2: text("unsafe_to_2"),
-  status: text("status").notNull().default("active"),
-  notes: text("notes"),
+  morning: text("morning"),
+  midday: text("midday"),
+  evening: text("evening"),
+  night: text("night"),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
 export const tideData = pgTable("harbor_tide_times", {
   id: serial("id").primaryKey(),
   date: text("date").notNull(),
-  highTide1Time: text("high_tide_1_time"),
-  highTide1Height: text("high_tide_1_height"),
-  lowTide1Time: text("low_tide_1_time"),
-  lowTide1Height: text("low_tide_1_height"),
-  highTide2Time: text("high_tide_2_time"),
-  highTide2Height: text("high_tide_2_height"),
-  lowTide2Time: text("low_tide_2_time"),
-  lowTide2Height: text("low_tide_2_height"),
+  highTide1: text("high_tide_1"),
+  lowTide1: text("low_tide_1"),
+  highTide2: text("high_tide_2"),
+  lowTide2: text("low_tide_2"),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
 export const weatherData = pgTable("harbor_weather_data", {
