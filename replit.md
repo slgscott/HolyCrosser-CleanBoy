@@ -112,9 +112,9 @@ The application operates on a week-based data model where:
 
 ## Current Status
 - **Local Development**: Working perfectly (frontend + backend + database)
-- **Railway**: Abandoned due to repeated frontend serving failures
-- **Next Step**: Deploy using Replit's built-in deployment system
-- **Goal**: Get production deployment working with existing codebase
+- **Railway Production**: Currently serving live users (backend works, frontend broken)
+- **Critical Constraint**: Cannot break existing user access during deployment changes
+- **Strategy**: Test Replit deployment on separate URL before any production changes
 - **Database**: Dual client system ready for Replit deployment (Neon)
 
 ## Changelog
@@ -140,4 +140,5 @@ The application operates on a week-based data model where:
 Preferred communication style: Simple, everyday language.
 User feedback: Deployment debugging sessions are frustrating when they go in circles without clear resolution.
 CRITICAL: Stop trying to fix static file serving with build scripts - this approach has failed multiple times.
-Decision: Move to Replit deployment instead of continuing Railway debugging.
+CRITICAL: Live users currently depend on production version - cannot break existing service.
+Decision: Test Replit deployment as alternative without affecting current production.
