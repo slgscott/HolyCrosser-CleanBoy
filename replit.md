@@ -95,9 +95,10 @@ The application operates on a week-based data model where:
 - **URL Structure**: Dynamic Replit URLs with SSL
 - **Environment**: Development mode with hot module replacement
 
-### Production Deployment Options
-- **Railway**: Primary deployment target with full-stack Node.js support and PostgreSQL integration
-- **Alternative platforms**: Other Node.js hosting services with PostgreSQL support
+### Production Deployment Strategy
+- **Replit**: Primary deployment platform with stable frontend/backend integration
+- **Railway**: Database continues serving but frontend deployment repeatedly failed
+- **Migration**: Transition from Railway to Replit for reliable full-stack hosting
 
 ### Build Process
 1. **Client Build**: Vite compiles React application to static assets
@@ -114,8 +115,9 @@ The application operates on a week-based data model where:
 - **Replit Development**: Working perfectly (frontend + backend + database)
 - **Data Display**: All three data types (crossings, tides, weather) showing correctly
 - **Database**: Bulletproof dynamic schema adaptation prevents future breaking changes
-- **Deployment Ready**: Complete Replit deployment ready for production testing
-- **Railway Production**: Live users still served while testing alternative deployment
+- **Deployment Strategy**: Replit deployment as primary platform after Railway frontend failures
+- **Railway Production**: Live users still served while transitioning to stable Replit platform
+- **Git Status**: v2.9.24 committed with complete working system
 
 ## Changelog
 - June 25, 2025: v2.9.24 - DATA VISIBLE: Fixed frontend date parsing and data display - app fully functional
