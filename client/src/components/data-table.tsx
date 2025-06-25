@@ -163,44 +163,48 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
     switch (screenType) {
       case "crossings":
         return [
-          <div key="morning" className="text-sm leading-tight whitespace-pre-line font-medium">
-            <div className="text-green-600 font-semibold">Safe</div>
-            <div>{formatTimeRange(dayData.safeFrom1 || dayData.morning, dayData.safeTo1, date)}</div>
+          <div key="safe1" className="text-sm leading-tight whitespace-pre-line">
+            <div className="font-bold text-black">{dayData.safeFrom1 || dayData.morning || "—"}</div>
+            <div className="text-sm">until</div>
+            <div className="font-bold text-black">{dayData.safeTo1 || "—"}</div>
           </div>,
-          <div key="midday" className="text-sm leading-tight whitespace-pre-line font-medium">
-            <div className="text-red-600 font-semibold">Unsafe</div>
-            <div>{formatTimeRange(dayData.unsafeFrom1 || dayData.midday, dayData.unsafeTo1, date)}</div>
+          <div key="unsafe1" className="text-sm leading-tight whitespace-pre-line">
+            <div className="font-bold text-black">{dayData.unsafeFrom1 || dayData.midday || "—"}</div>
+            <div className="text-sm">until</div>
+            <div className="font-bold text-black">{dayData.unsafeTo1 || "—"}</div>
           </div>,
-          <div key="evening" className="text-sm leading-tight whitespace-pre-line font-medium">
-            <div className="text-green-600 font-semibold">Safe</div>
-            <div>{formatTimeRange(dayData.safeFrom2 || dayData.evening, dayData.safeTo2, date, true)}</div>
+          <div key="safe2" className="text-sm leading-tight whitespace-pre-line">
+            <div className="font-bold text-black">{dayData.safeFrom2 || dayData.evening || "—"}</div>
+            <div className="text-sm">until</div>
+            <div className="font-bold text-black">{formatTimeWithDay(dayData.safeTo2, date, true) || "—"}</div>
           </div>,
-          <div key="night" className="text-sm leading-tight whitespace-pre-line font-medium">
-            <div className="text-red-600 font-semibold">Unsafe</div>
-            <div>{dayData.unsafeFrom2 ? formatTimeRange(dayData.unsafeFrom2, dayData.unsafeTo2, date, true) : "—"}</div>
+          <div key="unsafe2" className="text-sm leading-tight whitespace-pre-line">
+            {dayData.unsafeFrom2 ? (
+              <>
+                <div className="font-bold text-black">{dayData.unsafeFrom2}</div>
+                <div className="text-sm">until</div>
+                <div className="font-bold text-black">{formatTimeWithDay(dayData.unsafeTo2, date, true)}</div>
+              </>
+            ) : "—"}
           </div>
         ];
       case "tides":
         return [
-          <div key="high1" className="text-sm">
-            <div className="text-blue-600 font-semibold">High</div>
-            <div className="text-base font-medium">{dayData.highTide1Time || "—"}</div>
-            <div className="text-xs text-gray-600">{formatTideHeight(dayData.highTide1Height)}</div>
+          <div key="high1" className="text-sm text-center">
+            <div className="font-bold text-blue-600 text-base">{dayData.highTide1Time || "—"}</div>
+            <div className="text-xs font-medium">{formatTideHeight(dayData.highTide1Height)}</div>
           </div>,
-          <div key="low1" className="text-sm">
-            <div className="text-blue-500 font-semibold">Low</div>
-            <div className="text-base font-medium">{dayData.lowTide1Time || "—"}</div>
-            <div className="text-xs text-gray-600">{formatTideHeight(dayData.lowTide1Height)}</div>
+          <div key="low1" className="text-sm text-center">
+            <div className="font-bold text-blue-600 text-base">{dayData.lowTide1Time || "—"}</div>
+            <div className="text-xs font-medium">{formatTideHeight(dayData.lowTide1Height)}</div>
           </div>,
-          <div key="high2" className="text-sm">
-            <div className="text-blue-600 font-semibold">High</div>
-            <div className="text-base font-medium">{dayData.highTide2Time || "—"}</div>
-            <div className="text-xs text-gray-600">{formatTideHeight(dayData.highTide2Height)}</div>
+          <div key="high2" className="text-sm text-center">
+            <div className="font-bold text-blue-600 text-base">{dayData.highTide2Time || "—"}</div>
+            <div className="text-xs font-medium">{formatTideHeight(dayData.highTide2Height)}</div>
           </div>,
-          <div key="low2" className="text-sm">
-            <div className="text-blue-500 font-semibold">Low</div>
-            <div className="text-base font-medium">{dayData.lowTide2Time || "—"}</div>
-            <div className="text-xs text-gray-600">{formatTideHeight(dayData.lowTide2Height)}</div>
+          <div key="low2" className="text-sm text-center">
+            <div className="font-bold text-blue-600 text-base">{dayData.lowTide2Time || "—"}</div>
+            <div className="text-xs font-medium">{formatTideHeight(dayData.lowTide2Height)}</div>
           </div>
         ];
       case "weather":
@@ -220,27 +224,25 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
         };
 
         return [
-          <div key="temp" className="flex items-center justify-center">
-            <Sun className="h-4 w-4 text-yellow-500 mr-1" />
-            <span className="text-sm font-medium">{dayData.temperature || dayData.temp || "—"}°C</span>
+          <div key="temp" className="text-sm text-center">
+            <div className="font-bold text-red-600 text-base">{dayData.temperatureMax || dayData.temperature || "—"}°</div>
+            <div className="font-bold text-blue-600 text-sm">{dayData.temperatureMin || "—"}°</div>
           </div>,
           
-          <div key="condition" className="text-sm text-center">
-            <div className="font-medium">{dayData.condition || "—"}</div>
-            {dayData.precipitation && <div className="text-xs text-gray-600">{dayData.precipitation}mm</div>}
+          <div key="precip" className="text-sm text-center">
+            {dayData.precipitation || dayData.precipitationSum ? (
+              <div className="font-medium">{dayData.precipitation || dayData.precipitationSum}mm</div>
+            ) : "—"}
           </div>,
           
-          <div key="wind" className="flex items-center justify-center">
-            <Wind className="h-4 w-4 text-gray-500 mr-1" />
-            <div className="text-sm text-center">
-              <div>{dayData.windSpeed || dayData.wind || "—"} km/h</div>
-              <div className="text-xs">{dayData.windDirection || "—"}</div>
-            </div>
+          <div key="wind" className="text-sm text-center">
+            <div className="font-medium">🌪️ {dayData.windSpeed || "—"}mph</div>
+            <div className="text-xs">→</div>
           </div>,
           
-          <div key="humidity" className="flex items-center justify-center">
-            <Cloud className="h-4 w-4 text-gray-400 mr-1" />
-            <span className="text-sm">{dayData.humidity || "—"}%</span>
+          <div key="uv" className="text-sm text-center">
+            <div className="font-medium">☀️ UV{dayData.uvIndexMax || dayData.uvIndex || "—"}</div>
+            <div className="text-xs">☁️ {dayData.humidity || "—"}%</div>
           </div>
         ];
       default:
@@ -250,16 +252,12 @@ export default function DataTable({ screenType, weekOffset }: DataTableProps) {
 
   const getCellBackground = (columnIndex: number, isCurrentDay: boolean = false) => {
     if (screenType === "crossings") {
-      return columnIndex % 2 === 0 ? "bg-success-light" : "bg-error-light";
+      return columnIndex % 2 === 0 ? "bg-green-100" : "bg-red-100";
     }
     if (screenType === "tides") {
-      // High1 and High2 columns (index 0 and 2) get light blue background
-      if (columnIndex === 0 || columnIndex === 2) {
-        return "bg-blue-25";
-      }
-      return "bg-gray-50";
+      return "bg-blue-25";
     }
-    return "bg-gray-50";
+    return "bg-white";
   };
 
   return (
