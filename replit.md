@@ -115,6 +115,7 @@ The application operates on a week-based data model where:
 - **Railway**: Abandoned due to repeated frontend serving failures
 - **Next Step**: Deploy using Replit's built-in deployment system
 - **Goal**: Get production deployment working with existing codebase
+- **Database**: Dual client system ready for Replit deployment (Neon)
 
 ## Changelog
 - June 25, 2025: v2.9.19 - Final Railway abandonment: Prepare for Replit deployment
