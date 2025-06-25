@@ -8,8 +8,8 @@ import * as schema from "@shared/schema";
 // Configure Neon WebSocket for serverless environments
 neonConfig.webSocketConstructor = ws;
 
-// Use DATABASE_URL environment variable or construct from Railway variables
-let databaseUrl = process.env.DATABASE_URL;
+// Use Railway production database for deployment testing, otherwise development database
+let databaseUrl = process.env.RAILWAY_DATABASE_URL || process.env.DATABASE_URL;
 
 // If DATABASE_URL is not set or if we're on Railway with individual variables, construct it
 // Force construction on Railway even if DATABASE_URL exists (in case it's outdated)
