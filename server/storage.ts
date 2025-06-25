@@ -123,7 +123,30 @@ class DynamicMapper {
   static async safeQuery(tableName: string, whereClause: string = '', params: any[] = []): Promise<any[]> {
     const client = await harborPool.connect();
     try {
-      const sql = `SELECT * FROM ${tableName} ${whereClause} ORDER BY date`;
+      // Map to actual table names based on what exists in the database
+      const tableMapping: { [key: string]: string[] } = {
+        'harbor_crossing_times': ['crossing_times', 'harbor_crossing_times'],
+        'harbor_tide_times': ['tide_data', 'harbor_tide_times'],
+        'harbor_weather_data': ['weather_data', 'harbor_weather_data']
+      };
+      
+      const possibleTables = tableMapping[tableName] || [tableName];
+      let actualTable = tableName;
+      
+      // Try each possible table name
+      for (const table of possibleTables) {
+        try {
+          const testQuery = `SELECT 1 FROM ${table} LIMIT 1`;
+          await client.query(testQuery);
+          actualTable = table;
+          break;
+        } catch (e) {
+          // Table doesn't exist, try next one
+          continue;
+        }
+      }
+      
+      const sql = `SELECT * FROM ${actualTable} ${whereClause} ORDER BY date`;
       const result = await client.query(sql, params);
       return result.rows;
     } finally {
@@ -178,9 +201,21 @@ export class DatabaseStorage implements IStorage {
   async getCrossingTimesLastUpdated(): Promise<string | null> {
     try {
       const client = await harborPool.connect();
-      const result = await client.query('SELECT created_at FROM harbor_crossing_times ORDER BY created_at DESC LIMIT 1');
+      
+      // Try both possible table names
+      const tables = ['crossing_times', 'harbor_crossing_times'];
+      for (const table of tables) {
+        try {
+          const result = await client.query(`SELECT created_at FROM ${table} ORDER BY created_at DESC LIMIT 1`);
+          client.release();
+          return result.rows[0]?.created_at?.toDateString() || null;
+        } catch (e) {
+          continue;
+        }
+      }
+      
       client.release();
-      return result.rows[0]?.created_at?.toDateString() || null;
+      return null;
     } catch (error) {
       console.error('Harbor database crossing times timestamp query failed:', error);
       return null;
@@ -190,9 +225,21 @@ export class DatabaseStorage implements IStorage {
   async getTideTimesLastUpdated(): Promise<string | null> {
     try {
       const client = await harborPool.connect();
-      const result = await client.query('SELECT created_at FROM harbor_tide_times ORDER BY created_at DESC LIMIT 1');
+      
+      // Try both possible table names
+      const tables = ['tide_data', 'harbor_tide_times'];
+      for (const table of tables) {
+        try {
+          const result = await client.query(`SELECT created_at FROM ${table} ORDER BY created_at DESC LIMIT 1`);
+          client.release();
+          return result.rows[0]?.created_at?.toDateString() || null;
+        } catch (e) {
+          continue;
+        }
+      }
+      
       client.release();
-      return result.rows[0]?.created_at?.toDateString() || null;
+      return null;
     } catch (error) {
       console.error('Harbor database tide data timestamp query failed:', error);
       return null;
@@ -202,9 +249,21 @@ export class DatabaseStorage implements IStorage {
   async getWeatherDataLastUpdated(): Promise<string | null> {
     try {
       const client = await harborPool.connect();
-      const result = await client.query('SELECT created_at FROM harbor_weather_data ORDER BY created_at DESC LIMIT 1');
+      
+      // Try both possible table names
+      const tables = ['weather_data', 'harbor_weather_data'];
+      for (const table of tables) {
+        try {
+          const result = await client.query(`SELECT created_at FROM ${table} ORDER BY created_at DESC LIMIT 1`);
+          client.release();
+          return result.rows[0]?.created_at?.toDateString() || null;
+        } catch (e) {
+          continue;
+        }
+      }
+      
       client.release();
-      return result.rows[0]?.created_at?.toDateString() || null;
+      return null;
     } catch (error) {
       console.error('Harbor database weather data timestamp query failed:', error);
       return null;
