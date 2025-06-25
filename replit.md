@@ -113,12 +113,13 @@ The application operates on a week-based data model where:
 ## Current Status
 - **Local Development**: Working perfectly (frontend + backend + database)
 - **Railway Backend**: Working (API responds, database connected)  
-- **Railway Frontend**: FIXED - Static file path mismatch resolved
-- **Issue Found**: Server looks in `server/public/` but build creates `dist/public/`
-- **Solution**: Railway build now copies files to correct location
+- **Railway Frontend**: BROKEN - White screen persists
+- **Root Issue**: Application architecture may be incompatible with Railway deployment model
+- **Failed Approaches**: Multiple rollbacks, build script modifications, file copying attempts
 
 ## Changelog
-- June 25, 2025: v2.9.17 - FIXED Railway frontend: Copy static files from dist/public to server/public during build
+- June 25, 2025: v2.9.18 - Stop circular debugging: Revert failed static file fixes, need new approach
+- June 25, 2025: v2.9.17 - FAILED: Repeated same static file copying approach that didn't work
 - June 24, 2025: v2.9.16 - Minimal Railway config: Let Railway auto-detect everything
 - June 24, 2025: v2.9.15 - Simplified Railway start: Use npm run start instead of missing start-production.js
 - June 24, 2025: v2.9.14 - Fixed Railway build: Changed npm ci to npm install to resolve cache issues
@@ -137,3 +138,4 @@ The application operates on a week-based data model where:
 
 Preferred communication style: Simple, everyday language.
 User feedback: Deployment debugging sessions are frustrating when they go in circles without clear resolution.
+CRITICAL: Stop trying to fix static file serving with build scripts - this approach has failed multiple times.
